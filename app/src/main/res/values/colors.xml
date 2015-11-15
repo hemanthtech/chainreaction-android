@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash_screen_background">#000000</color>
+    <color name="splash_screen_buttons_color">#ffffff</color>
+    <color name="splash_screen_buttons_background">#00BFA5</color>
+    <color name="splash_screen_textview_color">#ffffff</color>
+
+    <color name="alertDialog_buttons_background">#00BFA5</color>
+    <color name="alertDialog_textview_color">#ffffff</color>
+    <color name="alertDialog_view_background">#616161</color>
+</resources>

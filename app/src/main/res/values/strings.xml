@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ChainReaction</string>
+
+    <!-- Strings for the SPlash screen-->
+    <string name="offline_play_button">Offline Play</string>
+    <string name="online_play_button">Online Play</string>
+    <string name="saved_games_button">Saved Games</string>
+    <string name="how_play_button">How to Play</string>
+    <string name="creator_email">[ ranjithsuda123@gmail.com ]</string>
+    <string name="creator_name">Ranjith</string>
+    <string name="email_app_name">Name of Application : </string>
+    <string name="email_app_version">App Version : </string>
+    <string name="email_device_name">Device Maker : </string>
+    <string name="email_device_version">Device Android version : </string>
+    <string name="email_subject">Feed Back about Chain Reaction</string>
+    <string name="email_mailId">ranjithsuda123@gmail.com</string>
+    <string name="noApp_email_share">No Application found to send Email </string>
+
+    <!-- Strings for Alert dialog in Splash -->
+    <string-array name="splash_screen_dialog">
+        <item>Exit</item>
+        <item>Cancel</item>
+    </string-array>
+    <string name="splash_screen_dialog_title">Exit Game or Cancel</string>
+
+</resources>

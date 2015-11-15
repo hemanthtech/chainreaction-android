@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_screen_background"
+    android:orientation="vertical"
+    android:weightSum="6"
+    tools:context=".SplashActivity">
+
+    <!-- Top Settings Container -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.ran.chainreaction.customviews.SoundSettingsView
+            android:id="@+id/splash_app_soundSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/splash_screen_top_container_margin_side"
+            android:src="@mipmap/sound_full" />
+
+        <ImageView
+            android:id="@+id/splash_app_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/splash_screen_top_container_margin_side"
+            android:src="@mipmap/app_settings" />
+    </RelativeLayout>
+
+    <!-- Offline Play Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/splash_offline_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/splash_screen_buttons_margin_side"
+            android:layout_marginRight="@dimen/splash_screen_buttons_margin_side"
+            android:background="@color/splash_screen_buttons_background"
+            android:text="@string/offline_play_button"
+            android:textColor="@color/splash_screen_buttons_color" />
+
+    </LinearLayout>
+
+    <!-- Online Play Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/splash_online_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/splash_screen_buttons_margin_side"
+            android:layout_marginRight="@dimen/splash_screen_buttons_margin_side"
+            android:background="@color/splash_screen_buttons_background"
+            android:text="@string/online_play_button"
+            android:textColor="@color/splash_screen_buttons_color" />
+
+    </LinearLayout>
+
+    <!-- Saved Games Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/splash_saved_games"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/splash_screen_buttons_margin_side"
+            android:layout_marginRight="@dimen/splash_screen_buttons_margin_side"
+            android:background="@color/splash_screen_buttons_background"
+            android:text="@string/saved_games_button"
+            android:textColor="@color/splash_screen_buttons_color" />
+
+    </LinearLayout>
+
+    <!-- How to Play Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/splash_how_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/splash_screen_buttons_margin_side"
+            android:layout_marginRight="@dimen/splash_screen_buttons_margin_side"
+            android:background="@color/splash_screen_buttons_background"
+            android:text="@string/how_play_button"
+            android:textColor="@color/splash_screen_buttons_color" />
+
+    </LinearLayout>
+
+
+    <!-- Creator Info Container -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/splash_creator_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/splash_screen_creator_margin_bottom"
+            android:text="@string/creator_email"
+            android:textColor="@color/splash_screen_textview_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/splash_creator_email"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="@dimen/splash_screen_creator_margin_bottom"
+            android:text="@string/creator_name"
+            android:textAllCaps="true"
+            android:textColor="@color/splash_screen_textview_color" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
