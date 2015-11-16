@@ -23,4 +23,7 @@
     </string-array>
     <string name="splash_screen_dialog_title">Exit Game or Cancel</string>
 
+    <!-- Strings for the Settings Screen -->
+    <string name="settings_default_player_name">Player</string>
+
 </resources>

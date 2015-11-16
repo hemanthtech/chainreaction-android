@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+
+    <!-- Default Player Name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/settings_default_player_name"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/settings_screen_textview_color"
+        android:textStyle="bold"/>
+
+    <!-- Facebook Login -->
+    <ImageView
+        android:id="@+id/settings_facebook_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/settings_screen_sing_in_view_margins"
+        android:src="@mipmap/ic_facebook"/>
+
+    <!-- Google Plus login -->
+    <ImageView
+        android:id="@+id/settings_google_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/settings_screen_sing_in_view_margins"
+        android:layout_toLeftOf="@id/settings_facebook_login"
+        android:src="@mipmap/ic_google"/>
+
+    <!-- Mail Login -->
+    <ImageView
+        android:id="@+id/settings_mail_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/settings_screen_sing_in_view_margins"
+        android:layout_toLeftOf="@id/settings_google_login"
+        android:src="@mipmap/ic_mail"/>
+
+</RelativeLayout>

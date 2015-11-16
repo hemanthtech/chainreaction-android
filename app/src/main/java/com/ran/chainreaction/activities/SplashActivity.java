@@ -6,8 +6,8 @@ package com.ran.chainreaction.activities;
 
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,27 +18,25 @@ import android.widget.Toast;
 import com.ran.chainreaction.R;
 import com.ran.chainreaction.customviews.AlertDialogCreator;
 import com.ran.chainreaction.customviews.SoundSettingsView;
+import com.ran.chainreaction.utils.ChainReactionNavigator;
 import com.ran.chainreaction.utils.ChainReactionShareUtils;
 
 public class SplashActivity extends ActionBarActivity implements View.OnClickListener, AlertDialogCreator.ButtonOnClickListener {
 
+    //TAGS for Alert Dialog Click [Match to String Array Entry]
+    public static final int EXIT_TAG = 0;
+    public static final int CANCEL_TAG = 1;
     private static final String TAG = SplashActivity.class.getSimpleName();
-
     Button offlinePlayButton;
     Button onlinePlayButton;
     Button savedGamesButton;
     Button howPlayButton;
     ImageView appSettingsView;
     TextView creatorEmail;
-
     SoundSettingsView soundSettingsView;
     AlertDialog mBackDialog;
     String mBackDialogEntries[];
     String mBackDialogTitle;
-
-    //TAGS for Alert Dialog Click [Match to String Array Entry]
-    public static final int EXIT_TAG = 0;
-    public static final int CANCEL_TAG = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +108,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
                 break;
 
             case R.id.splash_app_settings:
-                showCustomToastClick("App Settings");
+                ChainReactionNavigator.openSettingsActivity(this);
                 break;
 
 

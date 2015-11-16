@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/settings_screen_background"
+    android:orientation="vertical"
+    tools:context="com.ran.chainreaction.activities.SettingsActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_top_layout_height">
+
+        <!-- Back Button for the Activity close -->
+        <ImageView
+            android:id="@+id/settings_screen_back_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="@dimen/settings_screen_top_layout_margin_side"
+            android:src="@mipmap/ic_back"/>
+
+        <!-- Sound Settings View-->
+        <com.ran.chainreaction.customviews.SoundSettingsView
+            android:id="@+id/settings_screen_sound_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"
+            android:src="@mipmap/sound_full"/>
+
+        <!-- Image View for Profile Pic -->
+        <ImageView
+            android:id="@+id/settings_screen_profile_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user_icon"/>
+
+
+        <!-- Bottom layout for the SignIn /Initial Info -->
+        <include
+            android:id="@+id/settings_user_info_bottom_view"
+            layout="@layout/settings_top_info_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"/>
+
+    </FrameLayout>
+
+</LinearLayout>

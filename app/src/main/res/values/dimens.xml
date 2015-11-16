@@ -9,4 +9,10 @@
     <dimen name="alert_dialog_padding_horizantal">30dp</dimen>
     <dimen name="alert_dialog_padding_vetical">10dp</dimen>
 
+    <!-- Dimens for the Settings Screen -->
+    <dimen name="settings_screen_top_layout_height">160dp</dimen>
+    <dimen name="settings_screen_top_layout_margin_side">20dp</dimen>
+    <dimen name="settings_screen_sing_in_view_margins">5dp</dimen>
+
+
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ran.chainreaction">
+<manifest
+    package="com.ran.chainreaction"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -15,8 +16,9 @@
             android:configChanges="fontScale"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -25,8 +27,14 @@
             android:name=".services.AudioPlayBackService"
             android:enabled="true"
             android:exported="false">
-
         </service>
+
+        <!-- Activity responsible for Settings View -->
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:configChanges="fontScale"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
