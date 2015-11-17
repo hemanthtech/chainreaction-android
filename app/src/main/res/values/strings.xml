@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">ChainReaction</string>
 
     <!-- Strings for the SPlash screen-->
     <string name="offline_play_button">Offline Play</string>
@@ -25,5 +24,11 @@
 
     <!-- Strings for the Settings Screen -->
     <string name="settings_default_player_name">Player</string>
+    <string name="settings_bomb_title">Bomb Settings</string>
+    <string name="settings_bomb_info">Choose bomb style with which u want to play</string>
+    <string name="settings_color_title">Color Settings</string>
+    <string name="settings_color_info">Choose Color with which you want to play</string>
+    <string name="settings_music_title">Music Settings</string>
+    <string name="settings_music_info">Choose Music to be played in game</string>
 
 </resources>

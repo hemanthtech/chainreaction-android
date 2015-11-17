@@ -13,6 +13,7 @@
     <dimen name="settings_screen_top_layout_height">160dp</dimen>
     <dimen name="settings_screen_top_layout_margin_side">20dp</dimen>
     <dimen name="settings_screen_sing_in_view_margins">5dp</dimen>
+    <dimen name="settings_screen_textview_between_margin">5dp</dimen>
 
 
 </resources>

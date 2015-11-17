@@ -8,9 +8,20 @@
     android:orientation="vertical"
     tools:context="com.ran.chainreaction.activities.SettingsActivity">
 
+
+    <!-- Top Level Container for User Profile -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_screen_top_layout_height">
+
+        <!-- Image View for Profile Pic -->
+        <ImageView
+            android:id="@+id/settings_screen_profile_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.6"
+            android:scaleType="center"
+            android:src="@drawable/user_icon"/>
 
         <!-- Back Button for the Activity close -->
         <ImageView
@@ -30,14 +41,6 @@
             android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"
             android:src="@mipmap/sound_full"/>
 
-        <!-- Image View for Profile Pic -->
-        <ImageView
-            android:id="@+id/settings_screen_profile_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/user_icon"/>
-
 
         <!-- Bottom layout for the SignIn /Initial Info -->
         <include
@@ -50,5 +53,124 @@
             android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"/>
 
     </FrameLayout>
+
+    <!-- Settings Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <!--Settings Layouts :  Bomb Container -->
+        <RelativeLayout
+            android:id="@+id/settings_bmb_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_weight="1"
+            android:soundEffectsEnabled="true">
+
+            <TextView
+                android:id="@+id/settings_bmb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/settings_screen_textview_between_margin"
+                android:text="@string/settings_bomb_title"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/settings_screen_textview_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_bmb_title"
+                android:layout_margin="@dimen/settings_screen_textview_between_margin"
+                android:text="@string/settings_bomb_info"
+                android:textColor="@color/settings_screen_textview_color"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_front"/>
+
+        </RelativeLayout>
+
+        <!--Settings Layouts :  Color Container -->
+        <RelativeLayout
+            android:id="@+id/settings_color_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_weight="1"
+            android:soundEffectsEnabled="true">
+
+            <TextView
+                android:id="@+id/settings_color_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/settings_screen_textview_between_margin"
+                android:text="@string/settings_color_title"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/settings_screen_textview_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_color_title"
+                android:layout_margin="@dimen/settings_screen_textview_between_margin"
+                android:text="@string/settings_color_info"
+                android:textColor="@color/settings_screen_textview_color"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_front"/>
+
+        </RelativeLayout>
+
+        <!--Settings Layouts :  Music Container -->
+        <RelativeLayout
+            android:id="@+id/settings_music_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_marginRight="@dimen/settings_screen_top_layout_margin_side"
+            android:layout_weight="1"
+            android:soundEffectsEnabled="true">
+
+            <TextView
+                android:id="@+id/settings_music_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/settings_screen_textview_between_margin"
+                android:text="@string/settings_music_title"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/settings_screen_textview_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/settings_music_title"
+                android:layout_margin="@dimen/settings_screen_textview_between_margin"
+                android:text="@string/settings_music_info"
+                android:textColor="@color/settings_screen_textview_color"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_front"/>
+
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

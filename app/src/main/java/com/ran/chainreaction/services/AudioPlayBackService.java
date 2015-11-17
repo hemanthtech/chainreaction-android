@@ -2,6 +2,7 @@ package com.ran.chainreaction.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
@@ -18,7 +19,8 @@ import com.ran.chainreaction.utils.ChainReactionPreferences;
  * Audio Service running in Background for Playing Audio when View [SoundSettingsView] is attached
  */
 
-public class AudioPlayBackService extends Service implements AudioManager.OnAudioFocusChangeListener {
+public class AudioPlayBackService extends Service implements AudioManager.OnAudioFocusChangeListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = AudioPlayBackService.class.getSimpleName();
     private final IBinder mBinder = new LocalAudioBinder();
@@ -42,7 +44,7 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
 
             case AudioManager.AUDIOFOCUS_LOSS:
                 resetMediaPlayer();
-                ChainReactionPreferences.setSoundPrefernce(this, SoundPreferenceValues.NO_SOUND);
+                ChainReactionPreferences.setSoundPreference(this, SoundPreferenceValues.NO_SOUND);
                 break;
 
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
@@ -55,14 +57,10 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
     }
 
 
-    /**
-     * Binder class to Bind to the Service Connection ..
-     */
-    public class LocalAudioBinder extends Binder {
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        public AudioPlayBackService getService() {
-            return AudioPlayBackService.this;
-        }
+        //TODO [ranjith] Implement the Shared Preference logic
     }
 
     @Override
@@ -83,7 +81,6 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
         return mBinder;
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -102,11 +99,11 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
         int audioFocus = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
             AudioManager.AUDIOFOCUS_GAIN);
         if (audioFocus == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+            mediaPlayer = MediaPlayer.create(this, R.raw.sound1);
             mediaPlayer.setLooping(true);
             playAudio();
         } else {
-            ChainReactionPreferences.setSoundPrefernce(this, SoundPreferenceValues.NO_SOUND);
+            ChainReactionPreferences.setSoundPreference(this, SoundPreferenceValues.NO_SOUND);
             Log.d(TAG, "The Audio Focus / SoundPreference is not granted");
         }
     }
@@ -130,7 +127,7 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
     public void updateAudioPlayState(SoundPreferenceValues preferenceValues) {
 
         //Update the Current Preference to the ChainReactionPreferences Utils
-        ChainReactionPreferences.setSoundPrefernce(this, preferenceValues);
+        ChainReactionPreferences.setSoundPreference(this, preferenceValues);
 
         switch (preferenceValues) {
             case FULL_SOUND:
@@ -184,6 +181,16 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
                 AudioManager.FLAG_PLAY_SOUND);
         } else {
             //Do nothing..
+        }
+    }
+
+    /**
+     * Binder class to Bind to the Service Connection ..
+     */
+    public class LocalAudioBinder extends Binder {
+
+        public AudioPlayBackService getService() {
+            return AudioPlayBackService.this;
         }
     }
 }

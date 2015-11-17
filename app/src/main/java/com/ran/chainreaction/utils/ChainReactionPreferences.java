@@ -3,6 +3,9 @@ package com.ran.chainreaction.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ran.chainreaction.entities.BombValues;
+import com.ran.chainreaction.entities.MusicValues;
+import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.entities.SoundPreferenceValues;
 
 /**
@@ -17,14 +20,52 @@ public class ChainReactionPreferences {
      * Preference Key for Sound Settings.
      * Possible Index Values :
      * <p/>
-     * 0 -- No Sound
-     * 1 -- Medium Sound
-     * 2 -- Full Sound
+     * NO_SOUND(0, "nosound"),
+     * MEDIUM_SOUND(1, "medsound"),
+     * FULL_SOUND(2, "fullsound");
      */
     public static final String SOUND_KEY = "sound_preferences";
-
-
     public static final SoundPreferenceValues SOUND_KEY_DEFAULT_VALUE = SoundPreferenceValues.FULL_SOUND;
+
+    /**
+     * Preference Key for Bomb Settings.
+     * Possible Index Values :
+     * <p/>
+     * CIRCLE(10, "circle"),
+     * SQUARE(11, "square"),
+     * TRIANGLE(12, "triangle");
+     */
+    public static final String BOMB_KEY = "bmb_preferences";
+    public static final BombValues BOMB_KEY_DEFAULT_VALUE = BombValues.CIRCLE;
+
+
+    /**
+     * Preference Key for Player Color Settings.
+     * Possible Index Values :
+     * <p/>
+     * RED(100, "red"),
+     * ORANGE(101, "orange"),
+     * YELLOW(102, "yellow"),
+     * GREEN(103, "green"),
+     * WHITE(104, "white"),
+     * BLUE(105, "blue"),
+     * VIOLET(106, "violet"),
+     * PINK(107, "pink");
+     */
+    public static final String PLAY_COLOR_KEY = "color_preferences";
+    public static final PlayColorValues PLAY_COLOR_KEY_DEFAULT_VALUE = PlayColorValues.WHITE;
+
+    /**
+     * Preference Key for Music Settings.
+     * Possible Index Values :
+     * <p/>
+     * SOUND1(1000, "sound1.mp3"),
+     * SOUND2(1001, "sound2.mp3"),
+     * SOUND3(1002, "sound3.mp3");
+     */
+    public static final String MUSIC_KEY = "music_preferences";
+    public static final MusicValues MUSIC_KEY_DEFAULT_VALUE = MusicValues.SOUND1;
+
 
     /**
      * Method to get the SoundPreference Preference
@@ -48,7 +89,7 @@ public class ChainReactionPreferences {
      * @param context   -- Context of the Application
      * @param soundPref -- Enum type of the SoundPreference
      */
-    public static void setSoundPrefernce(Context context, SoundPreferenceValues soundPref) {
+    public static void setSoundPreference(Context context, SoundPreferenceValues soundPref) {
 
         SharedPreferences sharedPref = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -58,4 +99,98 @@ public class ChainReactionPreferences {
 
     }
 
+    /**
+     * Method to get the BombSettings Preference
+     *
+     * @param context -- Context of the Application
+     * @return -- Enum type of BombValues
+     */
+
+    public static BombValues getBombPreference(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        int bmbIndex = sharedPreferences.getInt(BOMB_KEY, BombValues.getIndex(BOMB_KEY_DEFAULT_VALUE));
+
+        return BombValues.getEnumType(bmbIndex);
+    }
+
+    /**
+     * Method to set the SoundPreference
+     *
+     * @param context -- Context of the Application
+     * @param bmbPref -- Enum type of the SoundPreference
+     */
+    public static void setBombPreference(Context context, BombValues bmbPref) {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(BOMB_KEY, BombValues.getIndex(bmbPref));
+        editor.commit();
+
+    }
+
+
+    /**
+     * Method to get the PlayerColor Preference
+     *
+     * @param context -- Context of the Application
+     * @return -- Enum type of PlayerValues
+     */
+
+    public static PlayColorValues getPlayerColorPreference(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        int colorIndex = sharedPreferences.getInt(PLAY_COLOR_KEY, PlayColorValues.getIndex(PLAY_COLOR_KEY_DEFAULT_VALUE));
+
+        return PlayColorValues.getEnumType(colorIndex);
+    }
+
+    /**
+     * Method to set the SoundPreference
+     *
+     * @param context       -- Context of the Application
+     * @param playColorPref -- Enum type of the PlayerColorPreference
+     */
+    public static void setPlayerColorPreference(Context context, PlayColorValues playColorPref) {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(PLAY_COLOR_KEY, PlayColorValues.getIndex(playColorPref));
+        editor.commit();
+
+    }
+
+
+    /**
+     * Method to get the Music  Preference
+     *
+     * @param context -- Context of the Application
+     * @return -- Enum type of MusicValues
+     */
+
+    public static MusicValues getMusicPreference(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        int musicIndex = sharedPreferences.getInt(MUSIC_KEY, MusicValues.getIndex(MUSIC_KEY_DEFAULT_VALUE));
+
+        return MusicValues.getEnumType(musicIndex);
+    }
+
+    /**
+     * Method to set the SoundPreference
+     *
+     * @param context   -- Context of the Application
+     * @param musicPref -- Enum type of the MusicPreference
+     */
+    public static void setMusicPreference(Context context, MusicValues musicPref) {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(MUSIC_KEY, MusicValues.getIndex(musicPref));
+        editor.commit();
+
+    }
 }
