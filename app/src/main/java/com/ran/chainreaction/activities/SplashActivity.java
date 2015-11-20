@@ -16,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ran.chainreaction.R;
-import com.ran.chainreaction.customviews.AlertDialogCreator;
+import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.utils.ChainReactionNavigator;
 import com.ran.chainreaction.utils.ChainReactionShareUtils;
 
-public class SplashActivity extends ActionBarActivity implements View.OnClickListener, AlertDialogCreator.ButtonOnClickListener {
+public class SplashActivity extends ActionBarActivity implements View.OnClickListener, ExitAlertDialogCreator.ButtonOnClickListener {
 
     //TAGS for Alert Dialog Click [Match to String Array Entry]
     public static final int EXIT_TAG = 0;
@@ -156,7 +156,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         if (mBackDialog == null || !mBackDialog.isShowing()) {
-            mBackDialog = AlertDialogCreator.createDialog(mBackDialogEntries, mBackDialogTitle, this);
+            mBackDialog = ExitAlertDialogCreator.createDialog(mBackDialogEntries, mBackDialogTitle, this);
             mBackDialog.show();
         } else {
             super.onBackPressed();

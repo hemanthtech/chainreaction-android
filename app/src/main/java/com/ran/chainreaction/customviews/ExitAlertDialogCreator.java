@@ -12,14 +12,12 @@ import android.widget.TextView;
 
 import com.ran.chainreaction.R;
 
-import java.util.ArrayList;
-
 /**
  * Created by ranjith on 15/11/15.
  * <p/>
- * Class Responsible for Creating AlertDialogs with Buttons Names and Title Specified ..
+ * Class Responsible for Creating Exit AlertDialogs with Buttons Names and Title Specified ..
  */
-public class AlertDialogCreator {
+public class ExitAlertDialogCreator {
 
 
     private static ButtonOnClickListener buttonOnClickListener;
