@@ -2,17 +2,19 @@ package com.ran.chainreaction.entities;
 
 /**
  * Created by ranjith on 17/11/15.
+ *
+ * PlayerColor Values Entities for ChainReaction Model
  */
 public enum PlayColorValues {
 
-    RED(100, "red"),
-    ORANGE(101, "orange"),
-    YELLOW(102, "yellow"),
-    GREEN(103, "green"),
-    WHITE(104, "white"),
-    BLUE(105, "blue"),
-    VIOLET(106, "violet"),
-    PINK(107, "pink");
+    RED(0, "red"),
+    ORANGE(1, "orange"),
+    YELLOW(2, "yellow"),
+    GREEN(3, "green"),
+    WHITE(4, "white"),
+    BLUE(5, "blue"),
+    VIOLET(6, "violet"),
+    PINK(7, "pink");
 
     int value;
     String name;

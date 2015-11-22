@@ -2,12 +2,14 @@ package com.ran.chainreaction.entities;
 
 /**
  * Created by ranjith on 17/11/15.
+ *
+ * Music Values Entities for ChainReaction Model
  */
 public enum MusicValues {
 
-    SOUND1(1000, "sound1.mp3"),
-    SOUND2(1001, "sound2.mp3"),
-    SOUND3(1002, "sound3.mp3");
+    SOUND1(0, "sound1.mp3"),
+    SOUND2(1, "sound2.mp3"),
+    SOUND3(2, "sound3.mp3");
 
     int value;
     String name;

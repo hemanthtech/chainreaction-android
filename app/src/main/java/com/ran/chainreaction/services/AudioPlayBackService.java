@@ -1,6 +1,7 @@
 package com.ran.chainreaction.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -60,7 +61,30 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        //TODO [ranjith] Implement the Shared Preference logic
+        if (key.equals(ChainReactionPreferences.MUSIC_KEY)) {
+            resetMediaPlayer();
+            if (ChainReactionPreferences.getSoundPreference(this) != SoundPreferenceValues.NO_SOUND) {
+                initializeMediaPlayer();
+            }
+        }
+    }
+
+    /**
+     * Helper Method to return the Music Id based on Setting's
+     *
+     * @return -- Id of the raw Music
+     */
+    private int getProperMusicId() {
+        switch (ChainReactionPreferences.getMusicPreference(this)) {
+            case SOUND1:
+                return R.raw.sound1;
+            case SOUND2:
+                return R.raw.sound2;
+            case SOUND3:
+                return R.raw.sound3;
+        }
+
+        return R.raw.sound1; //Default , Ideally doesn't happen
     }
 
     @Override
@@ -68,6 +92,8 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
         super.onCreate();
         Log.d(TAG, "onCreate");
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        this.getSharedPreferences(ChainReactionPreferences.APP_PREFERENCE_KEY, Context.MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -99,7 +125,7 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
         int audioFocus = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
             AudioManager.AUDIOFOCUS_GAIN);
         if (audioFocus == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.sound1);
+            mediaPlayer = MediaPlayer.create(this, getProperMusicId());
             mediaPlayer.setLooping(true);
             playAudio();
         } else {
@@ -156,7 +182,7 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
     /**
      * Method called from Sound Settings View [onResume /onPause ]
      *
-     * @param isVisible
+     * @param isVisible -- View visibility
      */
     public void viewVisible(boolean isVisible) {
         if (isVisible && ChainReactionPreferences.getSoundPreference(this) != SoundPreferenceValues.NO_SOUND) {
@@ -181,6 +207,7 @@ public class AudioPlayBackService extends Service implements AudioManager.OnAudi
                 AudioManager.FLAG_PLAY_SOUND);
         } else {
             //Do nothing..
+            Log.d(TAG, "No Sound Preference Volume update");
         }
     }
 

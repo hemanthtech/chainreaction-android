@@ -31,4 +31,18 @@
     <string name="settings_music_title">Music Settings</string>
     <string name="settings_music_info">Choose Music to be played in game</string>
 
+    <!-- Strings for the Settings Options Dialog -->
+    <string name="dialog_bmb_settings_title">Choose the Bomb type</string>
+    <string-array name="bmb_settings_array">
+        <item>Circle</item>
+        <item>Square</item>
+        <item>Triangle</item>
+    </string-array>
+    <string name="dialog_music_settings_title">Choose the background Music</string>
+    <string-array name="music_settings_array">
+        <item>Sound 1</item>
+        <item>Sound 2</item>
+        <item>Sound 3</item>
+    </string-array>
+
 </resources>

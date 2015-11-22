@@ -2,12 +2,14 @@ package com.ran.chainreaction.entities;
 
 /**
  * Created by ranjith on 17/11/15.
+ *
+ * Bomb Values Entities for ChainReaction Model
  */
 public enum BombValues {
 
-    CIRCLE(10, "circle"),
-    SQUARE(11, "square"),
-    TRIANGLE(12, "triangle");
+    CIRCLE(0, "circle"),
+    SQUARE(1, "square"),
+    TRIANGLE(2, "triangle");
 
     int value;
     String name;
