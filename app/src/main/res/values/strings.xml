@@ -45,4 +45,19 @@
         <item>Sound 3</item>
     </string-array>
 
+    <string name="dialog_color_settings_title">Choose Your default Color</string>
+    <string-array name="color_settings_array">
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Violet</item>
+        <item>Pink</item>
+    </string-array>
+    <string name="dialog_color_settings_ok">Save</string>
+    <string name="dialog_color_settings_reset">Reset</string>
+    <string name="settings_save_color_toast_reset">Your Preference is not saved</string>
+
 </resources>

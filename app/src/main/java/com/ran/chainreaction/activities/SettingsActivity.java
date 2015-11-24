@@ -105,9 +105,9 @@ public class SettingsActivity extends ActionBarActivity implements View.OnClickL
                 break;
 
             case R.id.settings_color_container:
-                /*settingsDialog = SettingsAlertDialogCreator.
+                settingsDialog = SettingsAlertDialogCreator.
                     createOptionsDialog(SettingsAlertDialogCreator.COLOR_TYPE_DIALOG, this);
-                settingsDialog.show();*/
+                settingsDialog.show();
                 break;
         }
     }
