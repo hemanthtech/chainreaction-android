@@ -60,4 +60,12 @@
     <string name="dialog_color_settings_reset">Reset</string>
     <string name="settings_save_color_toast_reset">Your Preference is not saved</string>
 
+    <!-- Strings responsible for the Offline Game Screen -->
+    <string name="offline_settings_screen_title">Offline Game Settings</string>
+    <string name="offline_settings_tile">Offline Game Settings</string>
+    <string name="offline_settings_grid_title">Grid size to play</string>
+    <string name="offline_settings_player_title">No of Players :</string>
+    <string name="offline_settings_color_tile">Player Colors :</string>
+    <string name="offline_settings_play_button">Start Game</string>
+
 </resources>

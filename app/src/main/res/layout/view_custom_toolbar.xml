@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <!-- Lollipop toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar_background_color"
+        android:titleTextAppearance="@color/toolbar_name_color"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp">
+    </android.support.v7.widget.Toolbar>
+
+    <!-- Custom Sound Image View for sound state Maintain -->
+    <com.ran.chainreaction.customviews.SoundSettingsView
+        android:id="@+id/tool_bar_sound_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/toolbar_sound_options_side_margin"
+        android:src="@mipmap/sound_full"/>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.ran.chainreaction.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ran.chainreaction.activities.OfflineSettingsActivity;
 import com.ran.chainreaction.activities.SettingsActivity;
 
 /**
@@ -18,8 +19,17 @@ public class ChainReactionNavigator {
      * @param context -- Context of App
      */
     public static void openSettingsActivity(Context context) {
-
         Intent intent = new Intent(context, SettingsActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Method to open Offline Game Settings View
+     *
+     * @param context -- Context of the App
+     */
+    public static void openOfflineGameSettingsActivity(Context context) {
+        Intent intent = new Intent(context, OfflineSettingsActivity.class);
         context.startActivity(intent);
     }
 }

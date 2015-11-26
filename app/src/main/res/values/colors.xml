@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colors for Splash screen -->
     <color name="splash_screen_background">#000000</color>
     <color name="splash_screen_buttons_color">#ffffff</color>
     <color name="splash_screen_buttons_background">#00BFA5</color>
     <color name="splash_screen_textview_color">#ffffff</color>
 
+    <!-- Alert dialog colors -->
     <color name="alertDialog_buttons_background">#00BFA5</color>
     <color name="alertDialog_textview_color">#ffffff</color>
     <color name="alertDialog_view_background">#616161</color>
 
+    <!-- Settings Screen colors -->
     <color name="settings_screen_background">#000000</color>
     <color name="settings_screen_textview_color">#ffffff</color>
 
+    <!-- Player color values -->
     <color name="red_background_color">#C62828</color>
     <color name="orange_background_color">#FF9800</color>
     <color name="yellow_background_color">#FFEB3B</color>
@@ -20,5 +24,15 @@
     <color name="blue_background_color">#2196F3</color>
     <color name="violet_background_color">#9C27B0</color>
     <color name="pink_background_color">#E91E63</color>
+
+    <!-- Colors for Offline screen -->
+    <color name="offline_settings_background">#000000</color>
+    <color name="offline_screen_buttons_color">#ffffff</color>
+    <color name="offline_screen_buttons_background">#00BFA5</color>
+    <color name="offline_screen_textview_color">#ffffff</color>
+
+    <!-- colors fot Toolbar -->
+    <color name="toolbar_background_color">#616161</color>
+    <color name="toolbar_name_color">#ffffff</color>
 
 </resources>

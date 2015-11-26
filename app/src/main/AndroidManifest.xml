@@ -35,6 +35,15 @@
             android:configChanges="fontScale"
             android:screenOrientation="portrait">
         </activity>
+
+        <!-- Activity responsible for Offline Game Settings View -->
+        <activity
+            android:name=".activities.OfflineSettingsActivity"
+            android:configChanges="fontScale"
+            android:label="@string/offline_settings_screen_title"
+            android:parentActivityName=".activities.SplashActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

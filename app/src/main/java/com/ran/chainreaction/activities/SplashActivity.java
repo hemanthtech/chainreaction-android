@@ -92,7 +92,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
         switch (clickedId) {
 
             case R.id.splash_offline_play:
-                showCustomToastClick(getResources().getString(R.string.offline_play_button));
+                ChainReactionNavigator.openOfflineGameSettingsActivity(this);
                 break;
 
             case R.id.splash_online_play:

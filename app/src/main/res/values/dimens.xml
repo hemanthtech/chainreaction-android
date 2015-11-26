@@ -18,4 +18,11 @@
     <dimen name="settings_color_selected_margin">10dp</dimen>
     <dimen name="settings_color_selected_view_margin">10dp</dimen>
 
+
+    <!-- Dimens for the Offline Settings Screen -->
+    <dimen name="offline_settings_title_margin">24dp</dimen>
+    <dimen name="offline_settings_topbottom_margin">10dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_sound_options_side_margin">20dp</dimen>
 </resources>
