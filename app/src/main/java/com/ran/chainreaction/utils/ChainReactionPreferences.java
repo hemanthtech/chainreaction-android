@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.ran.chainreaction.entities.BombValues;
+import com.ran.chainreaction.entities.GridSizeValues;
 import com.ran.chainreaction.entities.MusicValues;
 import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.entities.SoundPreferenceValues;
 
 /**
  * Created by ranjith on 12/11/15.
+ * <p/>
+ * COnstants and Accessory functions for all Preferences
  */
 public class ChainReactionPreferences {
 
@@ -66,6 +69,18 @@ public class ChainReactionPreferences {
     public static final String MUSIC_KEY = "music_preferences";
     public static final MusicValues MUSIC_KEY_DEFAULT_VALUE = MusicValues.SOUND1;
 
+    /**
+     * Preference Key for Grid size Settings.
+     * Possible Index Values :
+     * <p/>
+     * SMALL(0, "small"),
+     * MEDIUM(1, "medium"),
+     * LARGE(2, "large");
+     */
+
+    public static final String GRIDSIZE_KEY = "grid_preferences";
+    public static final GridSizeValues GRID_KEY_DEFAULT_VALUE = GridSizeValues.SMALL;
+
 
     /**
      * Method to get the SoundPreference Preference
@@ -118,7 +133,7 @@ public class ChainReactionPreferences {
      * Method to set the SoundPreference
      *
      * @param context -- Context of the Application
-     * @param bmbPref -- Enum type of the SoundPreference
+     * @param bmbPref -- Enum type of the BombValues
      */
     public static void setBombPreference(Context context, BombValues bmbPref) {
 
@@ -135,7 +150,7 @@ public class ChainReactionPreferences {
      * Method to get the PlayerColor Preference
      *
      * @param context -- Context of the Application
-     * @return -- Enum type of PlayerValues
+     * @return -- Enum type of PlayerColorValues
      */
 
     public static PlayColorValues getPlayerColorPreference(Context context) {
@@ -147,10 +162,10 @@ public class ChainReactionPreferences {
     }
 
     /**
-     * Method to set the SoundPreference
+     * Method to set the PlayerColor Preference
      *
      * @param context       -- Context of the Application
-     * @param playColorPref -- Enum type of the PlayerColorPreference
+     * @param playColorPref -- Enum type of the PlayColorValues
      */
     public static void setPlayerColorPreference(Context context, PlayColorValues playColorPref) {
 
@@ -179,10 +194,10 @@ public class ChainReactionPreferences {
     }
 
     /**
-     * Method to set the SoundPreference
+     * Method to set the MusicPreference
      *
      * @param context   -- Context of the Application
-     * @param musicPref -- Enum type of the MusicPreference
+     * @param musicPref -- Enum type of the MusicValues
      */
     public static void setMusicPreference(Context context, MusicValues musicPref) {
 
@@ -190,6 +205,37 @@ public class ChainReactionPreferences {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putInt(MUSIC_KEY, MusicValues.getIndex(musicPref));
+        editor.commit();
+
+    }
+
+    /**
+     * Method to get the Grid Size  Preference
+     *
+     * @param context -- Context of the Application
+     * @return -- Enum type of GridSizeValues
+     */
+
+    public static GridSizeValues getGridSizePreference(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        int gridIndex = sharedPreferences.getInt(GRIDSIZE_KEY, GridSizeValues.getIndex(GRID_KEY_DEFAULT_VALUE));
+
+        return GridSizeValues.getEnumType(gridIndex);
+    }
+
+    /**
+     * Method to set the GridSizePreference
+     *
+     * @param context  -- Context of the Application
+     * @param gridSize -- Enum type of the GridValuesType
+     */
+    public static void setGridSizePreference(Context context, GridSizeValues gridSize) {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(GRIDSIZE_KEY, GridSizeValues.getIndex(gridSize));
         editor.commit();
 
     }

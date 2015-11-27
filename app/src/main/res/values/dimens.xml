@@ -25,4 +25,10 @@
 
     <!-- Toolbar -->
     <dimen name="toolbar_sound_options_side_margin">20dp</dimen>
+
+    <!-- Grid CHooser Item view -->
+    <dimen name="grid_chooser_item_margin_top">20dp</dimen>
+    <dimen name="grid_chooser_item_margin_side">20dp</dimen>
+    <dimen name="grid_chooser_parent_margin_side">20dp</dimen>
+
 </resources>

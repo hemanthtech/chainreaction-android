@@ -63,9 +63,14 @@
     <!-- Strings responsible for the Offline Game Screen -->
     <string name="offline_settings_screen_title">Offline Game Settings</string>
     <string name="offline_settings_tile">Offline Game Settings</string>
-    <string name="offline_settings_grid_title">Grid size to play</string>
+    <string name="offline_settings_grid_title">Grid size to play :</string>
     <string name="offline_settings_player_title">No of Players :</string>
     <string name="offline_settings_color_tile">Player Colors :</string>
     <string name="offline_settings_play_button">Start Game</string>
+
+    <string name="grid_chooser_view_small_item">S</string>
+    <string name="grid_chooser_view_medium_item">M</string>
+    <string name="grid_chooser_view_large_item">L</string>
+
 
 </resources>

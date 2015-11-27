@@ -35,4 +35,9 @@
     <color name="toolbar_background_color">#616161</color>
     <color name="toolbar_name_color">#ffffff</color>
 
+    <color name="grid_view_option_textColor">#ffffff</color>
+    <color name="grid_view_option_selected">#00BFA5</color>
+    <color name="grid_view_option_unselected">#F44336</color>
+
+
 </resources>

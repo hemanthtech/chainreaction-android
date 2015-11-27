@@ -52,6 +52,6 @@ public enum PlayColorValues {
                 return item;
             }
         }
-        return null;
+        return PlayColorValues.RED;
     }
 }

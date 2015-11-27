@@ -47,6 +47,6 @@ public enum BombValues {
                 return item;
             }
         }
-        return null;
+        return CIRCLE;
     }
 }

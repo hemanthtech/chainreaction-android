@@ -10,7 +10,7 @@
     <!-- Toolbar for Title and Sound -->
     <include
         android:id="@+id/offline_settings_customtoolbar"
-        layout="@layout/view_custom_toolbar"></include>
+        layout="@layout/view_custom_toolbar"/>
 
     <!-- Button to start the Game -->
     <Button
@@ -48,6 +48,14 @@
                 android:text="@string/offline_settings_grid_title"
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/offline_screen_textview_color"/>
+
+            <com.ran.chainreaction.customviews.GridChooserView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/grid_chooser_parent_margin_side"
+                android:layout_marginRight="@dimen/grid_chooser_parent_margin_side">
+
+            </com.ran.chainreaction.customviews.GridChooserView>
 
         </LinearLayout>
 

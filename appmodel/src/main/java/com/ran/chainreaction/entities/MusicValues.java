@@ -48,6 +48,6 @@ public enum MusicValues {
                 return item;
             }
         }
-        return null;
+        return SOUND1;
     }
 }
