@@ -31,4 +31,9 @@
     <dimen name="grid_chooser_item_margin_side">20dp</dimen>
     <dimen name="grid_chooser_parent_margin_side">20dp</dimen>
 
+
+    <dimen name="player_chooser_parent_margin">10dp</dimen>
+    <dimen name="player_chooser_item_margin">5dp</dimen>
+
+
 </resources>

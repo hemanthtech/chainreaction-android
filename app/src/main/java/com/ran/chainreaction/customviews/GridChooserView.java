@@ -105,9 +105,9 @@ public class GridChooserView extends LinearLayout implements View.OnClickListene
         for (int k = 0; k < getChildCount(); k++) {
             View view = getChildAt(k);
             if (GridSizeValues.getIndex(ChainReactionPreferences.getGridSizePreference(getContext())) == k) {
-                view.setBackground(getResources().getDrawable(R.drawable.grid_chooser_drawable_selected));
+                view.setBackground(getResources().getDrawable(R.drawable.chooser_drawable_selected));
             } else {
-                view.setBackground(getResources().getDrawable(R.drawable.grid_chooser_drawable_unselected));
+                view.setBackground(getResources().getDrawable(R.drawable.chooser_drawable_unselected));
             }
         }
     }

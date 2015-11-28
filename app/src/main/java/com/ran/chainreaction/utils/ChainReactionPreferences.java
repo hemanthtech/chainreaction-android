@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.ran.chainreaction.entities.BombValues;
 import com.ran.chainreaction.entities.GridSizeValues;
 import com.ran.chainreaction.entities.MusicValues;
+import com.ran.chainreaction.entities.NoPlayerValues;
 import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.entities.SoundPreferenceValues;
 
@@ -80,6 +81,22 @@ public class ChainReactionPreferences {
 
     public static final String GRIDSIZE_KEY = "grid_preferences";
     public static final GridSizeValues GRID_KEY_DEFAULT_VALUE = GridSizeValues.SMALL;
+
+
+    /**
+     * Preference Key for PlayerNo Settings.
+     * Possible Index Values :
+     * <p/>
+     * TWO(2, "two"),
+     * THREE(3, "three"),
+     * FOUR(4, "four"),
+     * FIVE(5, "five"),
+     * SIX(6, "six"),
+     * SEVEN(7, "seven"),
+     * EIGHT(8, "eight");
+     */
+    public static final String PLAYERNO_KEY = "playerNo_preferences";
+    public static final NoPlayerValues PLAYERNO_KEY_DEFAULT_VALUE = NoPlayerValues.TWO;
 
 
     /**
@@ -236,6 +253,38 @@ public class ChainReactionPreferences {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putInt(GRIDSIZE_KEY, GridSizeValues.getIndex(gridSize));
+        editor.commit();
+
+    }
+
+
+    /**
+     * Method to get the Playerno  Preference
+     *
+     * @param context -- Context of the Application
+     * @return -- Enum type of NoPlayerValues
+     */
+
+    public static NoPlayerValues getPlayerNoReference(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        int playerIndex = sharedPreferences.getInt(PLAYERNO_KEY, NoPlayerValues.getIndex(PLAYERNO_KEY_DEFAULT_VALUE));
+
+        return NoPlayerValues.getEnumType(playerIndex);
+    }
+
+    /**
+     * Method to set the PlayerNo Preference
+     *
+     * @param context       -- Context of the Application
+     * @param noPlayerValue -- Enum type of the GridValuesType
+     */
+    public static void setPlayerNoPreference(Context context, NoPlayerValues noPlayerValue) {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(APP_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(PLAYERNO_KEY, NoPlayerValues.getIndex(noPlayerValue));
         editor.commit();
 
     }

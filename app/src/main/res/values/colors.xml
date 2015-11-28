@@ -39,5 +39,8 @@
     <color name="grid_view_option_selected">#00BFA5</color>
     <color name="grid_view_option_unselected">#F44336</color>
 
+    <color name="player_chooser_option_textColor">#ffffff</color>
+    <color name="player_chooser_option_selected">#00BFA5</color>
+    <color name="player_chooser_option_unselected">#000000</color>
 
 </resources>
