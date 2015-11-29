@@ -35,5 +35,8 @@
     <dimen name="player_chooser_parent_margin">10dp</dimen>
     <dimen name="player_chooser_item_margin">5dp</dimen>
 
+    <dimen name="player_color_parent_margin">10dp</dimen>
+    <dimen name="player_color_item_side_margin">15dp</dimen>
+    <dimen name="player_color_item_vertical_margin">15dp</dimen>
 
 </resources>

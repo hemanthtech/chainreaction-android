@@ -35,12 +35,17 @@
     <color name="toolbar_background_color">#616161</color>
     <color name="toolbar_name_color">#ffffff</color>
 
+    <!-- Colors for Grid View Options -->
     <color name="grid_view_option_textColor">#ffffff</color>
     <color name="grid_view_option_selected">#00BFA5</color>
     <color name="grid_view_option_unselected">#F44336</color>
 
+    <!-- Colors for Player Chooser View Options -->
     <color name="player_chooser_option_textColor">#ffffff</color>
     <color name="player_chooser_option_selected">#00BFA5</color>
     <color name="player_chooser_option_unselected">#000000</color>
+
+    <!-- Colors for Players color view -->
+    <color name="player_color_textColor">#000000</color>
 
 </resources>

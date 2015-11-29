@@ -99,6 +99,11 @@
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/offline_screen_textview_color"/>
 
+            <com.ran.chainreaction.customviews.PlayerColorView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/player_color_parent_margin"/>
+
         </LinearLayout>
     </LinearLayout>
 
