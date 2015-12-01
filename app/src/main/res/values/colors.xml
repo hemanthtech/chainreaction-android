@@ -48,4 +48,9 @@
     <!-- Colors for Players color view -->
     <color name="player_color_textColor">#000000</color>
 
+    <!-- Colors for the Saved Games -->
+    <color name="saved_games_background">#000000</color>
+    <color name="saved_games_textColor">#ffffff</color>
+    <color name="saved_games_buttons_background">#00BFA5</color>
+
 </resources>

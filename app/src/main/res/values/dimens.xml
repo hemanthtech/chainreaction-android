@@ -38,5 +38,8 @@
     <dimen name="player_color_parent_margin">10dp</dimen>
     <dimen name="player_color_item_side_margin">15dp</dimen>
     <dimen name="player_color_item_vertical_margin">15dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
 </resources>

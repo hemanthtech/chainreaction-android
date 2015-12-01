@@ -43,6 +43,21 @@
             android:label="@string/offline_settings_screen_title"
             android:parentActivityName=".activities.SplashActivity"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ran.chainreaction.activities.SplashActivity"/>
+        </activity>
+
+        <!-- Activity responsible for the Saved Games View -->
+        <activity
+            android:name=".SavedGamesActivity"
+            android:configChanges="fontScale"
+            android:label="@string/title_activity_saved_games"
+            android:parentActivityName=".activities.SplashActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ran.chainreaction.activities.SplashActivity"/>
         </activity>
     </application>
 

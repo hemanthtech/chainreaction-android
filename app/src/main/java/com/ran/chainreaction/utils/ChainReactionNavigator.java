@@ -3,6 +3,7 @@ package com.ran.chainreaction.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ran.chainreaction.SavedGamesActivity;
 import com.ran.chainreaction.activities.OfflineSettingsActivity;
 import com.ran.chainreaction.activities.SettingsActivity;
 
@@ -30,6 +31,16 @@ public class ChainReactionNavigator {
      */
     public static void openOfflineGameSettingsActivity(Context context) {
         Intent intent = new Intent(context, OfflineSettingsActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Method to open Saved Games Screen View
+     *
+     * @param context -- Context of the App
+     */
+    public static void openSavedGameSettingsActivity(Context context) {
+        Intent intent = new Intent(context, SavedGamesActivity.class);
         context.startActivity(intent);
     }
 }

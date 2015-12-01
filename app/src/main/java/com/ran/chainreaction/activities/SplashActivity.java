@@ -100,7 +100,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
                 break;
 
             case R.id.splash_saved_games:
-                showCustomToastClick(getResources().getString(R.string.saved_games_button));
+                ChainReactionNavigator.openSavedGameSettingsActivity(this);
                 break;
 
             case R.id.splash_how_play:
