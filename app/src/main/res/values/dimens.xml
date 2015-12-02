@@ -43,7 +43,7 @@
     <dimen name="saved_games_item_margin">10dp</dimen>
     <dimen name="saved_games_item_title_margin">10dp</dimen>
     <dimen name="saved_games_item_body_margin">10dp</dimen>
-    <dimen name="saved_games_item_player_info_size">30dp</dimen>
+    <dimen name="saved_games_item_player_info_size">40dp</dimen>
     <dimen name="saved_games_item_player_info_margin">10dp</dimen>
 
 
