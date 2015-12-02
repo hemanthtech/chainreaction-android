@@ -23,4 +23,15 @@
         android:text="@string/saved_games_resume_button"
         android:textColor="@color/saved_games_textColor"/>
 
+
+    <!-- Recycler view for holding the Games -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/saved_games_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/saved_settings_gamePlay"
+        android:layout_below="@id/offline_settings_customtoolbar">
+
+    </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/saved_games_item_margin"
+                android:background="@drawable/saved_games_background_drawable">
+
+
+    <!-- Container showing the Game Name , No of Players and Selected State -->
+    <RelativeLayout
+        android:id="@+id/saved_games_item_titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/saved_games_item_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/saved_games_item_title_margin"
+            android:text="@string/saved_games_item_title"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/saved_games_textColor"
+            />
+
+        <TextView
+            android:id="@+id/saved_games_item_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/saved_games_item_title1"
+            android:layout_margin="@dimen/saved_games_item_title_margin"
+            android:text="@string/saved_games_item_playerInfo"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/saved_games_textColor"
+            />
+
+        <CheckBox
+            android:id="@+id/saved_games_item_checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/saved_games_item_title_margin"/>
+
+    </RelativeLayout>
+
+    <!-- Container for the Player Info .. [Horizantal Scroll View ] -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saved_games_item_titleContainer"
+        android:fillViewport="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/saved_games_item_playerInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+</RelativeLayout>

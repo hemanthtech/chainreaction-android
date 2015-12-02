@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith on 29/11/15.
- * <p/>
+ *
  * Class that shows the Player Colors based on No of the Players selected ..
  */
 public class PlayerColorView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {

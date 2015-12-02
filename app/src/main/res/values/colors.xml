@@ -52,5 +52,6 @@
     <color name="saved_games_background">#000000</color>
     <color name="saved_games_textColor">#ffffff</color>
     <color name="saved_games_buttons_background">#00BFA5</color>
+    <color name="saved_games_item_background_stroke">#616161</color>
 
 </resources>
