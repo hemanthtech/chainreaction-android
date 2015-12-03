@@ -9,10 +9,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.ran.chainreaction.R;
 import com.ran.chainreaction.customviews.SoundSettingsView;
+import com.ran.chainreaction.utils.ChainReactionNavigator;
 
 public class OfflineSettingsActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -63,7 +63,7 @@ public class OfflineSettingsActivity extends ActionBarActivity implements View.O
 
         switch (v.getId()) {
             case R.id.offline_settings_play:
-                Toast.makeText(this, "Start Game clicked", Toast.LENGTH_SHORT).show();
+                ChainReactionNavigator.openNewGameScreenActivity(this);
                 break;
         }
     }

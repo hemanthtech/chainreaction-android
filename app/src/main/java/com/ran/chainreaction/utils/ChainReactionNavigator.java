@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ran.chainreaction.SavedGamesActivity;
+import com.ran.chainreaction.activities.GameScreenActivity;
 import com.ran.chainreaction.activities.OfflineSettingsActivity;
 import com.ran.chainreaction.activities.SettingsActivity;
 
@@ -41,6 +42,17 @@ public class ChainReactionNavigator {
      */
     public static void openSavedGameSettingsActivity(Context context) {
         Intent intent = new Intent(context, SavedGamesActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * Method to open New Offline Game Screen
+     *
+     * @param context -- Context of the App ..
+     */
+    public static void openNewGameScreenActivity(Context context) {
+        Intent intent = new Intent(context, GameScreenActivity.class);
         context.startActivity(intent);
     }
 }

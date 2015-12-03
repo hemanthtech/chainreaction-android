@@ -59,6 +59,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ran.chainreaction.activities.SplashActivity"/>
         </activity>
+
+        <!-- Activity for Game Screen View [Offline , Online and Saved] -->
+        <activity
+            android:name=".activities.GameScreenActivity"
+            android:configChanges="fontScale"
+            android:label="@string/title_activity_game_screen"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

@@ -28,10 +28,11 @@ public class ExitAlertDialogCreator {
      * @param buttonNames -- Name of buttons.
      * @param title       -- Title of Dialog
      * @param context     -- Application Context
+     * @param cancelable  -- Whether dialog can be cancelled
      * @return -- AlertDialog Instance
      */
 
-    public static AlertDialog createDialog(String[] buttonNames, String title, final Context context) {
+    public static AlertDialog createDialog(String[] buttonNames, String title, final Context context, boolean cancelable) {
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout parentLayout = (LinearLayout) layoutInflater.inflate(R.layout.alertdialog_parent, null);
@@ -68,10 +69,9 @@ public class ExitAlertDialogCreator {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
             .setCustomTitle(parentTitleLayout)
             .setView(parentLayout)
-            .setCancelable(false);
+            .setCancelable(cancelable);
 
-        AlertDialog alertDialog = mBuilder.create();
-        return alertDialog;
+        return mBuilder.create();
     }
 
     public interface ButtonOnClickListener {

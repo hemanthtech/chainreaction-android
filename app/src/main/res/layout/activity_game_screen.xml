@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/game_screen_background"
+    tools:context="com.ran.chainreaction.activities.GameScreenActivity">
+
+    <!-- Generic Header Layout -->
+    <include
+        android:id="@+id/game_screen_header"
+        layout="@layout/activity_game_headerlayout"/>
+
+    <!-- Game Container -->
+    <LinearLayout
+        android:id="@+id/game_screen_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/game_screen_header"
+        android:layout_margin="@dimen/game_screen_margin"
+        android:background="@drawable/game_screen_box_background"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+
+</RelativeLayout>

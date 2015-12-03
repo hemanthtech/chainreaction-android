@@ -46,5 +46,11 @@
     <dimen name="saved_games_item_player_info_size">40dp</dimen>
     <dimen name="saved_games_item_player_info_margin">10dp</dimen>
 
+    <!-- Dimens for the Game Screen -->
+    <dimen name="game_screen_header_platerInfoContainer">40dp</dimen>
+    <dimen name="game_screen_header_middleMargin">5dp</dimen>
+    <dimen name="game_screen_header_margin_side">10dp</dimen>
+    <dimen name="game_screen_margin">5dp</dimen>
+
 
 </resources>

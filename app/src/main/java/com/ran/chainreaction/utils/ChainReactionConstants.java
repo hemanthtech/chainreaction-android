@@ -2,14 +2,26 @@ package com.ran.chainreaction.utils;
 
 /**
  * Created by ranjith on 12/11/15.
+ *
+ * Interface for holding constants of Chain Reaction game
  */
 public interface ChainReactionConstants {
 
-    public static final String NEW_LINE = "\n";
+    String NEW_LINE = "\n";
 
-    public static final String SPACE = " ";
+    String SPACE = " ";
 
-    public static final String COLON = ":";
+    String COLON = ":";
 
-    public static final String DASH = "-";
+    String DASH = "-";
+
+    /**
+     * Key to  determine whether Game is  ONLINE Game or not
+     */
+    String ONLINE_GAME_KEY = "online_game";
+
+    /**
+     * Key to determine whether Game is Saved Game or not ..
+     */
+    String SAVED_GAME_KEY = "saved_game";
 }

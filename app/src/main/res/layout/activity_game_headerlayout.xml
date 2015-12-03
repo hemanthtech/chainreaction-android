@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/game_screen_header_margin_side"
+                android:layout_marginRight="@dimen/game_screen_header_margin_side">
+
+    <!-- Back for Game Screen -->
+    <ImageView
+        android:id="@+id/game_screen_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_back"/>
+
+    <!-- Sound Custom Settings Screen -->
+    <com.ran.chainreaction.customviews.SoundSettingsView
+        android:id="@+id/game_screen_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_screen_back"
+        android:layout_marginTop="@dimen/game_screen_header_middleMargin"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <!-- Game Title -->
+        <TextView
+            android:id="@+id/game_screen_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/game_screen_gameTitle"
+            android:textAllCaps="true"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/game_screen_textColor"
+            android:textStyle="bold"/>
+
+        <!-- Game Screen Timer -->
+        <TextView
+            android:id="@+id/game_screen_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/game_screen_header_middleMargin"
+            android:text="@string/game_screen_gameTImer"
+            android:textAllCaps="true"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/game_screen_timer"/>
+    </LinearLayout>
+
+    <!-- Player Info Holder -->
+    <LinearLayout
+        android:layout_width="@dimen/game_screen_header_platerInfoContainer"
+        android:layout_height="@dimen/game_screen_header_platerInfoContainer"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <!-- Offline Player Info Holder -->
+        <TextView
+            android:id="@+id/game_offline_Player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/player_color_drawable"
+            android:gravity="center"
+            android:text="@string/player_color_other_view"
+            android:textAllCaps="true"
+            android:textColor="@color/game_screen_textColor"
+            android:textStyle="bold"/>
+
+        <!-- Online Player Info Holder -->
+
+    </LinearLayout>
+
+
+</RelativeLayout>

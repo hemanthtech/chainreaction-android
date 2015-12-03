@@ -80,5 +80,18 @@
     <string name="saved_games_resume_button">Resume Game</string>
     <string name="saved_games_item_title">Name of the Game</string>
     <string name="saved_games_item_playerInfo">No of Players :</string>
+    <string name="title_activity_game_screen">Game Screen </string>
+
+    <!-- Strings for the Game Screen -->
+    <string name="game_screen_gameTitle">Game Name</string>
+    <string name="game_screen_gameTImer">Game Timer</string>
+    <string name="game_screen_exit_dialog">Options for Current Game</string>
+
+    <!-- Strings for Alert dialog in Game Screen -->
+    <string-array name="game_screen_dialog">
+        <item>Exit</item>
+        <item>Restart</item>
+        <item>Save &amp; Exit</item>
+    </string-array>
 
 </resources>

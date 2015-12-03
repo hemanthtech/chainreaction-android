@@ -156,7 +156,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         if (mBackDialog == null || !mBackDialog.isShowing()) {
-            mBackDialog = ExitAlertDialogCreator.createDialog(mBackDialogEntries, mBackDialogTitle, this);
+            mBackDialog = ExitAlertDialogCreator.createDialog(mBackDialogEntries, mBackDialogTitle, this, false);
             mBackDialog.show();
         } else {
             super.onBackPressed();
