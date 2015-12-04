@@ -52,11 +52,13 @@ public class GameInfoUtility {
      * @return Readable Time Format
      */
     public static String generateTimeFormat(long timeElapsed) {
-
-        String timeReadable = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeElapsed),
+        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeElapsed),
             TimeUnit.MILLISECONDS.toMinutes(timeElapsed) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeElapsed)),
             TimeUnit.MILLISECONDS.toSeconds(timeElapsed) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeElapsed)));
+    }
 
-        return timeReadable;
+
+    public static String generateGameName(Context context) {
+        return String.valueOf(System.currentTimeMillis());
     }
 }

@@ -90,6 +90,10 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
 
         if (isOnline) {
             offlinePlayerInfo.setVisibility(View.GONE);
+        } else if (isResumedGame) {
+            //Todo ranjith.suda After Db integration
+        } else {
+            gameName.setText(getResources().getString(R.string.game_screen_gameTitle) + GameInfoUtility.generateGameName(this));
         }
         gameBack.setOnClickListener(this);
     }

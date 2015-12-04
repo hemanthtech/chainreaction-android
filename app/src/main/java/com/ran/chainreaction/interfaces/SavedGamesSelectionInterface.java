@@ -14,4 +14,11 @@ public interface SavedGamesSelectionInterface {
      * @param position -- Position of the view ..
      */
     void onGameSelectionChanged(boolean isSelect, int position);
+
+    /**
+     * Method to say that game is deleted from Recycler Adapter
+     *
+     * @param position -- View that is deleted
+     */
+    void onGameDeleted(int position);
 }

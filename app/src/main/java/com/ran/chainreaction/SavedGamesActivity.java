@@ -118,6 +118,18 @@ public class SavedGamesActivity extends ActionBarActivity implements View.OnClic
         }
     }
 
+    /**
+     * Method to say that game is deleted from Recycler Adapter
+     *
+     * @param position -- View that is deleted
+     */
+    @Override
+    public void onGameDeleted(int position) {
+
+        //Logic to update Deletion status ..
+        //Todo [ranjith.suda] Add logic ..
+    }
+
     private boolean isResumeGameAvailable() {
 
         return true;

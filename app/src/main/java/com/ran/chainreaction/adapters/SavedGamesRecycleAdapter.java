@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -148,12 +149,13 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
         private TextView mTitleGame;
         private TextView mPlayerTitleGame;
         private CheckBox mGameCheckState;
         private LinearLayout mGamePlayerInfoContainer;
+        private ImageView mGameDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -163,6 +165,8 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
             mGameCheckState = (CheckBox) itemView.findViewById(R.id.saved_games_item_checkBox);
             mGameCheckState.setOnCheckedChangeListener(this);
             mGamePlayerInfoContainer = (LinearLayout) itemView.findViewById(R.id.saved_games_item_playerInfo);
+            mGameDelete = (ImageView) itemView.findViewById(R.id.saved_games_item_delete);
+            mGameDelete.setOnClickListener(this);
         }
 
         /**
@@ -175,6 +179,18 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (savedGamesSelectionInterface != null) {
                 savedGamesSelectionInterface.onGameSelectionChanged(isChecked, getAdapterPosition());
+            }
+        }
+
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            if (savedGamesSelectionInterface != null) {
+                savedGamesSelectionInterface.onGameDeleted(getAdapterPosition());
             }
         }
     }
