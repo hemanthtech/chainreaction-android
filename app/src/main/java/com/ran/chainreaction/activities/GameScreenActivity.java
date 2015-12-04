@@ -7,11 +7,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ran.chainreaction.R;
 import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
+import com.ran.chainreaction.customviews.GameArenaContainer;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.utils.ChainReactionConstants;
 import com.ran.chainreaction.utlity.GameInfoUtility;
@@ -39,7 +39,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private TextView gameName;
     private TextView gameTimer;
     private TextView offlinePlayerInfo;
-    private LinearLayout gameScreenContainer;
+    private GameArenaContainer gameScreenContainer;
     private CountDownTimer countDownTimer;
     private long savedGameTimeElapsed = 0;
 
@@ -73,7 +73,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         gameName = (TextView) findViewById(R.id.game_screen_tile);
         gameTimer = (TextView) findViewById(R.id.game_screen_timer);
         offlinePlayerInfo = (TextView) findViewById(R.id.game_offline_Player);
-        gameScreenContainer = (LinearLayout) findViewById(R.id.game_screen_container);
+        gameScreenContainer = (GameArenaContainer) findViewById(R.id.game_screen_container);
         mBackDialogEntries = getResources().getStringArray(R.array.game_screen_dialog);
         mBackDialogTitle = getResources().getString(R.string.game_screen_exit_dialog);
         countDownTimer = new CountDownTimer(TIMER_MILLS_FUTURE, TIME_INTERVAL) {

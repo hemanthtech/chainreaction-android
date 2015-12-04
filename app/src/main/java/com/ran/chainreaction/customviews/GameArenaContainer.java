@@ -4,11 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
+import com.ran.chainreaction.R;
 import com.ran.chainreaction.entities.GridSizeValues;
 import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
 import com.ran.chainreaction.utlity.GameInfoUtility;
 import com.ran.chainreaction.utlity.GamePreferenceUtils;
-import com.ran.chainreactionmodel.R;
 
 /**
  * Created by ranjith on 04/12/15.
