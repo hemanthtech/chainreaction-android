@@ -3,8 +3,10 @@ package com.ran.chainreaction.utlity;
 import android.content.Context;
 
 import com.ran.chainreaction.entities.GridSizeValues;
-import com.ran.chainreaction.gameplay.GameSizeBoxes;
+import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
 import com.ran.chainreactionmodel.R;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ranjith on 03/12/15.
@@ -22,7 +24,7 @@ public class GameInfoUtility {
      * @param height         -- height of screen available for drawing
      * @return -- Current GameSizeBox instance
      */
-    public static GameSizeBoxes generateGameGridSizes(Context context, GridSizeValues gridSizeValues, int width, int height) {
+    public static GameSizeBoxInfo generateGameGridSizes(Context context, GridSizeValues gridSizeValues, int width, int height) {
 
         int grid_box_size = 0;
         switch (gridSizeValues) {
@@ -40,6 +42,21 @@ public class GameInfoUtility {
         int x_boxes = width / grid_box_size;
         int y_boxes = height / grid_box_size;
 
-        return new GameSizeBoxes(x_boxes, y_boxes, grid_box_size);
+        return new GameSizeBoxInfo(x_boxes, y_boxes, grid_box_size);
+    }
+
+    /**
+     * Method to return the time Elapsed in game , in Readable format ..
+     *
+     * @param timeElapsed -- ElapsedTime ..
+     * @return Readable Time Format
+     */
+    public static String generateTimeFormat(long timeElapsed) {
+
+        String timeReadable = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeElapsed),
+            TimeUnit.MILLISECONDS.toMinutes(timeElapsed) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeElapsed)),
+            TimeUnit.MILLISECONDS.toSeconds(timeElapsed) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeElapsed)));
+
+        return timeReadable;
     }
 }

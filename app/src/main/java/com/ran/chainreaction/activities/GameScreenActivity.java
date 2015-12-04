@@ -2,6 +2,7 @@ package com.ran.chainreaction.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.ran.chainreaction.R;
 import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.utils.ChainReactionConstants;
+import com.ran.chainreaction.utlity.GameInfoUtility;
 
 public class GameScreenActivity extends ActionBarActivity implements ExitAlertDialogCreator.ButtonOnClickListener,
     View.OnClickListener {
@@ -21,6 +23,8 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     public static final int EXIT_TAG = 0;
     public static final int RESTART_TAG = 1;
     public static final int SAVE_EXIT_TAG = 2;
+    public static final long TIME_INTERVAL = 1000; // 1 Second
+    public static final long TIMER_MILLS_FUTURE = Long.MAX_VALUE;
     private static final String TAG = GameScreenActivity.class.getName();
     //Alert Dialog Stuff on Back..
     AlertDialog mBackDialog;
@@ -28,6 +32,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     String mBackDialogTitle;
     private boolean isOnline;
     private boolean isResumedGame;
+
     //Views on Game Screen ..
     private ImageView gameBack;
     private SoundSettingsView soundSettingsView;
@@ -35,6 +40,8 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private TextView gameTimer;
     private TextView offlinePlayerInfo;
     private LinearLayout gameScreenContainer;
+    private CountDownTimer countDownTimer;
+    private long savedGameTimeElapsed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +76,22 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         gameScreenContainer = (LinearLayout) findViewById(R.id.game_screen_container);
         mBackDialogEntries = getResources().getStringArray(R.array.game_screen_dialog);
         mBackDialogTitle = getResources().getString(R.string.game_screen_exit_dialog);
+        countDownTimer = new CountDownTimer(TIMER_MILLS_FUTURE, TIME_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                gameTimer.setText(GameInfoUtility.generateTimeFormat(TIMER_MILLS_FUTURE - (savedGameTimeElapsed + millisUntilFinished)));
+            }
+
+            @Override
+            public void onFinish() {
+                // No need to handle this ..
+            }
+        };
 
         if (isOnline) {
             offlinePlayerInfo.setVisibility(View.GONE);
         }
         gameBack.setOnClickListener(this);
-
     }
 
 
@@ -82,20 +99,16 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     protected void onResume() {
         super.onResume();
         soundSettingsView.onViewVisible();
+        countDownTimer.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         soundSettingsView.onViewHidden();
-    }
 
-
-    /**
-     * Method to generate the Initial Play Area ..
-     */
-    private void generateInitialPlayArea() {
-
+        //Todo [ranjith.suda] Cancel after saving to DB ..
+        countDownTimer.cancel();
     }
 
     @Override

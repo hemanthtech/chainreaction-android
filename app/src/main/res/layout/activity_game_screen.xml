@@ -13,16 +13,15 @@
         layout="@layout/activity_game_headerlayout"/>
 
     <!-- Game Container -->
-    <LinearLayout
+    <com.ran.chainreaction.customviews.GameArenaContainer
         android:id="@+id/game_screen_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/game_screen_header"
         android:layout_margin="@dimen/game_screen_margin"
-        android:background="@drawable/game_screen_box_background"
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.ran.chainreaction.customviews.GameArenaContainer>
 
 
 </RelativeLayout>
