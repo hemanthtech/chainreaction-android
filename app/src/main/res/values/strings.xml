@@ -83,7 +83,7 @@
     <string name="title_activity_game_screen">Game Screen </string>
 
     <!-- Strings for the Game Screen -->
-    <string name="game_screen_gameTitle">Game - </string>
+    <string name="game_screen_gameTitle">G - </string>
     <string name="game_screen_gameTImer">Timer</string>
     <string name="game_screen_exit_dialog">Options for Current Game</string>
 

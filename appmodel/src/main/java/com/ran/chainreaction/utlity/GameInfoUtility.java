@@ -6,6 +6,8 @@ import com.ran.chainreaction.entities.GridSizeValues;
 import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
 import com.ran.chainreactionmodel.R;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,10 +41,10 @@ public class GameInfoUtility {
                 break;
         }
 
-        int x_boxes = width / grid_box_size;
-        int y_boxes = height / grid_box_size;
+        int y_boxes = width / grid_box_size;
+        int x_boxes = height / grid_box_size;
 
-        return new GameSizeBoxInfo(x_boxes, y_boxes, grid_box_size);
+        return new GameSizeBoxInfo(x_boxes, y_boxes);
     }
 
     /**
@@ -59,6 +61,6 @@ public class GameInfoUtility {
 
 
     public static String generateGameName(Context context) {
-        return String.valueOf(System.currentTimeMillis());
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date(System.currentTimeMillis()));
     }
 }

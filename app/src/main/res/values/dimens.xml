@@ -51,6 +51,8 @@
     <dimen name="game_screen_header_middle_Margin">20dp</dimen>
     <dimen name="game_screen_header_margin_side">10dp</dimen>
     <dimen name="game_screen_margin">5dp</dimen>
+    <dimen name="game_screen_statusbar_size">25dp</dimen>
+    <dimen name="game_screen_headerLayout">60dp</dimen>
 
 
 </resources>

@@ -19,9 +19,17 @@
         android:layout_height="match_parent"
         android:layout_below="@id/game_screen_header"
         android:layout_margin="@dimen/game_screen_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
     </com.ran.chainreaction.customviews.GameArenaContainer>
+
+    <ProgressBar
+        android:id="@+id/screen_load_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
 
 
 </RelativeLayout>

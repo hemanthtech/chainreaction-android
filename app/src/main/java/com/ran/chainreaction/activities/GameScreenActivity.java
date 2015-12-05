@@ -3,10 +3,13 @@ package com.ran.chainreaction.activities;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ran.chainreaction.R;
@@ -26,12 +29,17 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     public static final long TIME_INTERVAL = 1000; // 1 Second
     public static final long TIMER_MILLS_FUTURE = Long.MAX_VALUE;
     private static final String TAG = GameScreenActivity.class.getName();
+    private static final int SCREEN_LOAD_IN = 3;
+    private static final int SCREEN_LOAD_SETUP_TIME = 2000;
+
+
     //Alert Dialog Stuff on Back..
     AlertDialog mBackDialog;
     String mBackDialogEntries[];
     String mBackDialogTitle;
     private boolean isOnline;
     private boolean isResumedGame;
+    private long savedGameTimeElapsed = 0;
 
     //Views on Game Screen ..
     private ImageView gameBack;
@@ -41,7 +49,21 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private TextView offlinePlayerInfo;
     private GameArenaContainer gameScreenContainer;
     private CountDownTimer countDownTimer;
-    private long savedGameTimeElapsed = 0;
+    private ProgressBar progressBar;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case SCREEN_LOAD_IN:
+                    progressBar.setVisibility(View.GONE);
+                    countDownTimer.start();
+                    gameScreenContainer.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +95,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         gameName = (TextView) findViewById(R.id.game_screen_tile);
         gameTimer = (TextView) findViewById(R.id.game_screen_timer);
         offlinePlayerInfo = (TextView) findViewById(R.id.game_offline_Player);
+        progressBar = (ProgressBar) findViewById(R.id.screen_load_indicator);
         gameScreenContainer = (GameArenaContainer) findViewById(R.id.game_screen_container);
         mBackDialogEntries = getResources().getStringArray(R.array.game_screen_dialog);
         mBackDialogTitle = getResources().getString(R.string.game_screen_exit_dialog);
@@ -98,12 +121,11 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         gameBack.setOnClickListener(this);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         soundSettingsView.onViewVisible();
-        countDownTimer.start();
+        mHandler.sendEmptyMessageDelayed(SCREEN_LOAD_IN, SCREEN_LOAD_SETUP_TIME);
     }
 
     @Override
@@ -111,12 +133,21 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         super.onPause();
         soundSettingsView.onViewHidden();
 
+        if (mHandler.hasMessages(SCREEN_LOAD_IN)) {
+            mHandler.removeMessages(SCREEN_LOAD_IN);
+        }
+
         //Todo [ranjith.suda] Cancel after saving to DB ..
         countDownTimer.cancel();
     }
 
     @Override
     public void onBackPressed() {
+        if (progressBar.getVisibility() == View.VISIBLE) {
+            Log.d(TAG, "Progress bar is in progress");
+            return;
+        }
+
         if (mBackDialog == null || !mBackDialog.isShowing()) {
             mBackDialog = ExitAlertDialogCreator.createDialog(mBackDialogEntries, mBackDialogTitle, this, true);
             mBackDialog.show();
