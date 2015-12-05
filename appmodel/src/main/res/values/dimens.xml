@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="game_size_small_box_dimen">40dp</dimen>
-    <dimen name="game_size_medium_box_dimen">50dp</dimen>
+    <dimen name="game_size_small_box_dimen">50dp</dimen>
+    <dimen name="game_size_medium_box_dimen">55dp</dimen>
     <dimen name="game_size_large_box_dimen">60dp</dimen>
 </resources>
