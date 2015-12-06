@@ -1,18 +1,24 @@
 package com.ran.chainreaction.utlity;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.ran.chainreaction.entities.GridSizeValues;
+import com.ran.chainreaction.gameplay.GameCellInfo;
+import com.ran.chainreaction.gameplay.GamePlayerInfo;
 import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
 import com.ran.chainreactionmodel.R;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ranjith on 03/12/15.
- * <p/>
+ *
  * Utility File responsible for Game Play
  */
 public class GameInfoUtility {
@@ -62,5 +68,29 @@ public class GameInfoUtility {
 
     public static String generateGameName(Context context) {
         return DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date(System.currentTimeMillis()));
+    }
+
+
+    public static GameSizeBoxInfo generateGameSizeBoxInfo(Context context, GridSizeValues gridSizeValues) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+
+        int width = point.x - 2 * context.getResources().getDimensionPixelSize(R.dimen.game_screen_margin);
+        int height = point.y - context.getResources().getDimensionPixelSize(R.dimen.game_screen_statusbar_size)
+            + context.getResources().getDimensionPixelSize(R.dimen.game_screen_headerLayout);
+
+        return GameInfoUtility.generateGameGridSizes(context, gridSizeValues, width, height);
+    }
+
+
+    public static ArrayList<GameCellInfo> generateGameCellInfo(Context context, int x_row, int y_row, GamePlayerInfo playerInfo) {
+        ArrayList<GameCellInfo> gameCellInfos = new ArrayList<>();
+
+        for (int k = 0; k < x_row * y_row; k++) {
+            gameCellInfos.add(new GameCellInfo(k, playerInfo, x_row, y_row));
+        }
+        return gameCellInfos;
     }
 }

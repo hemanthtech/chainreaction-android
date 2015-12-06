@@ -2,13 +2,13 @@ package com.ran.chainreaction.gameplay;
 
 /**
  * Created by ranjith on 03/12/15.
- *
+ * <p/>
  * Class responsible for giving the GameSize Box i.e x ,y boxes count
  */
 public class GameSizeBoxInfo {
 
-    private int x_boxes;
-    private int y_boxes;
+    private int x_boxes = 0;
+    private int y_boxes = 0;
 
     public GameSizeBoxInfo(int x_boxes, int y_boxes) {
         this.x_boxes = x_boxes;

@@ -60,7 +60,7 @@ public class ExitAlertDialogCreator {
                 @Override
                 public void onClick(View v) {
                     buttonOnClickListener = (ButtonOnClickListener) context;
-                    buttonOnClickListener.onButtonClick(v);
+                    buttonOnClickListener.onExitButtonClick(v);
                 }
             });
             parentLayout.addView(button);
@@ -76,6 +76,6 @@ public class ExitAlertDialogCreator {
 
     public interface ButtonOnClickListener {
 
-        void onButtonClick(View view);
+        void onExitButtonClick(View view);
     }
 }

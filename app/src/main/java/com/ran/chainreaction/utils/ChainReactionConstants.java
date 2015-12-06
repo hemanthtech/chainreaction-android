@@ -2,7 +2,7 @@ package com.ran.chainreaction.utils;
 
 /**
  * Created by ranjith on 12/11/15.
- *
+ * <p/>
  * Interface for holding constants of Chain Reaction game
  */
 public interface ChainReactionConstants {
@@ -24,4 +24,10 @@ public interface ChainReactionConstants {
      * Key to determine whether Game is Saved Game or not ..
      */
     String SAVED_GAME_KEY = "saved_game";
+
+    /**
+     * Key to pass the Game PlayerInfo in Intent
+     */
+
+    String PLAYER_INFO_KEY = "game_player_info";
 }

@@ -164,7 +164,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
     }
 
     @Override
-    public void onButtonClick(View view) {
+    public void onExitButtonClick(View view) {
 
         try {
             int tag = (int) view.getTag();

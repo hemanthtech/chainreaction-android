@@ -3,4 +3,8 @@
     <dimen name="game_size_small_box_dimen">50dp</dimen>
     <dimen name="game_size_medium_box_dimen">55dp</dimen>
     <dimen name="game_size_large_box_dimen">60dp</dimen>
+
+    <dimen name="game_screen_margin">5dp</dimen>
+    <dimen name="game_screen_statusbar_size">25dp</dimen>
+    <dimen name="game_screen_headerLayout">60dp</dimen>
 </resources>

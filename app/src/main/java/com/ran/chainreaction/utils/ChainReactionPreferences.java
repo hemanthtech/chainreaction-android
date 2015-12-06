@@ -147,7 +147,7 @@ public class ChainReactionPreferences {
     }
 
     /**
-     * Method to set the SoundPreference
+     * Method to set the Bomb Settings Preference
      *
      * @param context -- Context of the Application
      * @param bmbPref -- Enum type of the BombValues

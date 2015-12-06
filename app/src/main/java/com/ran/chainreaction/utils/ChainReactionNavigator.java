@@ -3,11 +3,10 @@ package com.ran.chainreaction.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.ran.chainreaction.SavedGamesActivity;
 import com.ran.chainreaction.activities.GameScreenActivity;
 import com.ran.chainreaction.activities.OfflineSettingsActivity;
+import com.ran.chainreaction.activities.SavedGamesActivity;
 import com.ran.chainreaction.activities.SettingsActivity;
-import com.ran.chainreaction.utlity.GamePreferenceUtils;
 
 /**
  * Created by ranjith on 16/11/15.
@@ -56,7 +55,5 @@ public class ChainReactionNavigator {
         Intent intent = new Intent(context, GameScreenActivity.class);
         context.startActivity(intent);
 
-        //Put Extra Params required for the Offline New Game ..
-        GamePreferenceUtils.setGridSizePreference(context, ChainReactionPreferences.getGridSizePreference(context));
     }
 }

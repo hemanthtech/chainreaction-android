@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ran.chainreaction.R;
+import com.ran.chainreaction.customviews.PlayerColorView;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.utils.ChainReactionNavigator;
 
@@ -19,6 +20,7 @@ public class OfflineSettingsActivity extends ActionBarActivity implements View.O
     Toolbar toolbar;
     SoundSettingsView soundSettingsView;
     Button startGame;
+    PlayerColorView playerColorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class OfflineSettingsActivity extends ActionBarActivity implements View.O
         toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
         startGame = (Button) findViewById(R.id.offline_settings_play);
+        playerColorView = (PlayerColorView) findViewById(R.id.offline_settings_colorPreferences);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,6 +66,7 @@ public class OfflineSettingsActivity extends ActionBarActivity implements View.O
 
         switch (v.getId()) {
             case R.id.offline_settings_play:
+                playerColorView.saveCurrentPreferences();
                 ChainReactionNavigator.openNewGameScreenActivity(this);
                 break;
         }

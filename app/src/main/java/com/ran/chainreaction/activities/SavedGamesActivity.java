@@ -1,4 +1,4 @@
-package com.ran.chainreaction;
+package com.ran.chainreaction.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ran.chainreaction.R;
 import com.ran.chainreaction.adapters.SavedGamesRecycleAdapter;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.interfaces.SavedGamesSelectionInterface;
@@ -131,7 +132,6 @@ public class SavedGamesActivity extends ActionBarActivity implements View.OnClic
     }
 
     private boolean isResumeGameAvailable() {
-
         return true;
     }
 }

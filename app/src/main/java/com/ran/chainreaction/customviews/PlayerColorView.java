@@ -11,17 +11,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.ran.chainreaction.R;
 import com.ran.chainreaction.entities.NoPlayerValues;
 import com.ran.chainreaction.entities.PlayColorValues;
+import com.ran.chainreaction.gameplay.GamePlayerInfo;
 import com.ran.chainreaction.utils.ChainReactionPreferences;
+import com.ran.chainreaction.utlity.GamePreferenceUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by ranjith on 29/11/15.
- *
+ * <p/>
  * Class that shows the Player Colors based on No of the Players selected ..
  */
 public class PlayerColorView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -92,6 +96,7 @@ public class PlayerColorView extends LinearLayout implements SharedPreferences.O
         }
         drawable.setColorFilter(context.getResources().getColor(colorId), PorterDuff.Mode.SRC_ATOP);
         mTextView.setBackground(drawable);
+        mTextView.setTag(index);
     }
 
     /**
@@ -229,6 +234,19 @@ public class PlayerColorView extends LinearLayout implements SharedPreferences.O
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equalsIgnoreCase(ChainReactionPreferences.PLAYERNO_KEY)) {
             updatePlayerStatus();
+        }
+    }
+
+    public void saveCurrentPreferences() {
+
+        List<GamePlayerInfo> gamePlayerInfos = new ArrayList<GamePlayerInfo>();
+        for (int i = 0; i < NoPlayerValues.getIndex(ChainReactionPreferences.getPlayerNoReference(getContext())); i++) {
+            gamePlayerInfos.add(new GamePlayerInfo(PlayColorValues.getEnumType((int) playerReferenceHolders.get(i).getTag()),
+                i,
+                playerReferenceHolders.get(i).getText().toString()));
+
+            Gson gson = new Gson();
+            GamePreferenceUtils.setGamePlayerInfoGame(getContext(), gson.toJson(gamePlayerInfos));
         }
     }
 }

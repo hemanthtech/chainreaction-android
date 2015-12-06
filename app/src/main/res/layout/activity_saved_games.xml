@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/saved_games_background"
-    tools:context="com.ran.chainreaction.SavedGamesActivity">
+    tools:context="com.ran.chainreaction.activities.SavedGamesActivity">
 
     <!-- Toolbar for Title and Sound -->
     <include

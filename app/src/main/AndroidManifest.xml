@@ -50,7 +50,7 @@
 
         <!-- Activity responsible for the Saved Games View -->
         <activity
-            android:name=".SavedGamesActivity"
+            android:name=".activities.SavedGamesActivity"
             android:configChanges="fontScale"
             android:label="@string/title_activity_saved_games"
             android:parentActivityName=".activities.SplashActivity"
