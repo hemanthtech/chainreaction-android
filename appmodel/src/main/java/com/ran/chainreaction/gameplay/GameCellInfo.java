@@ -1,6 +1,7 @@
 package com.ran.chainreaction.gameplay;
 
 import com.ran.chainreaction.entities.GameBombDirections;
+import com.ran.chainreaction.utlity.GameInfoUtility;
 
 import java.util.ArrayList;
 
@@ -22,15 +23,35 @@ public class GameCellInfo {
         this.currentGamePlayerInfo = gamePlayerInfo;
         this.x_rows = x_rows;
         this.y_columns = y_columns;
-
-        generatePossibleDirections();
+        possibleDirections = GameInfoUtility.generatePossibleDirections(x_rows, y_columns, index);
     }
 
-    /**
-     * Utility to generate the Possible Directions.
-     */
-    private void generatePossibleDirections() {
+    public int getIndex() {
+        return index;
+    }
 
+    public GamePlayerInfo getCurrentGamePlayerInfo() {
+        return currentGamePlayerInfo;
+    }
+
+    public void setCurrentGamePlayerInfo(GamePlayerInfo currentGamePlayerInfo) {
+        this.currentGamePlayerInfo = currentGamePlayerInfo;
+    }
+
+    public ArrayList<GameBombDirections> getPossibleDirections() {
+        return possibleDirections;
+    }
+
+    public int getX_rows() {
+        return x_rows;
+    }
+
+    public int getY_columns() {
+        return y_columns;
+    }
+
+    public int getMAX_CAPACITY() {
+        return possibleDirections.size() - 1;
     }
 
 }

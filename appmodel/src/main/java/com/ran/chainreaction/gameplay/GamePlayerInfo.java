@@ -20,4 +20,28 @@ public class GamePlayerInfo implements Serializable {
         this.playerName = playerName;
         this.playerColor = playColor;
     }
+
+    public PlayColorValues getPlayerColor() {
+        return playerColor;
+    }
+
+    public void setPlayerColor(PlayColorValues playerColor) {
+        this.playerColor = playerColor;
+    }
+
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
+
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 }

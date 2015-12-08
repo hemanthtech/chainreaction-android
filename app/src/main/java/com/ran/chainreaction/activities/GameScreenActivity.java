@@ -214,9 +214,9 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
                 ChainReactionPreferences.getGridSizePreference(this),
                 ChainReactionPreferences.getBombPreference(this),
                 sizeBoxInfo,
-                GameInfoUtility.generateGameCellInfo(this, sizeBoxInfo.getX_boxes(), sizeBoxInfo.getY_boxes(), currentPlayer));
+                GameInfoUtility.generateGameCellInfo(this, sizeBoxInfo.getX_boxes(), sizeBoxInfo.getY_boxes(), null));
         }
-        gameScreenContainer.initView(gamePlaySession.getGameSizeBoxInfo());
+        gameScreenContainer.initView(gamePlaySession);
         mHandler.sendEmptyMessageDelayed(SCREEN_LOAD_IN, SCREEN_LOAD_SETUP_TIME);
     }
 

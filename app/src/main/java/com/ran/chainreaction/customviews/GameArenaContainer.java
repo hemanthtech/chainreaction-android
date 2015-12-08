@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
+import com.ran.chainreaction.gameplay.GamePlaySession;
 
 /**
  * Created by ranjith on 04/12/15.
@@ -16,7 +16,7 @@ import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
 public class GameArenaContainer extends RelativeLayout {
 
     private static final String TAG = GameArenaContainer.class.getSimpleName();
-    private GameSizeBoxInfo gameSizeBoxes;
+    private GamePlaySession gamePlaySession;
     private boolean viewInitialized;
 
     public GameArenaContainer(Context context) {
@@ -34,8 +34,8 @@ public class GameArenaContainer extends RelativeLayout {
     /**
      * Method to initialize the Game Container ..
      */
-    public void initView(GameSizeBoxInfo gameSizeBoxes) {
-        this.gameSizeBoxes = gameSizeBoxes;
+    public void initView(GamePlaySession gamePlaySession) {
+        this.gamePlaySession = gamePlaySession;
         prepareGameOrbContainerViews();
         viewInitialized = true;
     }
@@ -46,12 +46,15 @@ public class GameArenaContainer extends RelativeLayout {
 
     private void prepareGameOrbContainerViews() {
 
-        Log.d(TAG, "game x box : " + gameSizeBoxes.getX_boxes());
-        Log.d(TAG, "game y box : " + gameSizeBoxes.getY_boxes());
+        Log.d(TAG, "game x box : " + gamePlaySession.getGameSizeBoxInfo().getX_boxes());
+        Log.d(TAG, "game y box : " + gamePlaySession.getGameSizeBoxInfo().getY_boxes());
 
-        for (int i = 0; i < gameSizeBoxes.getX_boxes() * gameSizeBoxes.getY_boxes(); i++) {
+        for (int i = 0; i < gamePlaySession.getGameSizeBoxInfo().getX_boxes() *
+            gamePlaySession.getGameSizeBoxInfo().getY_boxes(); i++) {
             GameArenaOrb gameArenaOrb = new GameArenaOrb(getContext());
             gameArenaOrb.setTag(i);
+            gameArenaOrb.initView(gamePlaySession.getGameBombType(),
+                gamePlaySession.getGameCellInfos().get(i), gamePlaySession.getCurrentPlayer());
             gameArenaOrb.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
             addView(gameArenaOrb);
@@ -64,16 +67,14 @@ public class GameArenaContainer extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         if (viewInitialized) {
-            int childWidth = getMeasuredWidth() / gameSizeBoxes.getY_boxes();
-            int childHeight = getMeasuredHeight() / gameSizeBoxes.getX_boxes();
-            Log.d(TAG, "childwidth :" + childWidth + "child height : " + childHeight);
+            int childWidth = getMeasuredWidth() / gamePlaySession.getGameSizeBoxInfo().getY_boxes();
+            int childHeight = getMeasuredHeight() / gamePlaySession.getGameSizeBoxInfo().getX_boxes();
             for (int k = 0; k < getChildCount(); k++) {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getChildAt(k).getLayoutParams();
                 params.width = childWidth;
                 params.height = childHeight;
-                params.leftMargin = childWidth * (k % gameSizeBoxes.getY_boxes());
-                params.topMargin = childHeight * (k / gameSizeBoxes.getY_boxes());
-                Log.d(TAG, "index  " + k + " : left : " + params.leftMargin + "top : " + params.topMargin);
+                params.leftMargin = childWidth * (k % gamePlaySession.getGameSizeBoxInfo().getY_boxes());
+                params.topMargin = childHeight * (k / gamePlaySession.getGameSizeBoxInfo().getY_boxes());
             }
         }
     }

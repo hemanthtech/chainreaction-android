@@ -3,7 +3,7 @@
        android:shape="rectangle">
 
     <stroke
-        android:width="2dp"
+        android:width="@dimen/game_screen_stroke_dimen"
         android:color="@color/game_screen_play_box_color"/>
 
 </shape>
