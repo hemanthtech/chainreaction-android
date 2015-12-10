@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,6 +20,7 @@ import com.ran.chainreaction.utils.CommonUtils;
 
 /**
  * Created by ranjith on 05/12/15.
+ * <p/>
  * Class that is used to make Orb based on the Player Info , Orb type ..
  */
 public class GameArenaOrb extends View implements View.OnClickListener {
@@ -32,6 +35,10 @@ public class GameArenaOrb extends View implements View.OnClickListener {
     private int count_orbs = 0;
     private Paint paintToDraw;
 
+    //Params for Orb Dimens ..
+    private int circleRadius;
+    private int squareSide;
+    private int triangleSide;
 
     public GameArenaOrb(Context context) {
         super(context);
@@ -102,30 +109,177 @@ public class GameArenaOrb extends View implements View.OnClickListener {
         paintToDraw.setStyle(Paint.Style.FILL);
         switch (count_orbs) {
             case ONE:
-                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2,
-                    generateCircleRadius(), paintToDraw);
+                drawOneOrb(canvas);
                 break;
             case TWO:
-                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2,
-                    generateCircleRadius(), paintToDraw);
+                drawTwoOrbs(canvas);
                 break;
             case THREE:
-                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2,
-                    generateCircleRadius(), paintToDraw);
+                drawThreeOrbs(canvas);
                 break;
         }
     }
 
     /**
-     * Utility Method to generate the Radius of Circle Orb Type
+     * Utility Method to draw Single Orb[Square ,Circle or Triangle] on Canvas
      *
-     * @return -- Radius of Circle Orb
+     * @param canvas -- Canvas
      */
-    private float generateCircleRadius() {
+    private void drawOneOrb(Canvas canvas) {
+        switch (gameBombType) {
+            case CIRCLE:
+                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2,
+                    circleRadius, paintToDraw);
+                break;
+            case TRIANGLE:
+                Point p1 = new Point(getMeasuredWidth() / 2, getMeasuredHeight() / 2 - triangleSide / 2);
+                Point p2 = new Point(getMeasuredWidth() / 2 - triangleSide / 2, getMeasuredHeight() / 2 + triangleSide / 2);
+                Point p3 = new Point(getMeasuredWidth() / 2 + triangleSide / 2, getMeasuredHeight() / 2 + triangleSide / 2);
+
+                Path path = new Path();
+                path.moveTo(p1.x, p1.y);
+                path.lineTo(p2.x, p2.y);
+                path.lineTo(p3.x, p3.y);
+                canvas.drawPath(path, paintToDraw);
+                break;
+            case SQUARE:
+                float left = getMeasuredWidth() / 2 - (squareSide / 2);
+                float top = getMeasuredHeight() / 2 - (squareSide / 2);
+                canvas.drawRect(left, top, left + squareSide, top + squareSide, paintToDraw);
+                break;
+        }
+    }
+
+    /**
+     * Utility Method to draw Two Orb's[Square ,Circle or Triangle] on Canvas
+     *
+     * @param canvas -- Canvas
+     */
+    private void drawTwoOrbs(Canvas canvas) {
+        switch (gameBombType) {
+            case CIRCLE:
+                canvas.drawCircle(getMeasuredWidth() / 2 - circleRadius, getMeasuredHeight() / 2,
+                    circleRadius, paintToDraw);
+                canvas.drawCircle(getMeasuredWidth() / 2 + circleRadius, getMeasuredHeight() / 2,
+                    circleRadius, paintToDraw);
+
+                break;
+            case TRIANGLE:
+                Point p1 = new Point(getMeasuredWidth() / 2 - triangleSide / 2, getMeasuredHeight() / 2 - triangleSide / 2);
+                Point p2 = new Point(getMeasuredWidth() / 2 - triangleSide, getMeasuredHeight() / 2 + triangleSide / 2);
+                Point p3 = new Point(getMeasuredWidth() / 2, getMeasuredHeight() / 2 + triangleSide / 2);
+
+                Path path = new Path();
+                path.moveTo(p1.x, p1.y);
+                path.lineTo(p2.x, p2.y);
+                path.lineTo(p3.x, p3.y);
+                canvas.drawPath(path, paintToDraw); //Triangle 1
+
+                Point p4 = new Point(getMeasuredWidth() / 2 + triangleSide / 2, getMeasuredHeight() / 2 - triangleSide / 2);
+                Point p5 = new Point(getMeasuredWidth() / 2 + triangleSide, getMeasuredHeight() / 2 + triangleSide / 2);
+                Point p6 = new Point(getMeasuredWidth() / 2, getMeasuredHeight() / 2 + triangleSide / 2);
+
+                Path path2 = new Path();
+                path2.moveTo(p4.x, p4.y);
+                path2.lineTo(p5.x, p5.y);
+                path2.lineTo(p6.x, p6.y);
+                canvas.drawPath(path2, paintToDraw); //Triangle 2
+
+                break;
+            case SQUARE:
+                float left = getMeasuredWidth() / 2 - (3 * squareSide / 2);
+                float top = getMeasuredHeight() / 2 - (squareSide / 2);
+                //Square 1
+                canvas.drawRect(left, top, left + squareSide, top + squareSide, paintToDraw);
+                float left2 = getMeasuredWidth() / 2 + squareSide / 2;
+                //Square 2
+                canvas.drawRect(left2, top, left2 + squareSide, top + squareSide, paintToDraw);
+
+                break;
+        }
+    }
+
+    /**
+     * Utility Method to draw Three Orb's[Square ,Circle or Triangle] on Canvas
+     *
+     * @param canvas -- Canvas
+     */
+    private void drawThreeOrbs(Canvas canvas) {
+        switch (gameBombType) {
+            case CIRCLE:
+                canvas.drawCircle(getMeasuredWidth() / 2 - circleRadius, getMeasuredHeight() / 2 + circleRadius,
+                    circleRadius, paintToDraw);
+                canvas.drawCircle(getMeasuredWidth() / 2 + circleRadius, getMeasuredHeight() / 2 + circleRadius,
+                    circleRadius, paintToDraw);
+                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2 - circleRadius,
+                    circleRadius, paintToDraw);
+                break;
+            case TRIANGLE:
+                Point p1 = new Point(getMeasuredWidth() / 2 - triangleSide / 2, getMeasuredHeight() / 2);
+                Point p2 = new Point(getMeasuredWidth() / 2 + triangleSide / 2, getMeasuredHeight() / 2);
+                Point p3 = new Point(getMeasuredWidth() / 2, getMeasuredHeight() / 2 - triangleSide);
+
+                Path path = new Path();
+                path.moveTo(p1.x, p1.y);
+                path.lineTo(p2.x, p2.y);
+                path.lineTo(p3.x, p3.y);
+                canvas.drawPath(path, paintToDraw); //Triangle 1
+
+                Point p4 = new Point(getMeasuredWidth() / 2 - triangleSide / 2, getMeasuredHeight() / 2);
+                Point p5 = new Point(getMeasuredWidth() / 2 - triangleSide, getMeasuredHeight() / 2 + triangleSide);
+                Point p6 = new Point(getMeasuredWidth() / 2, getMeasuredHeight() / 2 + triangleSide);
+
+                Path path2 = new Path();
+                path2.moveTo(p4.x, p4.y);
+                path2.lineTo(p5.x, p5.y);
+                path2.lineTo(p6.x, p6.y);
+                canvas.drawPath(path2, paintToDraw); //Triangle 2
+
+                Point p7 = new Point(getMeasuredWidth() / 2 + triangleSide / 2, getMeasuredHeight() / 2);
+                Point p8 = new Point(getMeasuredWidth() / 2, getMeasuredHeight() / 2 + triangleSide);
+                Point p9 = new Point(getMeasuredWidth() / 2 + triangleSide, getMeasuredHeight() / 2 + triangleSide);
+
+                Path path3 = new Path();
+                path3.moveTo(p7.x, p7.y);
+                path3.lineTo(p8.x, p8.y);
+                path3.lineTo(p9.x, p9.y);
+                canvas.drawPath(path3, paintToDraw); //Triangle 3
+
+                break;
+            case SQUARE:
+                float left = getMeasuredWidth() / 2 - (3 * squareSide / 2);
+                float top = getMeasuredHeight() / 2;
+                //Square 1
+                canvas.drawRect(left, top, left + squareSide, top + squareSide, paintToDraw);
+                float left2 = getMeasuredWidth() / 2 + squareSide / 2;
+                //Square 2
+                canvas.drawRect(left2, top, left2 + squareSide, top + squareSide, paintToDraw);
+                float left3 = getMeasuredWidth() / 2 - (squareSide / 2);
+                float top3 = getMeasuredHeight() / 2 - squareSide;
+                //Square 3
+                canvas.drawRect(left3, top3, left3 + squareSide, top3 + squareSide, paintToDraw);
+                break;
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        /**
+         * Determine the Circle Radius, Triangle , Square dimens params here ..
+         * case a) - Circle
+         * case b) - Square
+         * case c) - Triangle
+         */
         if (getMeasuredWidth() > getMeasuredHeight()) {
-            return getMeasuredHeight() / 4; //Todo [ranjith, finalize the UI logic]
+            circleRadius = getMeasuredHeight() / 5;
+            squareSide = getMeasuredHeight() / 3;
+            triangleSide = (int) (getMeasuredHeight() / 2.5);
         } else {
-            return getMeasuredWidth() / 4;
+            circleRadius = getMeasuredWidth() / 5;
+            squareSide = getMeasuredWidth() / 3;
+            triangleSide = (int) (getMeasuredHeight() / 2.5);
         }
     }
 
