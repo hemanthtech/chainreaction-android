@@ -36,7 +36,7 @@
                 android:gravity="center"
                 android:text="@string/player_color_other_view"
                 android:textAllCaps="true"
-                android:textColor="@color/game_screen_textColor"
+                android:textColor="@color/game_screen_playerInfoColor"
                 android:textStyle="bold"/>
 
             <!-- Online Player Info Holder -->
@@ -69,7 +69,7 @@
             android:text="@string/game_screen_gameTImer"
             android:textAllCaps="true"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:textColor="@color/game_screen_timer"/>
+            android:textColor="@color/game_screen_textColor"/>
 
     </RelativeLayout>
 

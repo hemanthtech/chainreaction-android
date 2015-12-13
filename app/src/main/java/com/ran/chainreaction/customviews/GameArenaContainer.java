@@ -6,14 +6,17 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ran.chainreaction.gameplay.GamePlayLogic;
 import com.ran.chainreaction.gameplay.GamePlaySession;
+import com.ran.chainreaction.gameplay.GamePlayerInfo;
+import com.ran.chainreaction.interfaces.GameStateObserver;
 
 /**
  * Created by ranjith on 04/12/15.
  * <p/>
  * Class responsible for creating Container View .. to Play ChainReaction Game ..
  */
-public class GameArenaContainer extends RelativeLayout {
+public class GameArenaContainer extends RelativeLayout implements GameStateObserver {
 
     private static final String TAG = GameArenaContainer.class.getSimpleName();
     private GamePlaySession gamePlaySession;
@@ -38,6 +41,7 @@ public class GameArenaContainer extends RelativeLayout {
         this.gamePlaySession = gamePlaySession;
         prepareGameOrbContainerViews();
         viewInitialized = true;
+        GamePlayLogic.getGameInstance().attach(this);
     }
 
     /**
@@ -78,4 +82,36 @@ public class GameArenaContainer extends RelativeLayout {
             }
         }
     }
+
+    @Override
+    public void updateGameTurnState(GamePlayerInfo gamePlayerInfo) {
+        //View Container , need not use updates on Turn State
+    }
+
+    /**
+     * Observer Call Back to say , Whether the View is Clickable or not ..
+     *
+     * @param isClickable -- Whether view is cli
+     */
+    @Override
+    public void updateClickableState(boolean isClickable) {
+        if (isClickable) {
+            setClickable(true);
+        } else {
+            setClickable(false);
+        }
+    }
+
+    /**
+     * Observer Call Back from Game Play logic ..
+     *
+     * @param index          -- Index to be updated ..
+     * @param gamePlayerInfo -- PlayerInfo for Cell
+     */
+    @Override
+    public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
+
+    }
+
+
 }

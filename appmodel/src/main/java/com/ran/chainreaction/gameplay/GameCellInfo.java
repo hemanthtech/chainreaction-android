@@ -13,29 +13,31 @@ import java.util.ArrayList;
 public class GameCellInfo {
 
     private int index;
-    private GamePlayerInfo currentGamePlayerInfo;
+    private GamePlayerInfo gamePlayerInfo;
     private ArrayList<GameBombDirections> possibleDirections;
     private int x_rows;
     private int y_columns;
+    private int currentCount;
 
     public GameCellInfo(int index, GamePlayerInfo gamePlayerInfo, int x_rows, int y_columns) {
         this.index = index;
-        this.currentGamePlayerInfo = gamePlayerInfo;
+        this.gamePlayerInfo = gamePlayerInfo;
         this.x_rows = x_rows;
         this.y_columns = y_columns;
         possibleDirections = GameInfoUtility.generatePossibleDirections(x_rows, y_columns, index);
+        currentCount = 0;
     }
 
     public int getIndex() {
         return index;
     }
 
-    public GamePlayerInfo getCurrentGamePlayerInfo() {
-        return currentGamePlayerInfo;
+    public GamePlayerInfo getGamePlayerInfo() {
+        return gamePlayerInfo;
     }
 
-    public void setCurrentGamePlayerInfo(GamePlayerInfo currentGamePlayerInfo) {
-        this.currentGamePlayerInfo = currentGamePlayerInfo;
+    public void setGamePlayerInfo(GamePlayerInfo currentGamePlayerInfo) {
+        this.gamePlayerInfo = currentGamePlayerInfo;
     }
 
     public ArrayList<GameBombDirections> getPossibleDirections() {
@@ -52,6 +54,14 @@ public class GameCellInfo {
 
     public int getMAX_CAPACITY() {
         return possibleDirections.size() - 1;
+    }
+
+    public int getCurrentCount() {
+        return currentCount;
+    }
+
+    public void setCurrentCount(int currentCount) {
+        this.currentCount = currentCount;
     }
 
 }

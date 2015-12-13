@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ranjith on 03/12/15.
- * <p/>
+ *
  * Utility File responsible for Game Play
  */
 public class GameInfoUtility {
@@ -125,7 +125,7 @@ public class GameInfoUtility {
         ArrayList<GameBombDirections> possibleDirections = new ArrayList<>();
         /**
          * Case a) Handle all the corner cases [Max Capacity 1] -- 4 cases
-         * Case b) Handle all the border cases [Max Capacity 2] -- 4 rows
+         * Case b) Handle all the border cases [Max Capacity 2] -- 4 cases
          * Case c) Handle all the rest cases [Max Capacity 3] -- Rest all
          */
         if (index == 0) { //[0,0]

@@ -14,7 +14,9 @@ import android.view.View;
 import com.ran.chainreaction.R;
 import com.ran.chainreaction.entities.BombValues;
 import com.ran.chainreaction.gameplay.GameCellInfo;
+import com.ran.chainreaction.gameplay.GamePlayLogic;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
+import com.ran.chainreaction.interfaces.GameStateObserver;
 import com.ran.chainreaction.utils.CommonUtils;
 
 
@@ -23,7 +25,7 @@ import com.ran.chainreaction.utils.CommonUtils;
  * <p/>
  * Class that is used to make Orb based on the Player Info , Orb type ..
  */
-public class GameArenaOrb extends View implements View.OnClickListener {
+public class GameArenaOrb extends View implements View.OnClickListener, GameStateObserver {
 
     private static final String TAG = GameArenaOrb.class.getName();
     private static final int ONE = 1;
@@ -69,6 +71,7 @@ public class GameArenaOrb extends View implements View.OnClickListener {
         setSoundEffectsEnabled(true);
         setHapticFeedbackEnabled(true);
         setOnClickListener(this);
+        GamePlayLogic.getGameInstance().attach(this);
     }
 
     /**
@@ -78,24 +81,32 @@ public class GameArenaOrb extends View implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
-        if (gameCellInfo.getCurrentGamePlayerInfo() != null && gameCurrentPlayer == gameCellInfo.getCurrentGamePlayerInfo()) {
+        if (gameCellInfo.getGamePlayerInfo() != null && gameCurrentPlayer != gameCellInfo.getGamePlayerInfo()) {
             Log.d(TAG, "You cannot change Orb/Bomb state here .."); //Todo [Check the GameCellInfo logic]
             return;
         }
 
         //Now process the Orb state ..
         if (count_orbs < gameCellInfo.getMAX_CAPACITY()) {
+            gameCellInfo.setGamePlayerInfo(gameCurrentPlayer);
             count_orbs++;
-            postInvalidate();
+            gameCellInfo.setCurrentCount(count_orbs);
+            GamePlayLogic.getGameInstance().changeGameTurn(gameCellInfo);
         } else {
             //Do processing ,Blast send to Parent Container ..
+            count_orbs = 0;
+            gameCellInfo.setGamePlayerInfo(null);
+            gameCellInfo.setCurrentCount(count_orbs);
+            GamePlayLogic.getGameInstance().blastOrb(gameCellInfo);
         }
+
+        //Invalidate the View ..
+        invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         //Now Draw the Boundary Rectangle..
@@ -105,9 +116,15 @@ public class GameArenaOrb extends View implements View.OnClickListener {
         paintToDraw.setStrokeWidth(getContext().getResources().getDimension(R.dimen.game_screen_stroke_dimen));
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), paintToDraw);
 
+        if (gameCellInfo.getCurrentCount() == 0) {
+            Log.d(TAG, "Don't Process Orb Drawing , if the Count is ZERO");
+            return;
+        }
+
         //Draw the Orbs
+        paintToDraw.setColor(CommonUtils.getColorByPlayerColor(gameCellInfo.getGamePlayerInfo().getPlayerColor(), getContext()));
         paintToDraw.setStyle(Paint.Style.FILL);
-        switch (count_orbs) {
+        switch (gameCellInfo.getCurrentCount()) {
             case ONE:
                 drawOneOrb(canvas);
                 break;
@@ -283,4 +300,39 @@ public class GameArenaOrb extends View implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void updateGameTurnState(GamePlayerInfo gamePlayerInfo) {
+        this.gameCurrentPlayer = gamePlayerInfo;
+        invalidate();
+    }
+
+    /**
+     * Observer Call Back to say , Whether the View is Clickable or not ..
+     *
+     * @param isClickable ,Whether View can be clickable or not ..
+     */
+    @Override
+    public void updateClickableState(boolean isClickable) {
+        if (isClickable) {
+            setClickable(true);
+        } else {
+            setClickable(false);
+        }
+    }
+
+    /**
+     * Call Back from Game Play logic ..
+     *
+     * @param index          -- Index to be updated ..
+     * @param gamePlayerInfo -- PlayerInfo for Cell
+     */
+    @Override
+    public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
+        if (index == gameCellInfo.getIndex()) {
+            gameCellInfo.setGamePlayerInfo(gamePlayerInfo);
+            count_orbs = gameCellInfo.getCurrentCount() + 1;
+            gameCellInfo.setCurrentCount(count_orbs);
+            invalidate();
+        }
+    }
 }

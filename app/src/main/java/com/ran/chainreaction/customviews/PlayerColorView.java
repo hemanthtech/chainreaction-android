@@ -2,9 +2,7 @@ package com.ran.chainreaction.customviews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import com.ran.chainreaction.entities.NoPlayerValues;
 import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
 import com.ran.chainreaction.utils.ChainReactionPreferences;
+import com.ran.chainreaction.utils.CommonUtils;
 import com.ran.chainreaction.utlity.GamePreferenceUtils;
 
 import java.util.ArrayList;
@@ -54,50 +53,6 @@ public class PlayerColorView extends LinearLayout implements SharedPreferences.O
         initView();
     }
 
-    /**
-     * Method to update the Drawable Color based on User Preference
-     *
-     * @param index     -- Index of selected Preference
-     * @param mTextView -- TextView to be drawn with color
-     * @param drawable  -- Drawable to updated
-     */
-    private static void updateColorView(int index, TextView mTextView, Drawable drawable, Context context) {
-        int colorId;
-        switch (index) {
-            case 0:
-                colorId = R.color.red_background_color;
-                break;
-            case 1:
-                colorId = R.color.orange_background_color;
-                break;
-            case 2:
-                colorId = R.color.yellow_background_color;
-                break;
-            case 3:
-                colorId = R.color.green_background_color;
-                break;
-            case 4:
-                colorId = R.color.white_background_color;
-                break;
-            case 5:
-                colorId = R.color.blue_background_color;
-                break;
-            case 6:
-                colorId = R.color.violet_background_color;
-                break;
-            case 7:
-                colorId = R.color.pink_background_color;
-                break;
-            default:
-                colorId = R.color.white_background_color;
-                break;
-
-
-        }
-        drawable.setColorFilter(context.getResources().getColor(colorId), PorterDuff.Mode.SRC_ATOP);
-        mTextView.setBackground(drawable);
-        mTextView.setTag(index);
-    }
 
     /**
      * Method to Initialize the View ..
@@ -195,11 +150,13 @@ public class PlayerColorView extends LinearLayout implements SharedPreferences.O
 
         for (int k = 0; k < playerReferenceHolders.size(); k++) {
             if (k == 0) {
-                updateColorView(index_Ur_Color % Colors_Value_Size, playerReferenceHolders.get(k),
+                CommonUtils.updateColorView(index_Ur_Color % Colors_Value_Size, playerReferenceHolders.get(k),
                     getResources().getDrawable(R.drawable.player_color_drawable), getContext());
+                playerReferenceHolders.get(k).setTag(index_Ur_Color % Colors_Value_Size);
             } else {
-                updateColorView((index_Ur_Color + k) % Colors_Value_Size, playerReferenceHolders.get(k),
+                CommonUtils.updateColorView((index_Ur_Color + k) % Colors_Value_Size, playerReferenceHolders.get(k),
                     getResources().getDrawable(R.drawable.player_color_drawable), getContext());
+                playerReferenceHolders.get(k).setTag((index_Ur_Color + k) % Colors_Value_Size);
             }
         }
     }
@@ -239,7 +196,7 @@ public class PlayerColorView extends LinearLayout implements SharedPreferences.O
 
     public void saveCurrentPreferences() {
 
-        List<GamePlayerInfo> gamePlayerInfos = new ArrayList<GamePlayerInfo>();
+        List<GamePlayerInfo> gamePlayerInfos = new ArrayList<>();
         for (int i = 0; i < NoPlayerValues.getIndex(ChainReactionPreferences.getPlayerNoReference(getContext())); i++) {
             gamePlayerInfos.add(new GamePlayerInfo(PlayColorValues.getEnumType((int) playerReferenceHolders.get(i).getTag()),
                 i,

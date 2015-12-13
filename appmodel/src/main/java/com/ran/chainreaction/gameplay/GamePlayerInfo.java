@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * Created by ranjith on 06/12/15.
- * <p/>
+ *
  * Class that holds the PlayerInfo's for a Game Session ..
  */
 public class GamePlayerInfo implements Serializable {

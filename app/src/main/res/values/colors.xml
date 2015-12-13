@@ -57,7 +57,7 @@
     <!-- Colors for the Game Screen -->
     <color name="game_screen_background">#000000</color>
     <color name="game_screen_textColor">#ffffff</color>
-    <color name="game_screen_timer">#F44336</color>
+    <color name="game_screen_playerInfoColor">#000000</color>
     <color name="game_screen_play_box_color">#ffffff</color>
 
 

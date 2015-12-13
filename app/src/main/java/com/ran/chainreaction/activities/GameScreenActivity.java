@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,11 +19,15 @@ import com.ran.chainreaction.R;
 import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
 import com.ran.chainreaction.customviews.GameArenaContainer;
 import com.ran.chainreaction.customviews.SoundSettingsView;
+import com.ran.chainreaction.entities.PlayColorValues;
+import com.ran.chainreaction.gameplay.GamePlayLogic;
 import com.ran.chainreaction.gameplay.GamePlaySession;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
 import com.ran.chainreaction.gameplay.GameSizeBoxInfo;
+import com.ran.chainreaction.interfaces.GameStateObserver;
 import com.ran.chainreaction.utils.ChainReactionConstants;
 import com.ran.chainreaction.utils.ChainReactionPreferences;
+import com.ran.chainreaction.utils.CommonUtils;
 import com.ran.chainreaction.utlity.GameInfoUtility;
 import com.ran.chainreaction.utlity.GamePreferenceUtils;
 
@@ -30,7 +35,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class GameScreenActivity extends ActionBarActivity implements ExitAlertDialogCreator.ButtonOnClickListener,
-    View.OnClickListener {
+    View.OnClickListener, GameStateObserver {
 
     public static final int EXIT_TAG = 0;
     public static final int RESTART_TAG = 1;
@@ -40,10 +45,12 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private static final String TAG = GameScreenActivity.class.getName();
     private static final int SCREEN_LOAD_IN = 3;
     private static final int SCREEN_LOAD_SETUP_TIME = 2000;
+
     //AlertDialog Related
     AlertDialog mBackDialog;
     String mBackDialogEntries[];
     String mBackDialogTitle;
+
     //Game Related..
     private boolean isOnline;
     private boolean isResumedGame;
@@ -68,7 +75,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
             switch (msg.what) {
                 case SCREEN_LOAD_IN:
                     progressBar.setVisibility(View.GONE);
-                    timerInitialization(TIMER_MILLS_FUTURE);
+                    countDownTimer.start();
                     gameScreenContainer.setVisibility(View.VISIBLE);
                     isGameStarted = true;
                     break;
@@ -103,6 +110,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private void initView() {
 
         gameBack = (ImageView) findViewById(R.id.game_screen_back);
+        gameBack.setOnClickListener(this);
         soundSettingsView = (SoundSettingsView) findViewById(R.id.game_screen_sound);
         gameName = (TextView) findViewById(R.id.game_screen_tile);
         gameTimer = (TextView) findViewById(R.id.game_screen_timer);
@@ -118,8 +126,8 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         } else {
             gameName.setText(getResources().getString(R.string.game_screen_gameTitle) + GameInfoUtility.generateGameName(this));
         }
-        gameBack.setOnClickListener(this);
 
+        timerInitialization(TIMER_MILLS_FUTURE);
         initialiseGameSession();
     }
 
@@ -146,6 +154,12 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GamePlayLogic.getGameInstance().resetGame();
+    }
+
+    @Override
     public void onBackPressed() {
         if (progressBar.getVisibility() == View.VISIBLE) {
             Log.d(TAG, "Progress bar is in progress");
@@ -166,9 +180,17 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
             int tag = (int) view.getTag();
             switch (tag) {
                 case EXIT_TAG:
+                    GamePlayLogic.getGameInstance().resetGame();
                     finish();
                     break;
-                //TODO ranjith.suda , Need to handle Restart and Save & Exit
+                case RESTART_TAG:
+                    GamePlayLogic.getGameInstance().resetGame();
+                    initialiseGameSession();
+                    mBackDialog.dismiss();
+                    break;
+                case SAVE_EXIT_TAG:
+                    Toast.makeText(this, "Save and Exit", Toast.LENGTH_SHORT).show();
+                    break;
             }
         } catch (Exception e) {
             Log.d(TAG, "Exception in Button Clicks");
@@ -197,7 +219,13 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
      */
     private void initialiseGameSession() {
 
+        //Reset all Variables First ..
         GamePlaySession gamePlaySession = null;
+        countDownTimer.cancel();
+        gameScreenContainer.removeAllViews();
+        gameScreenContainer.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
         if (isOnline) {
             //Todo ranjith.suda [online]
         } else if (isResumedGame) {
@@ -207,6 +235,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
             Gson gson = new Gson();
             Type type = new TypeToken<List<GamePlayerInfo>>() {
             }.getType();
+
             List<GamePlayerInfo> gamePlayerInfos = gson.fromJson(GamePreferenceUtils.getPlayerInfoGame(this), type);
             GamePlayerInfo currentPlayer = gamePlayerInfos.get(0);
             gamePlaySession = new GamePlaySession(gamePlayerInfos,
@@ -215,9 +244,13 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
                 ChainReactionPreferences.getBombPreference(this),
                 sizeBoxInfo,
                 GameInfoUtility.generateGameCellInfo(this, sizeBoxInfo.getX_boxes(), sizeBoxInfo.getY_boxes(), null));
+            //update Current Player Info.
+            updateGameTurnState(currentPlayer);
         }
         gameScreenContainer.initView(gamePlaySession);
         mHandler.sendEmptyMessageDelayed(SCREEN_LOAD_IN, SCREEN_LOAD_SETUP_TIME);
+        GamePlayLogic.getGameInstance().setGamePlaySession(gamePlaySession);
+        GamePlayLogic.getGameInstance().attach(this);
     }
 
 
@@ -239,6 +272,36 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
                 // No need to handle this ..
             }
         };
-        countDownTimer.start();
     }
+
+    @Override
+    public void updateGameTurnState(GamePlayerInfo gamePlayerInfo) {
+        offlinePlayerInfo.setText(gamePlayerInfo.getPlayerName());
+        CommonUtils.updateColorView(PlayColorValues.getIndex(gamePlayerInfo.getPlayerColor()),
+            offlinePlayerInfo,
+            getResources().getDrawable(R.drawable.player_color_drawable),
+            this);
+    }
+
+    /**
+     * Observer Call Back to say , Whether the View is Clickable or not ..
+     *
+     * @param isClickable view is clickable or not
+     */
+    @Override
+    public void updateClickableState(boolean isClickable) {
+        //Activity need not update Clickable State..
+    }
+
+    /**
+     * Observer Call Back from Game Play logic ..
+     *
+     * @param index          -- Index to be updated ..
+     * @param gamePlayerInfo -- PlayerInfo for Cell
+     */
+    @Override
+    public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
+
+    }
+
 }
