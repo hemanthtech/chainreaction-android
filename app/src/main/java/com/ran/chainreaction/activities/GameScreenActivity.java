@@ -301,7 +301,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
      */
     @Override
     public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
-
+        //Activity need not update the GameCell Info ..
     }
 
 }

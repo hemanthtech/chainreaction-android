@@ -91,7 +91,7 @@ public class GameArenaContainer extends RelativeLayout implements GameStateObser
     /**
      * Observer Call Back to say , Whether the View is Clickable or not ..
      *
-     * @param isClickable -- Whether view is cli
+     * @param isClickable -- Whether view is clickable or not
      */
     @Override
     public void updateClickableState(boolean isClickable) {
