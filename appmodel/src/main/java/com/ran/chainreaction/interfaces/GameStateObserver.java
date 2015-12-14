@@ -1,9 +1,12 @@
 package com.ran.chainreaction.interfaces;
 
+import com.ran.chainreaction.gameplay.GameCellInfo;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
 
 /**
  * Created by ranjith on 13/12/15.
+ *
+ * Interface between Game Play Session and Who wants to listen the Current Game ..
  */
 public interface GameStateObserver {
 
@@ -24,9 +27,10 @@ public interface GameStateObserver {
     /**
      * Observer Call Back from Game Play logic ..
      *
-     * @param index          -- Index to be updated ..
-     * @param gamePlayerInfo -- PlayerInfo for Cell
+     * @param index        -- Index to be updated ..
+     * @param gameCellInfo -- GameCellInfo for Cell
      */
 
-    void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo);
+    void updateGameCellInfo(int index, GameCellInfo gameCellInfo);
+
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ran.chainreaction.gameplay.GameCellInfo;
 import com.ran.chainreaction.gameplay.GamePlayLogic;
 import com.ran.chainreaction.gameplay.GamePlaySession;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
@@ -105,12 +106,12 @@ public class GameArenaContainer extends RelativeLayout implements GameStateObser
     /**
      * Observer Call Back from Game Play logic ..
      *
-     * @param index          -- Index to be updated ..
-     * @param gamePlayerInfo -- PlayerInfo for Cell
+     * @param index        -- Index to be updated ..
+     * @param gameCellInfo -- GameCellInfo for Cell
      */
     @Override
-    public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
-
+    public void updateGameCellInfo(int index, GameCellInfo gameCellInfo) {
+        //View Container doesn't require , may be Animation time it is required
     }
 
 

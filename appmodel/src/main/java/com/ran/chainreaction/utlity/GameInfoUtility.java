@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ranjith on 03/12/15.
- *
+ * <p/>
  * Utility File responsible for Game Play
  */
 public class GameInfoUtility {
@@ -164,6 +164,25 @@ public class GameInfoUtility {
         }
 
         return possibleDirections;
+    }
+
+
+    public static int generateChildOrbIndex(GameCellInfo gameCellInfo, GameBombDirections directions) {
+        int index_return = gameCellInfo.getIndex();
+        int y_columns = gameCellInfo.getY_columns();
+
+        switch (directions) {
+            case LEFT:
+                return index_return - 1;
+            case RIGHT:
+                return index_return + 1;
+            case TOP:
+                return index_return - y_columns;
+            case BOTTOM:
+                return index_return + y_columns;
+            default:
+                return index_return;
+        }
     }
 
 }

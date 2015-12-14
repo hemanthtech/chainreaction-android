@@ -20,6 +20,7 @@ import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
 import com.ran.chainreaction.customviews.GameArenaContainer;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.entities.PlayColorValues;
+import com.ran.chainreaction.gameplay.GameCellInfo;
 import com.ran.chainreaction.gameplay.GamePlayLogic;
 import com.ran.chainreaction.gameplay.GamePlaySession;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
@@ -296,11 +297,11 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     /**
      * Observer Call Back from Game Play logic ..
      *
-     * @param index          -- Index to be updated ..
-     * @param gamePlayerInfo -- PlayerInfo for Cell
+     * @param index        -- Index to be updated ..
+     * @param gameCellInfo -- GameCellInfo for Cell
      */
     @Override
-    public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
+    public void updateGameCellInfo(int index, GameCellInfo gameCellInfo) {
         //Activity need not update the GameCell Info ..
     }
 

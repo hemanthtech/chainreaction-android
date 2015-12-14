@@ -27,14 +27,13 @@ import com.ran.chainreaction.utils.CommonUtils;
  */
 public class GameArenaOrb extends View implements View.OnClickListener, GameStateObserver {
 
-    private static final String TAG = GameArenaOrb.class.getName();
+    private static final String TAG = GameArenaOrb.class.getSimpleName();
     private static final int ONE = 1;
     private static final int TWO = 2;
     private static final int THREE = 3;
     private GameCellInfo gameCellInfo;
     private GamePlayerInfo gameCurrentPlayer;
     private BombValues gameBombType;
-    private int count_orbs = 0;
     private Paint paintToDraw;
 
     //Params for Orb Dimens ..
@@ -86,22 +85,14 @@ public class GameArenaOrb extends View implements View.OnClickListener, GameStat
             return;
         }
 
-        //Now process the Orb state ..
-        if (count_orbs < gameCellInfo.getMAX_CAPACITY()) {
-            gameCellInfo.setGamePlayerInfo(gameCurrentPlayer);
-            count_orbs++;
-            gameCellInfo.setCurrentCount(count_orbs);
+        gameCellInfo.setGamePlayerInfo(gameCurrentPlayer);
+        gameCellInfo.setCurrentCount(gameCellInfo.getCurrentCount() + 1);
+        if (gameCellInfo.getCurrentCount() <= gameCellInfo.getMAX_CAPACITY()) {
             GamePlayLogic.getGameInstance().changeGameTurn(gameCellInfo);
+            invalidate();
         } else {
-            //Do processing ,Blast send to Parent Container ..
-            count_orbs = 0;
-            gameCellInfo.setGamePlayerInfo(null);
-            gameCellInfo.setCurrentCount(count_orbs);
             GamePlayLogic.getGameInstance().blastOrb(gameCellInfo);
         }
-
-        //Invalidate the View ..
-        invalidate();
     }
 
     @Override
@@ -321,17 +312,15 @@ public class GameArenaOrb extends View implements View.OnClickListener, GameStat
     }
 
     /**
-     * Call Back from Game Play logic ..
+     * Observer Call Back from Game Play logic ..
      *
-     * @param index          -- Index to be updated ..
-     * @param gamePlayerInfo -- PlayerInfo for Cell
+     * @param index               -- Index to be updated ..
+     * @param updatedGameCellInfo -- GameCellInfo for Cell
      */
     @Override
-    public void updateGameCellInfo(int index, GamePlayerInfo gamePlayerInfo) {
-        if (index == gameCellInfo.getIndex()) {
-            gameCellInfo.setGamePlayerInfo(gamePlayerInfo);
-            count_orbs = gameCellInfo.getCurrentCount() + 1;
-            gameCellInfo.setCurrentCount(count_orbs);
+    public void updateGameCellInfo(int index, GameCellInfo updatedGameCellInfo) {
+        if (index == this.gameCellInfo.getIndex()) {
+            this.gameCellInfo = updatedGameCellInfo;
             invalidate();
         }
     }
