@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ran.chainreaction.R;
 import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
 import com.ran.chainreaction.customviews.GameArenaContainer;
+import com.ran.chainreaction.customviews.GameWinDialogCreator;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.gameplay.GameCellInfo;
@@ -35,20 +36,29 @@ import com.ran.chainreaction.utlity.GamePreferenceUtils;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * Game Screen responsible for Current Game , Creates Session and Timer for Current Game
+ * Handles CallBacks from below :
+ *
+ * @see ExitAlertDialogCreator.ButtonOnClickListener -- Exit Dialog CallBacks
+ * @see GameStateObserver                            -- Game State CallBacks
+ * @see GameWinDialogCreator.GameWinCallBacks        -- Game Win Dialog CallBacks
+ */
 public class GameScreenActivity extends ActionBarActivity implements ExitAlertDialogCreator.ButtonOnClickListener,
-    View.OnClickListener, GameStateObserver {
+    View.OnClickListener, GameStateObserver, GameWinDialogCreator.GameWinCallBacks {
 
     public static final int EXIT_TAG = 0;
     public static final int RESTART_TAG = 1;
     public static final int SAVE_EXIT_TAG = 2;
     public static final long TIME_INTERVAL = 1000; // 1 Second
-    public static final long TIMER_MILLS_FUTURE = Long.MAX_VALUE;
+    public static final long TIMER_MILLS_FUTURE = 99999999L;
     private static final String TAG = GameScreenActivity.class.getName();
     private static final int SCREEN_LOAD_IN = 3;
     private static final int SCREEN_LOAD_SETUP_TIME = 2000;
 
     //AlertDialog Related
     AlertDialog mBackDialog;
+    AlertDialog mGameWinDialog;
     String mBackDialogEntries[];
     String mBackDialogTitle;
 
@@ -56,6 +66,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private boolean isOnline;
     private boolean isResumedGame;
     private long currentGameTimeElapsed = 0;
+    private long currentGamePrevTimeElapsed = 0;
     private boolean isGameStarted;
 
     //Views on Game Screen ..
@@ -136,8 +147,11 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     protected void onResume() {
         super.onResume();
         soundSettingsView.onViewVisible();
+
+        //Logic for Timer ..
         if (isGameStarted) {
-            timerInitialization(currentGameTimeElapsed);
+            timerInitialization(TIMER_MILLS_FUTURE);
+            countDownTimer.start();
         }
     }
 
@@ -149,8 +163,11 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         if (mHandler.hasMessages(SCREEN_LOAD_IN)) {
             mHandler.removeMessages(SCREEN_LOAD_IN);
         }
-
-        //Todo [ranjith.suda] Cancel after saving to DB ..
+        //Logic for timer ..
+        if (isGameStarted) {
+            currentGamePrevTimeElapsed = currentGamePrevTimeElapsed + currentGameTimeElapsed;
+        }
+        //Todo [ranjith.suda] Save to  DB ..
         countDownTimer.cancel();
     }
 
@@ -258,14 +275,14 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     /**
      * Method to Initialize the Timer ..
      *
-     * @param futureTime -- FutureTime
+     * @param futureTime -- FutureTime at whihc it needs to be stopped [Infinite]
      */
     private void timerInitialization(final long futureTime) {
         countDownTimer = new CountDownTimer(futureTime, TIME_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-                gameTimer.setText(GameInfoUtility.generateTimeFormat(futureTime - millisUntilFinished));
-                currentGameTimeElapsed = millisUntilFinished;
+                gameTimer.setText(GameInfoUtility.generateTimeFormat(futureTime + currentGamePrevTimeElapsed - millisUntilFinished));
+                currentGameTimeElapsed = futureTime - millisUntilFinished;
             }
 
             @Override
@@ -305,4 +322,34 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         //Activity need not update the GameCell Info ..
     }
 
+    /**
+     * Observer call Back , passing Current Player hasWon ..
+     *
+     * @param gamePlayerInfo -- Player who has won the Game
+     */
+    @Override
+    public void updatePlayerWinStatus(GamePlayerInfo gamePlayerInfo) {
+        mGameWinDialog = GameWinDialogCreator.createDialog(this, gamePlayerInfo);
+        mGameWinDialog.show();
+    }
+
+
+    /**
+     * Callback for the Game Win Dialog [Exit Click]
+     */
+    @Override
+    public void onGameWinExitClick() {
+        mGameWinDialog.dismiss();
+        finish();
+    }
+
+    /**
+     * Callback for the Game Win Dialog [Restart Dialog]
+     */
+    @Override
+    public void onGameWinRestartClick() {
+        GamePlayLogic.getGameInstance().resetGame();
+        initialiseGameSession();
+        mGameWinDialog.dismiss();
+    }
 }

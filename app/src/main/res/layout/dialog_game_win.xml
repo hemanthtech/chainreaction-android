@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/alertDialog_view_background"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/game_win_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/alertDialog_textview_color"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:layout_width="@dimen/game_win_image_width"
+        android:layout_height="@dimen/game_win_image_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/game_win_image_vertical_margin"
+        android:layout_marginTop="@dimen/game_win_image_vertical_margin"
+        android:src="@drawable/game_win"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/game_win_player_restart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/alertDialog_buttons_background"
+            android:text="@string/player_win_restart"
+            android:textColor="@color/alertDialog_textview_color"/>
+
+        <Button
+            android:id="@+id/game_win_player_exit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/alertDialog_buttons_background"
+            android:text="@string/player_win_exit"
+            android:textColor="@color/alertDialog_textview_color"/>
+
+    </LinearLayout>
+
+</LinearLayout>

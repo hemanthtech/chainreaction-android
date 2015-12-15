@@ -52,5 +52,10 @@
     <dimen name="game_screen_header_margin_side">10dp</dimen>
     <dimen name="game_screen_stroke_dimen">2dp</dimen>
 
+    <!-- Dimens for the Game Win -->
+    <dimen name="game_win_image_width">200dp</dimen>
+    <dimen name="game_win_image_height">200dp</dimen>
+    <dimen name="game_win_image_vertical_margin">20dp</dimen>
+
 
 </resources>

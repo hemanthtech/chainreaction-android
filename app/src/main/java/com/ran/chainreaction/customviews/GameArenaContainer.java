@@ -114,5 +114,15 @@ public class GameArenaContainer extends RelativeLayout implements GameStateObser
         //View Container doesn't require , may be Animation time it is required
     }
 
+    /**
+     * Observer call Back , passing Current Player hasWon ..
+     *
+     * @param gamePlayerInfo -- PlayerInfo Who has Won
+     */
+    @Override
+    public void updatePlayerWinStatus(GamePlayerInfo gamePlayerInfo) {
+        //Nothing to do ..
+    }
+
 
 }

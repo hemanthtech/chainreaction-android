@@ -94,4 +94,9 @@
         <item>Save &amp; Exit</item>
     </string-array>
 
+    <!-- Strings for the Game WIn Dialog -->
+    <string name="player_win_message">%1s has Won . Hurray !! </string>
+    <string name="player_win_restart">Restart</string>
+    <string name="player_win_exit">Exit</string>
+
 </resources>

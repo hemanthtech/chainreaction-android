@@ -5,7 +5,7 @@ import com.ran.chainreaction.gameplay.GamePlayerInfo;
 
 /**
  * Created by ranjith on 13/12/15.
- *
+ * <p/>
  * Interface between Game Play Session and Who wants to listen the Current Game ..
  */
 public interface GameStateObserver {
@@ -32,5 +32,12 @@ public interface GameStateObserver {
      */
 
     void updateGameCellInfo(int index, GameCellInfo gameCellInfo);
+
+    /**
+     * Observer call Back , passing Current Player hasWon ..
+     *
+     * @param gamePlayerInfo -- PlayerInfo who won
+     */
+    void updatePlayerWinStatus(GamePlayerInfo gamePlayerInfo);
 
 }

@@ -324,4 +324,15 @@ public class GameArenaOrb extends View implements View.OnClickListener, GameStat
             invalidate();
         }
     }
+
+    /**
+     * Observer call Back , passing Current Player hasWon ..
+     *
+     * @param gamePlayerInfo -- PlayerInfo Who has Won
+     */
+    @Override
+    public void updatePlayerWinStatus(GamePlayerInfo gamePlayerInfo) {
+        //Nothing to do ..
+    }
+
 }

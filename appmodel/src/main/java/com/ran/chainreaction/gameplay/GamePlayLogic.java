@@ -19,6 +19,7 @@ import java.util.List;
 public class GamePlayLogic {
 
     private static final Object LOCK = new Object();
+    private static final int ZER0 = 0;
     private static GamePlayLogic gamePlayLogic;
     private LinkedList<GameCellInfo> gamePendingMoves;
     private List<GameStateObserver> gameStateObservers;
@@ -97,7 +98,7 @@ public class GamePlayLogic {
         gamePendingMoves.add(gamePlaySession.getGameCellInfos().get(gameCellInfo.getIndex()));
         processPendingMoves();
         if (isCurrentPlayerWon()) {
-            //Todo [ranjith.suda] ,Notify Game is done ans show UI on Activity..
+            notifyGameWinStatus();
         } else {
             notifyCurrentPlayerUpdates();
             notifyClickStates(true);
@@ -114,7 +115,7 @@ public class GamePlayLogic {
     private void processPendingMoves() {
         while (gamePendingMoves.size() > 0) {
             GameCellInfo cellInfo = gamePendingMoves.remove();
-            if (0 < cellInfo.getCurrentCount() && cellInfo.getCurrentCount() <= cellInfo.getMAX_CAPACITY()) {
+            if (ZER0 < cellInfo.getCurrentCount() && cellInfo.getCurrentCount() <= cellInfo.getMAX_CAPACITY()) {
                 notifyGameCellInfoUpdates(cellInfo.getIndex(), cellInfo);
             } else {
                 cellInfo.setCurrentCount(0);
@@ -185,7 +186,6 @@ public class GamePlayLogic {
      * Utility to update the Current Player ..
      */
     private void notifyCurrentPlayerUpdates() {
-
         int index_new_player = (gamePlaySession.getCurrentPlayer().getPlayerIndex() + 1) %
             gamePlaySession.getGamePlayerInfos().size();
 
@@ -193,6 +193,15 @@ public class GamePlayLogic {
 
         for (GameStateObserver gameStateObserver : gameStateObservers) {
             gameStateObserver.updateGameTurnState(gamePlaySession.getCurrentPlayer());
+        }
+    }
+
+    /**
+     * Method to update the Game Win Status to UI
+     */
+    private void notifyGameWinStatus() {
+        for (GameStateObserver gameStateObserver : gameStateObservers) {
+            gameStateObserver.updatePlayerWinStatus(gamePlaySession.getCurrentPlayer());
         }
     }
 
