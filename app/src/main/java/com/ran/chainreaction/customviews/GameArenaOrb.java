@@ -8,7 +8,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.ran.chainreaction.R;
@@ -81,7 +80,6 @@ public class GameArenaOrb extends View implements View.OnClickListener, GameStat
     @Override
     public void onClick(View v) {
         if (gameCellInfo.getGamePlayerInfo() != null && gameCurrentPlayer != gameCellInfo.getGamePlayerInfo()) {
-            Log.d(TAG, "You cannot change Orb/Bomb state here .."); //Todo [Check the GameCellInfo logic]
             return;
         }
 
@@ -108,7 +106,6 @@ public class GameArenaOrb extends View implements View.OnClickListener, GameStat
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), paintToDraw);
 
         if (gameCellInfo.getCurrentCount() == 0) {
-            Log.d(TAG, "Don't Process Orb Drawing , if the Count is ZERO");
             return;
         }
 

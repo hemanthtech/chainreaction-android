@@ -64,4 +64,8 @@ public class GameCellInfo {
         this.currentCount = currentCount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return index == ((GameCellInfo) o).index;
+    }
 }

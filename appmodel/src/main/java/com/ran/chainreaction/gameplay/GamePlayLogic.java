@@ -20,6 +20,7 @@ public class GamePlayLogic {
 
     private static final Object LOCK = new Object();
     private static final int ZER0 = 0;
+    private static final String TAG = GamePlayLogic.class.getSimpleName();
     private static GamePlayLogic gamePlayLogic;
     private LinkedList<GameCellInfo> gamePendingMoves;
     private List<GameStateObserver> gameStateObservers;
@@ -97,6 +98,7 @@ public class GamePlayLogic {
         notifyClickStates(false);
         gamePendingMoves.add(gamePlaySession.getGameCellInfos().get(gameCellInfo.getIndex()));
         processPendingMoves();
+
         if (isCurrentPlayerWon()) {
             notifyGameWinStatus();
         } else {
@@ -112,16 +114,13 @@ public class GamePlayLogic {
      * b) Do a Blast , and Notify the blasted Orb to Observers.
      * Pile up the newly added directions in the Queue ..
      */
-    private void processPendingMoves() {
+    private synchronized void processPendingMoves() {
         while (gamePendingMoves.size() > 0) {
             GameCellInfo cellInfo = gamePendingMoves.remove();
             if (ZER0 < cellInfo.getCurrentCount() && cellInfo.getCurrentCount() <= cellInfo.getMAX_CAPACITY()) {
                 notifyGameCellInfoUpdates(cellInfo.getIndex(), cellInfo);
             } else {
-                cellInfo.setCurrentCount(0);
-                cellInfo.setGamePlayerInfo(null);
-                notifyGameCellInfoUpdates(cellInfo.getIndex(), cellInfo);
-
+                int blastedCount = 0;
                 //Blast process ..
                 for (GameBombDirections directions : cellInfo.getPossibleDirections()) {
                     GameCellInfo processedCell = null;
@@ -131,29 +130,45 @@ public class GamePlayLogic {
                                 get(GameInfoUtility.generateChildOrbIndex(cellInfo, GameBombDirections.LEFT));
                             processedCell.setCurrentCount(processedCell.getCurrentCount() + 1);
                             processedCell.setGamePlayerInfo(gamePlaySession.getCurrentPlayer());
+                            blastedCount++;
                             break;
                         case RIGHT:
                             processedCell = gamePlaySession.getGameCellInfos().
                                 get(GameInfoUtility.generateChildOrbIndex(cellInfo, GameBombDirections.RIGHT));
                             processedCell.setCurrentCount(processedCell.getCurrentCount() + 1);
                             processedCell.setGamePlayerInfo(gamePlaySession.getCurrentPlayer());
+                            blastedCount++;
                             break;
                         case TOP:
                             processedCell = gamePlaySession.getGameCellInfos().
                                 get(GameInfoUtility.generateChildOrbIndex(cellInfo, GameBombDirections.TOP));
                             processedCell.setCurrentCount(processedCell.getCurrentCount() + 1);
                             processedCell.setGamePlayerInfo(gamePlaySession.getCurrentPlayer());
+                            blastedCount++;
                             break;
                         case BOTTOM:
                             processedCell = gamePlaySession.getGameCellInfos().
                                 get(GameInfoUtility.generateChildOrbIndex(cellInfo, GameBombDirections.BOTTOM));
                             processedCell.setCurrentCount(processedCell.getCurrentCount() + 1);
                             processedCell.setGamePlayerInfo(gamePlaySession.getCurrentPlayer());
+                            blastedCount++;
                             break;
                     }
+
                     gamePlaySession.getGameCellInfos().set(processedCell.getIndex(), processedCell);
-                    gamePendingMoves.add(gamePlaySession.getGameCellInfos().get(processedCell.getIndex()));
+                    //First Remove any of them are there and Add at same location..
+                    if (!gamePendingMoves.contains(gamePlaySession.getGameCellInfos().get(processedCell.getIndex()))) {
+                        gamePendingMoves.add(gamePlaySession.getGameCellInfos().get(processedCell.getIndex()));
+                    }
                 }
+
+                cellInfo.setCurrentCount(cellInfo.getCurrentCount() - blastedCount);
+                if (cellInfo.getCurrentCount() > 0) {
+                    cellInfo.setGamePlayerInfo(gamePlaySession.getCurrentPlayer());
+                } else {
+                    cellInfo.setGamePlayerInfo(null);
+                }
+                notifyGameCellInfoUpdates(cellInfo.getIndex(), cellInfo);
             }
         }
     }

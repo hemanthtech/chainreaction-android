@@ -2,7 +2,6 @@ package com.ran.chainreaction.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -50,10 +49,6 @@ public class GameArenaContainer extends RelativeLayout implements GameStateObser
      */
 
     private void prepareGameOrbContainerViews() {
-
-        Log.d(TAG, "game x box : " + gamePlaySession.getGameSizeBoxInfo().getX_boxes());
-        Log.d(TAG, "game y box : " + gamePlaySession.getGameSizeBoxInfo().getY_boxes());
-
         for (int i = 0; i < gamePlaySession.getGameSizeBoxInfo().getX_boxes() *
             gamePlaySession.getGameSizeBoxInfo().getY_boxes(); i++) {
             GameArenaOrb gameArenaOrb = new GameArenaOrb(getContext());
