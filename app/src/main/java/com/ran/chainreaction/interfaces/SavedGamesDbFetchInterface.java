@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith on 18/12/15.
- * <p/>
+ *
  * Interface between Presenter and View
- * <p/>
- * {@Link com.ran.chainreaction.activities.SavedGamesActivity}
- * {@Link com.ran.chainreaction.presenters.SavedGamesDbPresenter}
+ *
+ * @see com.ran.chainreaction.activities.SavedGamesActivity
+ * @see com.ran.chainreaction.presenters.SavedGamesDbPresenter
  */
 public interface SavedGamesDbFetchInterface {
 
