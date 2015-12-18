@@ -8,17 +8,14 @@ package com.ran.chainreaction.interfaces;
 public interface SavedGamesSelectionInterface {
 
     /**
-     * Method to say which View is Selected in RecyclerAdapter
+     * Call Back to Activity for saying GameId Selected
      *
-     * @param isSelect -- View is Selected /not
-     * @param position -- Position of the view ..
+     * @param gameId -- Selected Game Id
      */
-    void onGameSelectionChanged(boolean isSelect, int position);
+    void onGameSelection(long gameId);
 
     /**
-     * Method to say that game is deleted from Recycler Adapter
-     *
-     * @param position -- View that is deleted
+     * Call Back to Activity saying All Games are Deleted
      */
-    void onGameDeleted(int position);
+    void onAllGamesDeleted();
 }

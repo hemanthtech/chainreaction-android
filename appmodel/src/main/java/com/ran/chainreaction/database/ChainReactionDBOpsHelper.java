@@ -55,7 +55,7 @@ public class ChainReactionDBOpsHelper {
      * @param gameName        -- Name of the game
      * @return -- Whether Operation is Success /Not
      */
-    private boolean addCurrentGame(GamePlaySession gamePlaySession, long gameTime, String gameName) {
+    public boolean addCurrentGame(GamePlaySession gamePlaySession, long gameTime, String gameName) {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(GAME_ID, gameTime);
@@ -78,7 +78,7 @@ public class ChainReactionDBOpsHelper {
      * @param gameId -- Id of the Game to be Deleted
      * @return -- Whether Operation is success or not
      */
-    private boolean deleteGame(long gameId) {
+    public boolean deleteGame(long gameId) {
         String selectionQuery = GAME_ID + " =?";
         SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getWritableDatabase();
         int rowsEffected = sqLiteDatabase.delete(TABLE_GAME,
@@ -92,7 +92,7 @@ public class ChainReactionDBOpsHelper {
      *
      * @return -- ArrayList of the SavedGamesEntity
      */
-    private ArrayList<SavedGamesEntity> retrieveGamesFromDB() {
+    public ArrayList<SavedGamesEntity> retrieveGamesFromDB() {
 
         ArrayList<SavedGamesEntity> savedGamesEntities = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getReadableDatabase();
@@ -120,7 +120,7 @@ public class ChainReactionDBOpsHelper {
      * @param gameId -- Game Id for which to be generated
      * @return -- GamePlaySession Created
      */
-    private GamePlaySession retrieveGameSession(long gameId) {
+    public GamePlaySession retrieveGameSession(long gameId) {
 
         SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getReadableDatabase();
         String selectionQuery = GAME_ID + " =?";

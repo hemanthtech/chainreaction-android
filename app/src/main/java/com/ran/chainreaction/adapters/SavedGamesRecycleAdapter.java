@@ -16,7 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ran.chainreaction.R;
+import com.ran.chainreaction.database.ChainReactionDBOpsHelper;
 import com.ran.chainreaction.entities.PlayColorValues;
+import com.ran.chainreaction.entities.SavedGamesEntity;
+import com.ran.chainreaction.gameplay.GamePlayerInfo;
 import com.ran.chainreaction.interfaces.SavedGamesSelectionInterface;
 
 import java.util.ArrayList;
@@ -28,13 +31,13 @@ import java.util.ArrayList;
  */
 public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRecycleAdapter.ViewHolder> {
 
-    //TODO ranjith.suda [Send proper Data Set by DB reading]
-    private ArrayList<Integer> dataSet;
+    private ArrayList<SavedGamesEntity> dataSet;
     private SavedGamesSelectionInterface savedGamesSelectionInterface;
+    private int currentCheckedGame = -1;
     private Context context;
 
     public SavedGamesRecycleAdapter(Context context, SavedGamesSelectionInterface savedGamesSelectionInterface,
-                                    ArrayList<Integer> dataSet) {
+                                    ArrayList<SavedGamesEntity> dataSet) {
         this.dataSet = dataSet;
         this.savedGamesSelectionInterface = savedGamesSelectionInterface;
         this.context = context;
@@ -46,7 +49,7 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
      * @param colorValues -- Current Color value Enum
      * @param mTextView   -- textView to be colored
      * @param drawable    -- Drawable to be used
-     * @param context     -- Context odf the screen
+     * @param context     -- Context of the screen
      */
     private static void updateColorView(PlayColorValues colorValues, TextView mTextView, Drawable drawable, Context context) {
         int colorId;
@@ -95,10 +98,12 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        //TODO [ranjith.suda] Enable Proper Data Set Mappping..
-
-        //Adding Data to ScrollView ..
+        holder.mTitleGame.setText(dataSet.get(position).getGameName());
         addPlayerInfo(holder.mGamePlayerInfoContainer, position);
+        //Todo [ranjith.suda], This is hack made for just code work Around.Ideally to be from DataSet
+        if (currentCheckedGame != -1 && position == currentCheckedGame) {
+            holder.mGameCheckState.setChecked(true);
+        }
     }
 
     /**
@@ -120,13 +125,11 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
      */
     private void addPlayerInfo(LinearLayout scrollView, int position) {
 
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= dataSet.get(position).getGamePlayerInfos().size(); i++) {
+            GamePlayerInfo currentPlayer = dataSet.get(position).getGamePlayerInfos().get(i - 1);
+
             TextView textView = new TextView(context);
-            if (i == 1) {
-                textView.setText(context.getResources().getString(R.string.player_color_self_view));
-            } else {
-                textView.setText(context.getResources().getString(R.string.player_color_other_view) + i);
-            }
+            textView.setText(currentPlayer.getPlayerName());
             textView.setTextAppearance(context, android.R.style.TextAppearance_Small);
             textView.setAllCaps(true);
             textView.setTypeface(null, Typeface.BOLD);
@@ -141,8 +144,7 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
             textView.setGravity(Gravity.CENTER);
             textView.setLayoutParams(childParam);
 
-            //TODO [ranjith.suda] -- Check param 1 when implemented
-            updateColorView(PlayColorValues.getEnumType(i), textView,
+            updateColorView(currentPlayer.getPlayerColor(), textView,
                 context.getResources().getDrawable(R.drawable.player_color_drawable), context);
 
             scrollView.addView(textView);
@@ -152,7 +154,6 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
     public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
         private TextView mTitleGame;
-        private TextView mPlayerTitleGame;
         private CheckBox mGameCheckState;
         private LinearLayout mGamePlayerInfoContainer;
         private ImageView mGameDelete;
@@ -161,7 +162,6 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
             super(itemView);
 
             mTitleGame = (TextView) itemView.findViewById(R.id.saved_games_item_title1);
-            mPlayerTitleGame = (TextView) itemView.findViewById(R.id.saved_games_item_title2);
             mGameCheckState = (CheckBox) itemView.findViewById(R.id.saved_games_item_checkBox);
             mGameCheckState.setOnCheckedChangeListener(this);
             mGamePlayerInfoContainer = (LinearLayout) itemView.findViewById(R.id.saved_games_item_playerInfo);
@@ -177,8 +177,10 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
          */
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (savedGamesSelectionInterface != null) {
-                savedGamesSelectionInterface.onGameSelectionChanged(isChecked, getAdapterPosition());
+            if (isChecked) {
+                savedGamesSelectionInterface.onGameSelection(dataSet.get(getAdapterPosition()).getGameId());
+                currentCheckedGame = getAdapterPosition();
+                notifyDataSetChanged();
             }
         }
 
@@ -189,8 +191,17 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
          */
         @Override
         public void onClick(View v) {
-            if (savedGamesSelectionInterface != null) {
-                savedGamesSelectionInterface.onGameDeleted(getAdapterPosition());
+            //Retrieve the Id and delete from DataBase .
+            long toDelId = dataSet.get(getAdapterPosition()).getGameId();
+            boolean deleteStatus = ChainReactionDBOpsHelper.getDBInstance(context).deleteGame(toDelId);
+            if (deleteStatus) {
+                dataSet.remove(getAdapterPosition());
+                notifyDataSetChanged();
+            }
+
+            //Propagate to UI to show the Empty Message , if data set is null
+            if (dataSet.size() == 0) {
+                savedGamesSelectionInterface.onAllGamesDeleted();
             }
         }
     }
