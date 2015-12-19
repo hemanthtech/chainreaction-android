@@ -56,4 +56,19 @@ public class ChainReactionNavigator {
         context.startActivity(intent);
 
     }
+
+
+    /**
+     * Method to Open Saved Game from DB screen ..
+     *
+     * @param context -- Context of the App ..
+     * @param gameId  -- saved GameId
+     */
+    public static void openSavedGameScreenActivity(Context context, long gameId) {
+        Intent intent = new Intent(context, GameScreenActivity.class);
+        intent.putExtra(ChainReactionConstants.SAVED_GAME_ID_KEY, gameId);
+        intent.putExtra(ChainReactionConstants.SAVED_GAME_KEY, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 }

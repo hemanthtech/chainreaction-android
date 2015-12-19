@@ -21,6 +21,7 @@ import com.ran.chainreaction.customviews.GameWinDialogCreator;
 import com.ran.chainreaction.customviews.SoundSettingsView;
 import com.ran.chainreaction.database.ChainReactionDBOpsHelper;
 import com.ran.chainreaction.entities.PlayColorValues;
+import com.ran.chainreaction.entities.SavedGamePlayEntity;
 import com.ran.chainreaction.gameplay.GameCellInfo;
 import com.ran.chainreaction.gameplay.GamePlayLogic;
 import com.ran.chainreaction.gameplay.GamePlaySession;
@@ -61,14 +62,15 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     AlertDialog mGameWinDialog;
     String mBackDialogEntries[];
     String mBackDialogTitle;
-
+    //Saved Game Req Things .
+    SavedGamePlayEntity savedGamePlayEntity;
+    long savedGameId;
     //Game Related..
     private boolean isOnline;
     private boolean isResumedGame;
     private long currentGameTimeElapsed = 0;
     private long currentGamePrevTimeElapsed = 0;
     private boolean isGameStarted;
-
     //Views on Game Screen ..
     private ImageView gameBack;
     private SoundSettingsView soundSettingsView;
@@ -78,7 +80,6 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private GameArenaContainer gameScreenContainer;
     private CountDownTimer countDownTimer;
     private ProgressBar progressBar;
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -114,6 +115,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     private void getIncomingIntentParams() {
         isOnline = getIntent().getBooleanExtra(ChainReactionConstants.ONLINE_GAME_KEY, false);
         isResumedGame = getIntent().getBooleanExtra(ChainReactionConstants.SAVED_GAME_KEY, false);
+        savedGameId = getIntent().getLongExtra(ChainReactionConstants.SAVED_GAME_ID_KEY, -1);
     }
 
     /**
@@ -134,7 +136,10 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         if (isOnline) {
             offlinePlayerInfo.setVisibility(View.GONE);
         } else if (isResumedGame) {
-            //Todo ranjith.suda After Db integration
+            savedGamePlayEntity = ChainReactionDBOpsHelper.getDBInstance(this).retrieveGameSession(savedGameId);
+            gameName.setText(savedGamePlayEntity.getSavedGameName());
+            currentGamePrevTimeElapsed = savedGamePlayEntity.getSavedGameTimeElapsed();
+            ChainReactionDBOpsHelper.getDBInstance(this).deleteGame(savedGameId);
         } else {
             gameName.setText(getResources().getString(R.string.game_screen_gameTitle) + GameInfoUtility.generateGameName(this));
         }
@@ -243,6 +248,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
 
         //Reset all Variables First ..
         GamePlaySession gamePlaySession = null;
+        GamePlayerInfo currentPlayer;
         countDownTimer.cancel();
         gameScreenContainer.removeAllViews();
         gameScreenContainer.setVisibility(View.INVISIBLE);
@@ -251,7 +257,9 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         if (isOnline) {
             //Todo ranjith.suda [online]
         } else if (isResumedGame) {
-            //Todo ranjith.suda [resumed]
+            gamePlaySession = savedGamePlayEntity.getSavedGamePlaySession();
+            currentPlayer = gamePlaySession.getCurrentPlayer();
+            updateGameTurnState(currentPlayer);
         } else {
             GameSizeBoxInfo sizeBoxInfo = GameInfoUtility.generateGameSizeBoxInfo(this, ChainReactionPreferences.getGridSizePreference(this));
             Gson gson = new Gson();
@@ -259,16 +267,16 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
             }.getType();
 
             ArrayList<GamePlayerInfo> gamePlayerInfos = gson.fromJson(GamePreferenceUtils.getPlayerInfoGame(this), type);
-            GamePlayerInfo currentPlayer = gamePlayerInfos.get(0);
+            currentPlayer = gamePlayerInfos.get(0);
             gamePlaySession = new GamePlaySession(gamePlayerInfos,
                 currentPlayer,
                 ChainReactionPreferences.getGridSizePreference(this),
                 ChainReactionPreferences.getBombPreference(this),
                 sizeBoxInfo,
                 GameInfoUtility.generateGameCellInfo(this, sizeBoxInfo.getX_boxes(), sizeBoxInfo.getY_boxes(), null));
-            //update Current Player Info.
             updateGameTurnState(currentPlayer);
         }
+
         gameScreenContainer.initView(gamePlaySession);
         mHandler.sendEmptyMessageDelayed(SCREEN_LOAD_IN, SCREEN_LOAD_SETUP_TIME);
         GamePlayLogic.getGameInstance().setGamePlaySession(gamePlaySession);

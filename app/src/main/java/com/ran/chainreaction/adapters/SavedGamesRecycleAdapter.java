@@ -1,5 +1,6 @@
 package com.ran.chainreaction.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -20,6 +21,7 @@ import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.entities.SavedGamesEntity;
 import com.ran.chainreaction.gameplay.GamePlayerInfo;
 import com.ran.chainreaction.interfaces.SavedGamesSelectionInterface;
+import com.ran.chainreaction.utils.ChainReactionNavigator;
 
 import java.util.ArrayList;
 
@@ -190,8 +192,9 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
                     break;
 
                 case R.id.saved_games_item_button:
-
-                    //Logic to start the Saved game ..
+                    long gameId = dataSet.get(getAdapterPosition()).getGameId();
+                    ChainReactionNavigator.openSavedGameScreenActivity(context, gameId);
+                    ((Activity) context).finish();
                     break;
             }
 

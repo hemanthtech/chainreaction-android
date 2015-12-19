@@ -79,7 +79,7 @@ public class SavedGamesActivity extends ActionBarActivity implements SavedGamesS
             //RecyclerView Stuff..
             layoutManager = new LinearLayoutManager(this);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            savedGamesRecycleAdapter = new SavedGamesRecycleAdapter(getApplicationContext(), this, savedGamesEntities);
+            savedGamesRecycleAdapter = new SavedGamesRecycleAdapter(this, this, savedGamesEntities);
             savedGamesRecycler.setAdapter(savedGamesRecycleAdapter);
             savedGamesRecycler.setLayoutManager(layoutManager);
             savedGamesRecycler.setVisibility(View.VISIBLE);

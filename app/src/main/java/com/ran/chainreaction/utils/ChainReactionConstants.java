@@ -26,8 +26,7 @@ public interface ChainReactionConstants {
     String SAVED_GAME_KEY = "saved_game";
 
     /**
-     * Key to pass the Game PlayerInfo in Intent
+     * Key to pass the GameId from Saved DB to Game Screen ..
      */
-
-    String PLAYER_INFO_KEY = "game_player_info";
+    String SAVED_GAME_ID_KEY = "saved_game_id";
 }
