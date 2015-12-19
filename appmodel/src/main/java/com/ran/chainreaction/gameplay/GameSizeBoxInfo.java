@@ -1,11 +1,13 @@
 package com.ran.chainreaction.gameplay;
 
+import java.io.Serializable;
+
 /**
  * Created by ranjith on 03/12/15.
  * <p/>
  * Class responsible for giving the GameSize Box i.e x ,y boxes count
  */
-public class GameSizeBoxInfo {
+public class GameSizeBoxInfo implements Serializable {
 
     private int x_boxes = 0;
     private int y_boxes = 0;

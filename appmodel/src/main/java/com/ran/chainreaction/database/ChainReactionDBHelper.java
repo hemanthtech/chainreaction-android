@@ -27,14 +27,14 @@ public class ChainReactionDBHelper extends SQLiteOpenHelper {
      * Game Table Creation ..
      */
     private String CREATE_GAME_TABLE = "CREATE TABLE " + TABLE_GAME + " (" +
-        GAME_ID + " INTEGER PRIMARY KEY," +
+        GAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         GAME_NAME + " TEXT," +
-        GAME_TIME + " INTEGER" +
+        GAME_TIME + " INTEGER," +
         GAME_CURRENT_PLAYER + " TEXT," +
         GAME_PLAYERS + " TEXT," +
         GAME_GRID_TYPE + " INTEGER," +
         GAME_ORB_TYPE + " INTEGER," +
-        GAME_BOX_INFO + " TEXT" +
+        GAME_BOX_INFO + " TEXT," +
         GAME_CELL_INFOS + " TEXT" + " )";
 
     /**

@@ -82,6 +82,7 @@
     <string name="saved_games_item_playerInfo">No of Players :</string>
     <string name="title_activity_game_screen">Game Screen </string>
     <string name="saved_games_no_content">No Saved Games.Click Back to Exit</string>
+    <string name="saved_games_item_play">Play</string>
     <string name="saved_games_retrieval_failed">Sorry ,Unable to Retrieve the Saved Games Now.Please try again</string>
 
     <!-- Strings for the Game Screen -->

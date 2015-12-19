@@ -12,29 +12,18 @@
         android:id="@+id/offline_settings_customtoolbar"
         layout="@layout/view_custom_toolbar"/>
 
-    <!-- Button to resume the Game -->
-    <Button
-        android:id="@+id/saved_settings_gamePlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="@color/saved_games_buttons_background"
-        android:text="@string/saved_games_resume_button"
-        android:textColor="@color/saved_games_textColor"/>
-
 
     <!-- Recycler view for holding the Games -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/saved_games_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/saved_settings_gamePlay"
         android:layout_below="@id/offline_settings_customtoolbar"
         android:visibility="gone">
 
     </android.support.v7.widget.RecyclerView>
 
+    <!-- Progress Bar for status Update -->
     <ProgressBar
         android:id="@+id/saved_games_progress"
         android:layout_width="wrap_content"
@@ -42,6 +31,7 @@
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 
+    <!-- Message if no items present -->
     <TextView
         android:id="@+id/saved_games_noItems"
         android:layout_width="wrap_content"

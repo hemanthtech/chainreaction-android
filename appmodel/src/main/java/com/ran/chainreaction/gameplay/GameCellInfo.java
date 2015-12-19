@@ -3,6 +3,7 @@ package com.ran.chainreaction.gameplay;
 import com.ran.chainreaction.entities.GameBombDirections;
 import com.ran.chainreaction.utlity.GameInfoUtility;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * <p/>
  * A Cell in a Game , which holds required Data ..
  */
-public class GameCellInfo {
+public class GameCellInfo implements Serializable {
 
     private int index;
     private GamePlayerInfo gamePlayerInfo;

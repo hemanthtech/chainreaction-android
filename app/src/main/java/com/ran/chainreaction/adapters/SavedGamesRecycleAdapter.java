@@ -9,8 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +32,6 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
 
     private ArrayList<SavedGamesEntity> dataSet;
     private SavedGamesSelectionInterface savedGamesSelectionInterface;
-    private int currentCheckedGame = -1;
     private Context context;
 
     public SavedGamesRecycleAdapter(Context context, SavedGamesSelectionInterface savedGamesSelectionInterface,
@@ -81,7 +79,6 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
             default:
                 colorId = R.color.white_background_color;
                 break;
-
         }
         drawable.setColorFilter(context.getResources().getColor(colorId), PorterDuff.Mode.SRC_ATOP);
         mTextView.setBackground(drawable);
@@ -89,7 +86,6 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_games_layout_item, parent, false);
         return new ViewHolder(view);
     }
@@ -97,13 +93,8 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         holder.mTitleGame.setText(dataSet.get(position).getGameName());
         addPlayerInfo(holder.mGamePlayerInfoContainer, position);
-        //Todo [ranjith.suda], This is hack made for just code work Around.Ideally to be from DataSet
-        if (currentCheckedGame != -1 && position == currentCheckedGame) {
-            holder.mGameCheckState.setChecked(true);
-        }
     }
 
     /**
@@ -124,6 +115,9 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
      * @param position   -- Position to retrieve the data
      */
     private void addPlayerInfo(LinearLayout scrollView, int position) {
+
+        //First Remove any Previous elements ..
+        scrollView.removeAllViews();
 
         for (int i = 1; i <= dataSet.get(position).getGamePlayerInfos().size(); i++) {
             GamePlayerInfo currentPlayer = dataSet.get(position).getGamePlayerInfos().get(i - 1);
@@ -151,38 +145,23 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleGame;
-        private CheckBox mGameCheckState;
+        private Button mGamePlay;
         private LinearLayout mGamePlayerInfoContainer;
         private ImageView mGameDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             mTitleGame = (TextView) itemView.findViewById(R.id.saved_games_item_title1);
-            mGameCheckState = (CheckBox) itemView.findViewById(R.id.saved_games_item_checkBox);
-            mGameCheckState.setOnCheckedChangeListener(this);
+            mGamePlay = (Button) itemView.findViewById(R.id.saved_games_item_button);
+            mGamePlay.setOnClickListener(this);
             mGamePlayerInfoContainer = (LinearLayout) itemView.findViewById(R.id.saved_games_item_playerInfo);
             mGameDelete = (ImageView) itemView.findViewById(R.id.saved_games_item_delete);
             mGameDelete.setOnClickListener(this);
         }
 
-        /**
-         * Called when the checked state of a compound button has changed.
-         *
-         * @param buttonView The compound button view whose state has changed.
-         * @param isChecked  The new checked state of buttonView.
-         */
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked) {
-                savedGamesSelectionInterface.onGameSelection(dataSet.get(getAdapterPosition()).getGameId());
-                currentCheckedGame = getAdapterPosition();
-                notifyDataSetChanged();
-            }
-        }
 
         /**
          * Called when a view has been clicked.
@@ -191,18 +170,31 @@ public class SavedGamesRecycleAdapter extends RecyclerView.Adapter<SavedGamesRec
          */
         @Override
         public void onClick(View v) {
-            //Retrieve the Id and delete from DataBase .
-            long toDelId = dataSet.get(getAdapterPosition()).getGameId();
-            boolean deleteStatus = ChainReactionDBOpsHelper.getDBInstance(context).deleteGame(toDelId);
-            if (deleteStatus) {
-                dataSet.remove(getAdapterPosition());
-                notifyDataSetChanged();
+
+            switch (v.getId()) {
+                case R.id.saved_games_item_delete:
+
+                    //Retrieve the Id and delete from DataBase .
+                    long toDelId = dataSet.get(getAdapterPosition()).getGameId();
+                    boolean deleteStatus = ChainReactionDBOpsHelper.getDBInstance(context).deleteGame(toDelId);
+                    if (deleteStatus) {
+                        dataSet.remove(getAdapterPosition());
+                        notifyDataSetChanged();
+                    }
+
+                    //Propagate to UI to show the Empty Message , if data set is null
+                    if (dataSet.size() == 0) {
+                        savedGamesSelectionInterface.onAllGamesDeleted();
+                    }
+
+                    break;
+
+                case R.id.saved_games_item_button:
+
+                    //Logic to start the Saved game ..
+                    break;
             }
 
-            //Propagate to UI to show the Empty Message , if data set is null
-            if (dataSet.size() == 0) {
-                savedGamesSelectionInterface.onAllGamesDeleted();
-            }
         }
     }
 

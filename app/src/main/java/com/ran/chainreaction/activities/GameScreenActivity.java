@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +19,7 @@ import com.ran.chainreaction.customviews.ExitAlertDialogCreator;
 import com.ran.chainreaction.customviews.GameArenaContainer;
 import com.ran.chainreaction.customviews.GameWinDialogCreator;
 import com.ran.chainreaction.customviews.SoundSettingsView;
+import com.ran.chainreaction.database.ChainReactionDBOpsHelper;
 import com.ran.chainreaction.entities.PlayColorValues;
 import com.ran.chainreaction.gameplay.GameCellInfo;
 import com.ran.chainreaction.gameplay.GamePlayLogic;
@@ -34,7 +34,7 @@ import com.ran.chainreaction.utlity.GameInfoUtility;
 import com.ran.chainreaction.utlity.GamePreferenceUtils;
 
 import java.lang.reflect.Type;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Game Screen responsible for Current Game , Creates Session and Timer for Current Game
@@ -152,6 +152,8 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         if (isGameStarted) {
             timerInitialization(TIMER_MILLS_FUTURE);
             countDownTimer.start();
+        } else {
+            initialiseGameSession();
         }
     }
 
@@ -167,7 +169,6 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         if (isGameStarted) {
             currentGamePrevTimeElapsed = currentGamePrevTimeElapsed + currentGameTimeElapsed;
         }
-        //Todo [ranjith.suda] Save to  DB ..
         countDownTimer.cancel();
     }
 
@@ -207,7 +208,10 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
                     mBackDialog.dismiss();
                     break;
                 case SAVE_EXIT_TAG:
-                    Toast.makeText(this, "Save and Exit", Toast.LENGTH_SHORT).show();
+                    ChainReactionDBOpsHelper.getDBInstance(this).addCurrentGame(GamePlayLogic.getGameInstance().getGamePlaySession(),
+                        currentGameTimeElapsed + currentGamePrevTimeElapsed,
+                        gameName.getText().toString());
+                    finish();
                     break;
             }
         } catch (Exception e) {
@@ -217,7 +221,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
     }
 
     /**
-     * Called when a Back Key of Activity [Top Navigation] has been clicked.
+     * Needed , when a Back Key of Activity [Top Navigation] has been clicked.
      *
      * @param v The view that was clicked.
      */
@@ -233,7 +237,7 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
 
 
     /**
-     * Method to initialize the Game Sessison , used for Online ,Offline and Saved Games
+     * Method to initialize the Game Session , used for Online ,Offline and Saved Games
      */
     private void initialiseGameSession() {
 
@@ -251,10 +255,10 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         } else {
             GameSizeBoxInfo sizeBoxInfo = GameInfoUtility.generateGameSizeBoxInfo(this, ChainReactionPreferences.getGridSizePreference(this));
             Gson gson = new Gson();
-            Type type = new TypeToken<List<GamePlayerInfo>>() {
+            Type type = new TypeToken<ArrayList<GamePlayerInfo>>() {
             }.getType();
 
-            List<GamePlayerInfo> gamePlayerInfos = gson.fromJson(GamePreferenceUtils.getPlayerInfoGame(this), type);
+            ArrayList<GamePlayerInfo> gamePlayerInfos = gson.fromJson(GamePreferenceUtils.getPlayerInfoGame(this), type);
             GamePlayerInfo currentPlayer = gamePlayerInfos.get(0);
             gamePlaySession = new GamePlaySession(gamePlayerInfos,
                 currentPlayer,
@@ -352,4 +356,5 @@ public class GameScreenActivity extends ActionBarActivity implements ExitAlertDi
         initialiseGameSession();
         mGameWinDialog.dismiss();
     }
+
 }

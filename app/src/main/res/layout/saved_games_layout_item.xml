@@ -33,20 +33,26 @@
             android:textColor="@color/saved_games_textColor"
             />
 
-        <CheckBox
-            android:id="@+id/saved_games_item_checkBox"
+        <Button
+            android:id="@+id/saved_games_item_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/saved_games_item_title_margin"/>
+            android:layout_marginRight="@dimen/saved_games_item_title_margin"
+            android:layout_marginTop="@dimen/saved_games_item_title_margin"
+            android:background="@color/saved_games_buttons_background"
+            android:text="@string/saved_games_item_play"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="@color/saved_games_textColor"/>
 
         <ImageView
             android:id="@+id/saved_games_item_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/saved_games_item_checkBox"
-            android:layout_marginRight="@dimen/saved_games_item_title_margin"
+            android:layout_below="@id/saved_games_item_button"
+            android:layout_marginRight="@dimen/saved_games_item_margin"
+            android:layout_marginTop="@dimen/saved_games_item_margin"
             android:src="@mipmap/ic_delete"/>
 
     </RelativeLayout>

@@ -41,6 +41,15 @@ public class GamePlayLogic {
     }
 
     /**
+     * Utility Method to retrieve the Current Game Session
+     *
+     * @return -- Current Game Session
+     */
+    public GamePlaySession getGamePlaySession() {
+        return gamePlaySession;
+    }
+
+    /**
      * Utility Method to set the Current GamePlaySession ..
      *
      * @param gamePlaySession -- Current Game Play Session
@@ -80,6 +89,9 @@ public class GamePlayLogic {
         gamePlaySession.getGameCellInfos().set(gameCellInfo.getIndex(), gameCellInfo);
         notifyCurrentPlayerUpdates();
     }
+
+
+    // ------------------------ All Private Methods /Helpers are defined Below --------------------
 
     /**
      * Method call to process the Orb /Bomb Blast

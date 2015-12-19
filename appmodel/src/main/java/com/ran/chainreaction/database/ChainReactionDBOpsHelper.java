@@ -4,12 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ran.chainreaction.entities.BombValues;
 import com.ran.chainreaction.entities.GridSizeValues;
 import com.ran.chainreaction.entities.SavedGamesEntity;
+import com.ran.chainreaction.gameplay.GameCellInfo;
 import com.ran.chainreaction.gameplay.GamePlaySession;
+import com.ran.chainreaction.gameplay.GamePlayerInfo;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.ran.chainreaction.database.ChainReactionDBHelper.GAME_BOX_INFO;
@@ -30,6 +36,7 @@ import static com.ran.chainreaction.database.ChainReactionDBHelper.TABLE_GAME;
  */
 public class ChainReactionDBOpsHelper {
 
+    private static final String TAG = ChainReactionDBOpsHelper.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static ChainReactionDBOpsHelper dbOpsHelper;
     private ChainReactionDBHelper chainReactionDBHelper;
@@ -57,17 +64,31 @@ public class ChainReactionDBOpsHelper {
      */
     public boolean addCurrentGame(GamePlaySession gamePlaySession, long gameTime, String gameName) {
 
+        Gson gson = new Gson();
+        Type type_PlayerInfo = new TypeToken<ArrayList<GamePlayerInfo>>() {
+        }.getType();
+        Type type_GameCellInfo = new TypeToken<ArrayList<GameCellInfo>>() {
+        }.getType();
+
+        String currentPlayerJson = gson.toJson(gamePlaySession.getCurrentPlayer());
+        String currentPlayersJson = gson.toJson(gamePlaySession.getGamePlayerInfos(), type_PlayerInfo);
+        String currentCellInfoSJson = gson.toJson(gamePlaySession.getGameCellInfos(), type_GameCellInfo);
+        String currentGameBoxJson = gson.toJson(gamePlaySession.getGameSizeBoxInfo());
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put(GAME_ID, gameTime);
         contentValues.put(GAME_NAME, gameName);
         contentValues.put(GAME_GRID_TYPE, GridSizeValues.getIndex(gamePlaySession.getPlayerGridType()));
         contentValues.put(GAME_ORB_TYPE, BombValues.getIndex(gamePlaySession.getGameBombType()));
         contentValues.put(GAME_TIME, gameTime);
+        contentValues.put(GAME_CURRENT_PLAYER, currentPlayerJson);
+        contentValues.put(GAME_PLAYERS, currentPlayersJson);
+        contentValues.put(GAME_CELL_INFOS, currentCellInfoSJson);
+        contentValues.put(GAME_BOX_INFO, currentGameBoxJson);
+
 
         SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getWritableDatabase();
-        long newRowId = sqLiteDatabase.insert(TABLE_GAME,
-            null,
-            contentValues);
+        long newRowId = sqLiteDatabase.insert(TABLE_GAME, null, contentValues);
+        Log.d(TAG, "new Row id  : " + newRowId);
         sqLiteDatabase.close();
         return newRowId != -1;
     }
@@ -104,8 +125,12 @@ public class ChainReactionDBOpsHelper {
             String gameName = cursor.getString(cursor.getColumnIndex(GAME_NAME));
             long gameId = cursor.getLong(cursor.getColumnIndex(GAME_ID));
             String gamePlayersInfo = cursor.getString(cursor.getColumnIndex(GAME_PLAYERS));
-            //TODO [ranjith.suda] , convert the gamePlayernInfo to GamePlayerInfo List ..
-            SavedGamesEntity entity = new SavedGamesEntity(gameName, gameId, null);
+
+            Gson gson = new Gson();
+            Type type_PlayerInfo = new TypeToken<ArrayList<GamePlayerInfo>>() {
+            }.getType();
+            ArrayList<GamePlayerInfo> playerInfos = gson.fromJson(gamePlayersInfo, type_PlayerInfo);
+            SavedGamesEntity entity = new SavedGamesEntity(gameName, gameId, playerInfos);
             savedGamesEntities.add(entity);
         }
         cursor.close();
