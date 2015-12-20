@@ -104,7 +104,7 @@ public class SplashActivity extends ActionBarActivity implements View.OnClickLis
                 break;
 
             case R.id.splash_how_play:
-                showCustomToastClick(getResources().getString(R.string.how_play_button));
+                ChainReactionNavigator.openHowToPlayActivity(this);
                 break;
 
             case R.id.splash_app_settings:

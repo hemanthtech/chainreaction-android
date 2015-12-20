@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ran.chainreaction.activities.GameScreenActivity;
+import com.ran.chainreaction.activities.HowToPlayActivity;
 import com.ran.chainreaction.activities.OfflineSettingsActivity;
 import com.ran.chainreaction.activities.SavedGamesActivity;
 import com.ran.chainreaction.activities.SettingsActivity;
@@ -69,6 +70,16 @@ public class ChainReactionNavigator {
         intent.putExtra(ChainReactionConstants.SAVED_GAME_ID_KEY, gameId);
         intent.putExtra(ChainReactionConstants.SAVED_GAME_KEY, true);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Method to Open How to Play Screen ..
+     *
+     * @param context -- Context of the App.
+     */
+    public static void openHowToPlayActivity(Context context) {
+        Intent intent = new Intent(context, HowToPlayActivity.class);
         context.startActivity(intent);
     }
 }

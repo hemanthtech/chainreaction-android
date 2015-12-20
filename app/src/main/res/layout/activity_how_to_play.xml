@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ran.chainreaction.activities.HowToPlayActivity">
+
+    <!-- Toolbar for Title and Sound -->
+    <include
+        android:id="@+id/how_to_play_titleBar"
+        layout="@layout/view_custom_toolbar"/>
+
+
+    <!-- Button to start the Game -->
+    <Button
+        android:id="@+id/how_to_Play_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:background="@color/how_to_play_buttons_Background"
+        android:text="@string/how_to_play_startGame"
+        android:textColor="@color/how_to_play_textColor"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/how_to_Play_start"
+        android:layout_below="@id/how_to_play_titleBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/how_to_play_scroll_view_border_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/how_to_play_item_margin"
+                android:text="@string/how_to_play_line1"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/how_to_play_item_margin"
+                android:text="@string/how_to_play_line2"
+                android:textAppearance="@android:style/TextAppearance.Large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/how_to_play_item_margin"
+                android:text="@string/how_to_play_paragraph"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_margin="@dimen/how_to_play_item_margin"
+                android:background="@color/how_to_play_textColor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/how_to_play_item_margin"
+                android:text="@string/how_to_play_settings"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

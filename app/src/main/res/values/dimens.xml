@@ -57,5 +57,8 @@
     <dimen name="game_win_image_height">200dp</dimen>
     <dimen name="game_win_image_vertical_margin">20dp</dimen>
 
+    <!-- How to Play Dimens -->
+    <dimen name="how_to_play_scroll_view_border_margin">15dp</dimen>
+    <dimen name="how_to_play_item_margin">5dp</dimen>
 
 </resources>

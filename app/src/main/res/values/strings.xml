@@ -102,4 +102,17 @@
     <string name="player_win_restart">Restart</string>
     <string name="player_win_exit">Exit</string>
 
+    <!-- Strings for the How to Play Game Info -->
+    <string name="how_to_play_tile">Game Instructions to Play</string>
+    <string name="how_to_play_startGame">Let\'s Play</string>
+    <string name="how_to_play_line1">A Strategy Game for 2 to 8 Players</string>
+    <string name="how_to_play_line2">The Objective of Chain Reaction is to take control of the Board by eliminating your opponents orbs.</string>
+    <string name="how_to_play_paragraph">a) Players take it in turns to place their Orbs in a Cell.\n
+        b) Once a cell has reached Critical mass , the orbs explode into the surrounding cells adding an extra orb and claiming the cell for the Player.\n
+        c) A Player may only place their orbs in a blank cell or a cell that contains orbs of their own Colour.\n \n
+        As soon as a player looses all their orbs  , they are out of the game.
+    </string>
+
+    <string name="how_to_play_settings">Open the Settings Icon on top Right of Main Screen for various Orbs,Player Settings</string>
+
 </resources>
