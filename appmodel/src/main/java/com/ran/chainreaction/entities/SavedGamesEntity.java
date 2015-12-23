@@ -11,27 +11,27 @@ import java.util.ArrayList;
  */
 public class SavedGamesEntity {
 
-    private String gameName;
-    private long gameId;
-    private ArrayList<GamePlayerInfo> gamePlayerInfos;
+  private String gameName;
+  private long gameId;
+  private ArrayList<GamePlayerInfo> gamePlayerInfos;
 
 
-    public SavedGamesEntity(String gameName, long gameId, ArrayList<GamePlayerInfo> gamePlayerInfos) {
-        this.gameId = gameId;
-        this.gameName = gameName;
-        this.gamePlayerInfos = gamePlayerInfos;
-    }
+  public SavedGamesEntity(String gameName, long gameId, ArrayList<GamePlayerInfo> gamePlayerInfos) {
+    this.gameId = gameId;
+    this.gameName = gameName;
+    this.gamePlayerInfos = gamePlayerInfos;
+  }
 
-    public String getGameName() {
-        return gameName;
-    }
+  public String getGameName() {
+    return gameName;
+  }
 
-    public long getGameId() {
-        return gameId;
-    }
+  public long getGameId() {
+    return gameId;
+  }
 
-    public ArrayList<GamePlayerInfo> getGamePlayerInfos() {
-        return gamePlayerInfos;
-    }
+  public ArrayList<GamePlayerInfo> getGamePlayerInfos() {
+    return gamePlayerInfos;
+  }
 
 }

@@ -18,18 +18,16 @@ import com.ran.chainreaction.gameplay.GamePlayerInfo;
  */
 public class GameWinDialogCreator {
 
-  private static GameWinCallBacks gameWinCallBacks;
+  private static AlertDialog alertDialog;
 
   /**
    * Utility Method to create the Game Win Dialog
    *
    * @param context    -- Context of the Screen
    * @param playerInfo -- PlayerInfo who Won
-   * @return -- Dialog created
    */
-  public static AlertDialog createDialog(final Context context, GamePlayerInfo playerInfo) {
-    gameWinCallBacks = (GameWinCallBacks) context;
-
+  public static void createDialog(final GameWinCallBacks gameWinCallBacks, GamePlayerInfo
+      playerInfo, Context context) {
     LayoutInflater layoutInflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     LinearLayout parentLayout =
@@ -39,6 +37,7 @@ public class GameWinDialogCreator {
     Exit.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        alertDialog.dismiss();
         gameWinCallBacks.onGameWinExitClick();
       }
     });
@@ -46,6 +45,7 @@ public class GameWinDialogCreator {
     Restart.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        alertDialog.dismiss();
         gameWinCallBacks.onGameWinRestartClick();
       }
     });
@@ -58,8 +58,8 @@ public class GameWinDialogCreator {
         new AlertDialog.Builder(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
             .setView(parentLayout)
             .setCancelable(false);
-
-    return mBuilder.create();
+    alertDialog = mBuilder.create();
+    alertDialog.show();
   }
 
   public interface GameWinCallBacks {

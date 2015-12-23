@@ -38,158 +38,161 @@ import static com.ran.chainreaction.database.ChainReactionDBHelper.TABLE_GAME;
  */
 public class ChainReactionDBOpsHelper {
 
-    private static final String TAG = ChainReactionDBOpsHelper.class.getSimpleName();
-    private static final Object LOCK = new Object();
-    private static ChainReactionDBOpsHelper dbOpsHelper;
-    private ChainReactionDBHelper chainReactionDBHelper;
+  private static final String TAG = ChainReactionDBOpsHelper.class.getSimpleName();
+  private static final Object LOCK = new Object();
+  private static ChainReactionDBOpsHelper dbOpsHelper;
+  private ChainReactionDBHelper chainReactionDBHelper;
 
-    private ChainReactionDBOpsHelper(Context context) {
-        chainReactionDBHelper = new ChainReactionDBHelper(context);
+  private ChainReactionDBOpsHelper(Context context) {
+    chainReactionDBHelper = new ChainReactionDBHelper(context);
+  }
+
+  public static ChainReactionDBOpsHelper getDBInstance(Context context) {
+    synchronized (LOCK) {
+      if (dbOpsHelper == null) {
+        dbOpsHelper = new ChainReactionDBOpsHelper(context);
+      }
+    }
+    return dbOpsHelper;
+  }
+
+  /**
+   * Method to add Current Game Play Session to the DB
+   *
+   * @param gamePlaySession -- Current Game Play Session
+   * @param gameTime        -- Game Time Elapsed
+   * @param gameName        -- Name of the game
+   * @return -- Whether Operation is Success /Not
+   */
+  public boolean addCurrentGame(GamePlaySession gamePlaySession, long gameTime, String gameName) {
+
+    Gson gson = new Gson();
+    Type type_PlayerInfo = new TypeToken<ArrayList<GamePlayerInfo>>() {
+    }.getType();
+    Type type_GameCellInfo = new TypeToken<ArrayList<GameCellInfo>>() {
+    }.getType();
+
+    String currentPlayerJson = gson.toJson(gamePlaySession.getCurrentPlayer());
+    String currentPlayersJson = gson.toJson(gamePlaySession.getGamePlayerInfos(), type_PlayerInfo);
+    String currentCellInfoSJson =
+        gson.toJson(gamePlaySession.getGameCellInfos(), type_GameCellInfo);
+    String currentGameBoxJson = gson.toJson(gamePlaySession.getGameSizeBoxInfo());
+
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(GAME_NAME, gameName);
+    contentValues.put(GAME_GRID_TYPE, GridSizeValues.getIndex(gamePlaySession.getPlayerGridType()));
+    contentValues.put(GAME_ORB_TYPE, BombValues.getIndex(gamePlaySession.getGameBombType()));
+    contentValues.put(GAME_TIME, gameTime);
+    contentValues.put(GAME_CURRENT_PLAYER, currentPlayerJson);
+    contentValues.put(GAME_PLAYERS, currentPlayersJson);
+    contentValues.put(GAME_CELL_INFOS, currentCellInfoSJson);
+    contentValues.put(GAME_BOX_INFO, currentGameBoxJson);
+
+
+    SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getWritableDatabase();
+    long newRowId = sqLiteDatabase.insert(TABLE_GAME, null, contentValues);
+    Log.d(TAG, "new Row id  : " + newRowId);
+    sqLiteDatabase.close();
+    return newRowId != -1;
+  }
+
+  /**
+   * Method to Delete the Game in the DB
+   *
+   * @param gameId -- Id of the Game to be Deleted
+   * @return -- Whether Operation is success or not
+   */
+  public boolean deleteGame(long gameId) {
+    String selectionQuery = GAME_ID + " =?";
+    SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getWritableDatabase();
+    int rowsEffected = sqLiteDatabase.delete(TABLE_GAME,
+        selectionQuery, new String[]{String.valueOf(gameId)});
+    sqLiteDatabase.close();
+    return rowsEffected != 0;
+  }
+
+  /**
+   * Method to generate the SavedGames ArrayList for Recycler
+   *
+   * @return -- ArrayList of the SavedGamesEntity
+   */
+  public ArrayList<SavedGamesEntity> retrieveGamesFromDB() {
+
+    ArrayList<SavedGamesEntity> savedGamesEntities = new ArrayList<>();
+    SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getReadableDatabase();
+
+    String selectionColumns[] = new String[]{GAME_ID, GAME_NAME, GAME_PLAYERS};
+    String selectionOrderBy = GAME_TIME + " DESC";
+    Cursor cursor = sqLiteDatabase.query(TABLE_GAME, selectionColumns, null, null, null, null,
+        selectionOrderBy);
+    while (cursor.moveToNext()) {
+      String gameName = cursor.getString(cursor.getColumnIndex(GAME_NAME));
+      long gameId = cursor.getLong(cursor.getColumnIndex(GAME_ID));
+      String gamePlayersInfo = cursor.getString(cursor.getColumnIndex(GAME_PLAYERS));
+
+      Gson gson = new Gson();
+      Type type_PlayerInfo = new TypeToken<ArrayList<GamePlayerInfo>>() {
+      }.getType();
+      ArrayList<GamePlayerInfo> playerInfos = gson.fromJson(gamePlayersInfo, type_PlayerInfo);
+      SavedGamesEntity entity = new SavedGamesEntity(gameName, gameId, playerInfos);
+      savedGamesEntities.add(entity);
+    }
+    cursor.close();
+    sqLiteDatabase.close();
+
+    return savedGamesEntities;
+  }
+
+  /**
+   * Method to generate the GamePlaySession
+   *
+   * @param gameId -- Game Id for which to be generated
+   * @return -- SavedGamePlayEntity Created
+   */
+  public SavedGamePlayEntity retrieveGameSession(long gameId) {
+
+    SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getReadableDatabase();
+    String selectionQuery = GAME_ID + " =?";
+    String selectionArgs[] = new String[]{String.valueOf(gameId)};
+
+    SavedGamePlayEntity savedGamePlayEntity;
+
+    Cursor cursor =
+        sqLiteDatabase.query(TABLE_GAME, null, selectionQuery, selectionArgs, null, null, null);
+    if (cursor.moveToNext()) {
+      Gson gson = new Gson();
+      Type type_PlayerInfoS = new TypeToken<ArrayList<GamePlayerInfo>>() {
+      }.getType();
+      Type type_GameCellInfoS = new TypeToken<ArrayList<GameCellInfo>>() {
+      }.getType();
+
+      String gameName = cursor.getString(cursor.getColumnIndex(GAME_NAME));
+      long gameElapsedTime = cursor.getLong(cursor.getColumnIndex(GAME_TIME));
+      String gameCurrentPlayer = cursor.getString(cursor.getColumnIndex(GAME_CURRENT_PLAYER));
+      String currentPlayers = cursor.getString(cursor.getColumnIndex(GAME_PLAYERS));
+      String gameBoxInfo = cursor.getString(cursor.getColumnIndex(GAME_BOX_INFO));
+      String cellInfoS = cursor.getString(cursor.getColumnIndex(GAME_CELL_INFOS));
+      int OrbType = cursor.getInt(cursor.getColumnIndex(GAME_ORB_TYPE));
+      int GridType = cursor.getInt(cursor.getColumnIndex(GAME_GRID_TYPE));
+
+      ArrayList<GamePlayerInfo> gamePlayers = gson.fromJson(currentPlayers, type_PlayerInfoS);
+      ArrayList<GameCellInfo> gameCellInfos = gson.fromJson(cellInfoS, type_GameCellInfoS);
+      cursor.close();
+      sqLiteDatabase.close();
+
+      GamePlaySession temp_Session = new GamePlaySession(gamePlayers,
+          gson.fromJson(gameCurrentPlayer, GamePlayerInfo.class),
+          GridSizeValues.getEnumType(GridType),
+          BombValues.getEnumType(OrbType),
+          gson.fromJson(gameBoxInfo, GameSizeBoxInfo.class),
+          gameCellInfos);
+      savedGamePlayEntity = new SavedGamePlayEntity(temp_Session, gameName, gameElapsedTime);
+      return savedGamePlayEntity;
+    } else {
+      cursor.close();
+      sqLiteDatabase.close();
+      return null;
     }
 
-    public static ChainReactionDBOpsHelper getDBInstance(Context context) {
-        synchronized (LOCK) {
-            if (dbOpsHelper == null) {
-                dbOpsHelper = new ChainReactionDBOpsHelper(context);
-            }
-        }
-        return dbOpsHelper;
-    }
-
-    /**
-     * Method to add Current Game Play Session to the DB
-     *
-     * @param gamePlaySession -- Current Game Play Session
-     * @param gameTime        -- Game Time Elapsed
-     * @param gameName        -- Name of the game
-     * @return -- Whether Operation is Success /Not
-     */
-    public boolean addCurrentGame(GamePlaySession gamePlaySession, long gameTime, String gameName) {
-
-        Gson gson = new Gson();
-        Type type_PlayerInfo = new TypeToken<ArrayList<GamePlayerInfo>>() {
-        }.getType();
-        Type type_GameCellInfo = new TypeToken<ArrayList<GameCellInfo>>() {
-        }.getType();
-
-        String currentPlayerJson = gson.toJson(gamePlaySession.getCurrentPlayer());
-        String currentPlayersJson = gson.toJson(gamePlaySession.getGamePlayerInfos(), type_PlayerInfo);
-        String currentCellInfoSJson = gson.toJson(gamePlaySession.getGameCellInfos(), type_GameCellInfo);
-        String currentGameBoxJson = gson.toJson(gamePlaySession.getGameSizeBoxInfo());
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(GAME_NAME, gameName);
-        contentValues.put(GAME_GRID_TYPE, GridSizeValues.getIndex(gamePlaySession.getPlayerGridType()));
-        contentValues.put(GAME_ORB_TYPE, BombValues.getIndex(gamePlaySession.getGameBombType()));
-        contentValues.put(GAME_TIME, gameTime);
-        contentValues.put(GAME_CURRENT_PLAYER, currentPlayerJson);
-        contentValues.put(GAME_PLAYERS, currentPlayersJson);
-        contentValues.put(GAME_CELL_INFOS, currentCellInfoSJson);
-        contentValues.put(GAME_BOX_INFO, currentGameBoxJson);
-
-
-        SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getWritableDatabase();
-        long newRowId = sqLiteDatabase.insert(TABLE_GAME, null, contentValues);
-        Log.d(TAG, "new Row id  : " + newRowId);
-        sqLiteDatabase.close();
-        return newRowId != -1;
-    }
-
-    /**
-     * Method to Delete the Game in the DB
-     *
-     * @param gameId -- Id of the Game to be Deleted
-     * @return -- Whether Operation is success or not
-     */
-    public boolean deleteGame(long gameId) {
-        String selectionQuery = GAME_ID + " =?";
-        SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getWritableDatabase();
-        int rowsEffected = sqLiteDatabase.delete(TABLE_GAME,
-            selectionQuery, new String[]{String.valueOf(gameId)});
-        sqLiteDatabase.close();
-        return rowsEffected != 0;
-    }
-
-    /**
-     * Method to generate the SavedGames ArrayList for Recycler
-     *
-     * @return -- ArrayList of the SavedGamesEntity
-     */
-    public ArrayList<SavedGamesEntity> retrieveGamesFromDB() {
-
-        ArrayList<SavedGamesEntity> savedGamesEntities = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getReadableDatabase();
-
-        String selectionColumns[] = new String[]{GAME_ID, GAME_NAME, GAME_PLAYERS};
-        String selectionOrderBy = GAME_TIME + " DESC";
-        Cursor cursor = sqLiteDatabase.query(TABLE_GAME, selectionColumns, null, null, null, null, selectionOrderBy);
-        while (cursor.moveToNext()) {
-            String gameName = cursor.getString(cursor.getColumnIndex(GAME_NAME));
-            long gameId = cursor.getLong(cursor.getColumnIndex(GAME_ID));
-            String gamePlayersInfo = cursor.getString(cursor.getColumnIndex(GAME_PLAYERS));
-
-            Gson gson = new Gson();
-            Type type_PlayerInfo = new TypeToken<ArrayList<GamePlayerInfo>>() {
-            }.getType();
-            ArrayList<GamePlayerInfo> playerInfos = gson.fromJson(gamePlayersInfo, type_PlayerInfo);
-            SavedGamesEntity entity = new SavedGamesEntity(gameName, gameId, playerInfos);
-            savedGamesEntities.add(entity);
-        }
-        cursor.close();
-        sqLiteDatabase.close();
-
-        return savedGamesEntities;
-    }
-
-    /**
-     * Method to generate the GamePlaySession
-     *
-     * @param gameId -- Game Id for which to be generated
-     * @return -- SavedGamePlayEntity Created
-     */
-    public SavedGamePlayEntity retrieveGameSession(long gameId) {
-
-        SQLiteDatabase sqLiteDatabase = chainReactionDBHelper.getReadableDatabase();
-        String selectionQuery = GAME_ID + " =?";
-        String selectionArgs[] = new String[]{String.valueOf(gameId)};
-
-        SavedGamePlayEntity savedGamePlayEntity;
-
-        Cursor cursor = sqLiteDatabase.query(TABLE_GAME, null, selectionQuery, selectionArgs, null, null, null);
-        if (cursor.moveToNext()) {
-            Gson gson = new Gson();
-            Type type_PlayerInfoS = new TypeToken<ArrayList<GamePlayerInfo>>() {
-            }.getType();
-            Type type_GameCellInfoS = new TypeToken<ArrayList<GameCellInfo>>() {
-            }.getType();
-
-            String gameName = cursor.getString(cursor.getColumnIndex(GAME_NAME));
-            long gameElapsedTime = cursor.getLong(cursor.getColumnIndex(GAME_TIME));
-            String gameCurrentPlayer = cursor.getString(cursor.getColumnIndex(GAME_CURRENT_PLAYER));
-            String currentPlayers = cursor.getString(cursor.getColumnIndex(GAME_PLAYERS));
-            String gameBoxInfo = cursor.getString(cursor.getColumnIndex(GAME_BOX_INFO));
-            String cellInfoS = cursor.getString(cursor.getColumnIndex(GAME_CELL_INFOS));
-            int OrbType = cursor.getInt(cursor.getColumnIndex(GAME_ORB_TYPE));
-            int GridType = cursor.getInt(cursor.getColumnIndex(GAME_GRID_TYPE));
-
-            ArrayList<GamePlayerInfo> gamePlayers = gson.fromJson(currentPlayers, type_PlayerInfoS);
-            ArrayList<GameCellInfo> gameCellInfos = gson.fromJson(cellInfoS, type_GameCellInfoS);
-            cursor.close();
-            sqLiteDatabase.close();
-
-            GamePlaySession temp_Session = new GamePlaySession(gamePlayers,
-                gson.fromJson(gameCurrentPlayer, GamePlayerInfo.class),
-                GridSizeValues.getEnumType(GridType),
-                BombValues.getEnumType(OrbType),
-                gson.fromJson(gameBoxInfo, GameSizeBoxInfo.class),
-                gameCellInfos);
-            savedGamePlayEntity = new SavedGamePlayEntity(temp_Session, gameName, gameElapsedTime);
-            return savedGamePlayEntity;
-        } else {
-            cursor.close();
-            sqLiteDatabase.close();
-            return null;
-        }
-
-    }
+  }
 }

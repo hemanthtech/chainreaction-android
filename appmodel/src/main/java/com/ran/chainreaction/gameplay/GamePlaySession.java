@@ -13,95 +13,96 @@ import java.util.List;
  */
 public class GamePlaySession {
 
-    /**
-     * List of Players playing this game
-     */
-    private List<GamePlayerInfo> gamePlayerInfos;
+  /**
+   * List of Players playing this game
+   */
+  private List<GamePlayerInfo> gamePlayerInfos;
 
-    /**
-     * Current Player playing this Game
-     */
-    private GamePlayerInfo currentPlayer;
+  /**
+   * Current Player playing this Game
+   */
+  private GamePlayerInfo currentPlayer;
 
-    /**
-     * Type pf Grid used for this Game [Small,Middle,Large]
-     */
-    private GridSizeValues playerGridType;
+  /**
+   * Type pf Grid used for this Game [Small,Middle,Large]
+   */
+  private GridSizeValues playerGridType;
 
-    /**
-     * Type of Bomb Used for this Game[Circle ,Triangle or Square]
-     */
-    private BombValues gameBombType;
+  /**
+   * Type of Bomb Used for this Game[Circle ,Triangle or Square]
+   */
+  private BombValues gameBombType;
 
-    /**
-     * Current Game X, y boxes to be drawn based on GridSize Value
-     */
-    private GameSizeBoxInfo gameSizeBoxInfo;
+  /**
+   * Current Game X, y boxes to be drawn based on GridSize Value
+   */
+  private GameSizeBoxInfo gameSizeBoxInfo;
 
-    /**
-     * Array list holding all the Info of the Game Cell's
-     */
-    private ArrayList<GameCellInfo> gameCellInfos;
-
-
-    public GamePlaySession(List<GamePlayerInfo> gamePlayerInfos, GamePlayerInfo currentPlayer,
-                           GridSizeValues playerGridType, BombValues gameBombType, GameSizeBoxInfo gameSizeBoxInfo,
-                           ArrayList<GameCellInfo> gameCellInfos) {
-
-        this.gameBombType = gameBombType;
-        this.gamePlayerInfos = gamePlayerInfos;
-        this.gameSizeBoxInfo = gameSizeBoxInfo;
-        this.gameCellInfos = gameCellInfos;
-        this.currentPlayer = currentPlayer;
-        this.playerGridType = playerGridType;
-    }
+  /**
+   * Array list holding all the Info of the Game Cell's
+   */
+  private ArrayList<GameCellInfo> gameCellInfos;
 
 
-    public List<GamePlayerInfo> getGamePlayerInfos() {
-        return gamePlayerInfos;
-    }
+  public GamePlaySession(List<GamePlayerInfo> gamePlayerInfos, GamePlayerInfo currentPlayer,
+                         GridSizeValues playerGridType, BombValues gameBombType,
+                         GameSizeBoxInfo gameSizeBoxInfo,
+                         ArrayList<GameCellInfo> gameCellInfos) {
 
-    public void setGamePlayerInfos(ArrayList<GamePlayerInfo> gamePlayerInfos) {
-        this.gamePlayerInfos = gamePlayerInfos;
-    }
+    this.gameBombType = gameBombType;
+    this.gamePlayerInfos = gamePlayerInfos;
+    this.gameSizeBoxInfo = gameSizeBoxInfo;
+    this.gameCellInfos = gameCellInfos;
+    this.currentPlayer = currentPlayer;
+    this.playerGridType = playerGridType;
+  }
 
-    public GamePlayerInfo getCurrentPlayer() {
-        return currentPlayer;
-    }
 
-    public void setCurrentPlayer(GamePlayerInfo currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
+  public List<GamePlayerInfo> getGamePlayerInfos() {
+    return gamePlayerInfos;
+  }
 
-    public ArrayList<GameCellInfo> getGameCellInfos() {
-        return gameCellInfos;
-    }
+  public void setGamePlayerInfos(ArrayList<GamePlayerInfo> gamePlayerInfos) {
+    this.gamePlayerInfos = gamePlayerInfos;
+  }
 
-    public void setGameCellInfos(ArrayList<GameCellInfo> gameCellInfos) {
-        this.gameCellInfos = gameCellInfos;
-    }
+  public GamePlayerInfo getCurrentPlayer() {
+    return currentPlayer;
+  }
 
-    public GameSizeBoxInfo getGameSizeBoxInfo() {
-        return gameSizeBoxInfo;
-    }
+  public void setCurrentPlayer(GamePlayerInfo currentPlayer) {
+    this.currentPlayer = currentPlayer;
+  }
 
-    public void setGameSizeBoxInfo(GameSizeBoxInfo gameSizeBoxInfo) {
-        this.gameSizeBoxInfo = gameSizeBoxInfo;
-    }
+  public ArrayList<GameCellInfo> getGameCellInfos() {
+    return gameCellInfos;
+  }
 
-    public GridSizeValues getPlayerGridType() {
-        return playerGridType;
-    }
+  public void setGameCellInfos(ArrayList<GameCellInfo> gameCellInfos) {
+    this.gameCellInfos = gameCellInfos;
+  }
 
-    public void setPlayerGridType(GridSizeValues playerGridType) {
-        this.playerGridType = playerGridType;
-    }
+  public GameSizeBoxInfo getGameSizeBoxInfo() {
+    return gameSizeBoxInfo;
+  }
 
-    public BombValues getGameBombType() {
-        return gameBombType;
-    }
+  public void setGameSizeBoxInfo(GameSizeBoxInfo gameSizeBoxInfo) {
+    this.gameSizeBoxInfo = gameSizeBoxInfo;
+  }
 
-    public void setGameBombType(BombValues gameBombType) {
-        this.gameBombType = gameBombType;
-    }
+  public GridSizeValues getPlayerGridType() {
+    return playerGridType;
+  }
+
+  public void setPlayerGridType(GridSizeValues playerGridType) {
+    this.playerGridType = playerGridType;
+  }
+
+  public BombValues getGameBombType() {
+    return gameBombType;
+  }
+
+  public void setGameBombType(BombValues gameBombType) {
+    this.gameBombType = gameBombType;
+  }
 }

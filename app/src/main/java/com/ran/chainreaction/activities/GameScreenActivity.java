@@ -60,7 +60,6 @@ public class GameScreenActivity extends ActionBarActivity
 
   //AlertDialog Related
   AlertDialog mBackDialog;
-  AlertDialog mGameWinDialog;
   String mBackDialogEntries[];
   String mBackDialogTitle;
   //Saved Game Req Things .
@@ -105,7 +104,6 @@ public class GameScreenActivity extends ActionBarActivity
     if (getSupportActionBar() != null) {
       getSupportActionBar().hide();
     }
-
     getIncomingIntentParams();
     initView();
   }
@@ -148,7 +146,6 @@ public class GameScreenActivity extends ActionBarActivity
     }
 
     timerInitialization(TIMER_MILLS_FUTURE);
-    initialiseGameSession();
   }
 
   @Override
@@ -258,6 +255,7 @@ public class GameScreenActivity extends ActionBarActivity
     gameScreenContainer.removeAllViews();
     gameScreenContainer.setVisibility(View.INVISIBLE);
     progressBar.setVisibility(View.VISIBLE);
+    GamePlayLogic.getGameInstance().resetGame();
 
     if (isOnline) {
       //Todo ranjith.suda [online]
@@ -349,9 +347,8 @@ public class GameScreenActivity extends ActionBarActivity
    * @param gamePlayerInfo -- Player who has won the Game
    */
   @Override
-  public void updatePlayerWinStatus(GamePlayerInfo gamePlayerInfo) {
-    mGameWinDialog = GameWinDialogCreator.createDialog(this, gamePlayerInfo);
-    mGameWinDialog.show();
+  public void updatePlayerWinStatus(final GamePlayerInfo gamePlayerInfo) {
+    GameWinDialogCreator.createDialog(this, gamePlayerInfo, GameScreenActivity.this);
   }
 
 
@@ -360,7 +357,6 @@ public class GameScreenActivity extends ActionBarActivity
    */
   @Override
   public void onGameWinExitClick() {
-    mGameWinDialog.dismiss();
     finish();
   }
 
@@ -371,7 +367,6 @@ public class GameScreenActivity extends ActionBarActivity
   public void onGameWinRestartClick() {
     GamePlayLogic.getGameInstance().resetGame();
     initialiseGameSession();
-    mGameWinDialog.dismiss();
   }
 
 }

@@ -11,43 +11,44 @@ import java.io.Serializable;
  */
 public class GamePlayerInfo implements Serializable {
 
-    private PlayColorValues playerColor;
-    private int playerIndex;
-    private String playerName;
+  private PlayColorValues playerColor;
+  private int playerIndex;
+  private String playerName;
 
-    public GamePlayerInfo(PlayColorValues playColor, int playerIndex, String playerName) {
-        this.playerIndex = playerIndex;
-        this.playerName = playerName;
-        this.playerColor = playColor;
-    }
+  public GamePlayerInfo(PlayColorValues playColor, int playerIndex, String playerName) {
+    this.playerIndex = playerIndex;
+    this.playerName = playerName;
+    this.playerColor = playColor;
+  }
 
-    public PlayColorValues getPlayerColor() {
-        return playerColor;
-    }
+  public PlayColorValues getPlayerColor() {
+    return playerColor;
+  }
 
-    public void setPlayerColor(PlayColorValues playerColor) {
-        this.playerColor = playerColor;
-    }
+  public void setPlayerColor(PlayColorValues playerColor) {
+    this.playerColor = playerColor;
+  }
 
-    public int getPlayerIndex() {
-        return playerIndex;
-    }
+  public int getPlayerIndex() {
+    return playerIndex;
+  }
 
-    public void setPlayerIndex(int playerIndex) {
-        this.playerIndex = playerIndex;
-    }
+  public void setPlayerIndex(int playerIndex) {
+    this.playerIndex = playerIndex;
+  }
 
-    public String getPlayerName() {
-        return playerName;
-    }
+  public String getPlayerName() {
+    return playerName;
+  }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
+  public void setPlayerName(String playerName) {
+    this.playerName = playerName;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        GamePlayerInfo objParm = (GamePlayerInfo) o;
-        return objParm.getPlayerIndex() == playerIndex && objParm.getPlayerName().equalsIgnoreCase(playerName);
-    }
+  @Override
+  public boolean equals(Object o) {
+    GamePlayerInfo objParm = (GamePlayerInfo) o;
+    return objParm.getPlayerIndex() == playerIndex &&
+        objParm.getPlayerName().equalsIgnoreCase(playerName);
+  }
 }

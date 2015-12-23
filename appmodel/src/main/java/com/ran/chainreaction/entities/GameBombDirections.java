@@ -7,16 +7,16 @@ package com.ran.chainreaction.entities;
  */
 public enum GameBombDirections {
 
-    LEFT(0, "left"),
-    TOP(1, "top"),
-    RIGHT(2, "right"),
-    BOTTOM(3, "bottom");
+  LEFT(0, "left"),
+  TOP(1, "top"),
+  RIGHT(2, "right"),
+  BOTTOM(3, "bottom");
 
-    int index;
-    String name;
+  int index;
+  String name;
 
-    GameBombDirections(int index, String name) {
-        this.index = index;
-        this.name = name;
-    }
+  GameBombDirections(int index, String name) {
+    this.index = index;
+    this.name = name;
+  }
 }

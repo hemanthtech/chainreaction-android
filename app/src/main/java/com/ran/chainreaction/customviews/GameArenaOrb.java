@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.ran.chainreaction.R;
@@ -334,6 +335,7 @@ public class GameArenaOrb extends View implements View.OnClickListener, GameStat
   public void updateGameCellInfo(int index, GameCellInfo updatedGameCellInfo) {
     if (index == this.gameCellInfo.getIndex()) {
       this.gameCellInfo = updatedGameCellInfo;
+      Log.d(TAG, "Got Update Event : " + index);
       invalidate();
     }
   }

@@ -10,25 +10,27 @@ import android.content.SharedPreferences;
  */
 public class GamePreferenceUtils {
 
-    public static final String GAME_PREFERENCE_KEY = "game_preferences_chainReaction";
-    public static final String GAME_PLAYER_INFO_KEY = "game_playerInfoKey";
+  public static final String GAME_PREFERENCE_KEY = "game_preferences_chainReaction";
+  public static final String GAME_PLAYER_INFO_KEY = "game_playerInfoKey";
 
 
-    public static String getPlayerInfoGame(Context context) {
+  public static String getPlayerInfoGame(Context context) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(GAME_PREFERENCE_KEY, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(GAME_PLAYER_INFO_KEY, null);
-    }
+    SharedPreferences sharedPreferences =
+        context.getSharedPreferences(GAME_PREFERENCE_KEY, Context.MODE_PRIVATE);
+    return sharedPreferences.getString(GAME_PLAYER_INFO_KEY, null);
+  }
 
 
-    public static void setGamePlayerInfoGame(Context context, String pref) {
+  public static void setGamePlayerInfoGame(Context context, String pref) {
 
-        SharedPreferences sharedPref = context.getSharedPreferences(GAME_PREFERENCE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+    SharedPreferences sharedPref =
+        context.getSharedPreferences(GAME_PREFERENCE_KEY, Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putString(GAME_PLAYER_INFO_KEY, pref);
-        editor.commit();
+    editor.putString(GAME_PLAYER_INFO_KEY, pref);
+    editor.commit();
 
-    }
+  }
 
 }
