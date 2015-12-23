@@ -17,58 +17,58 @@ import com.ran.chainreaction.utils.ChainReactionNavigator;
 
 public class OfflineSettingsActivity extends ActionBarActivity implements View.OnClickListener {
 
-    Toolbar toolbar;
-    SoundSettingsView soundSettingsView;
-    Button startGame;
-    PlayerColorView playerColorView;
+  Toolbar toolbar;
+  SoundSettingsView soundSettingsView;
+  Button startGame;
+  PlayerColorView playerColorView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offline_settings);
-        initViews();
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_offline_settings);
+    initViews();
+  }
+
+  /**
+   * Method to Initialize the Views
+   */
+  private void initViews() {
+
+    toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+    soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
+    startGame = (Button) findViewById(R.id.offline_settings_play);
+    playerColorView = (PlayerColorView) findViewById(R.id.offline_settings_colorPreferences);
+
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    startGame.setOnClickListener(this);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    soundSettingsView.onViewVisible();
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    soundSettingsView.onViewHidden();
+  }
+
+  /**
+   * Called when a view has been clicked.
+   *
+   * @param v The view that was clicked.
+   */
+  @Override
+  public void onClick(View v) {
+
+    switch (v.getId()) {
+      case R.id.offline_settings_play:
+        playerColorView.saveCurrentPreferences();
+        ChainReactionNavigator.openNewGameScreenActivity(this);
+        break;
     }
-
-    /**
-     * Method to Initialize the Views
-     */
-    private void initViews() {
-
-        toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
-        soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
-        startGame = (Button) findViewById(R.id.offline_settings_play);
-        playerColorView = (PlayerColorView) findViewById(R.id.offline_settings_colorPreferences);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        startGame.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        soundSettingsView.onViewVisible();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        soundSettingsView.onViewHidden();
-    }
-
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.offline_settings_play:
-                playerColorView.saveCurrentPreferences();
-                ChainReactionNavigator.openNewGameScreenActivity(this);
-                break;
-        }
-    }
+  }
 }

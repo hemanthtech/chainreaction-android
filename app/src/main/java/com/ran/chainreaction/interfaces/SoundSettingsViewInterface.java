@@ -5,13 +5,13 @@ package com.ran.chainreaction.interfaces;
  */
 public interface SoundSettingsViewInterface {
 
-    /**
-     * Method to say that view isVisible
-     */
-    void onViewVisible();
+  /**
+   * Method to say that view isVisible
+   */
+  void onViewVisible();
 
-    /**
-     * Method to say that view isHidden
-     */
-    void onViewHidden();
+  /**
+   * Method to say that view isHidden
+   */
+  void onViewHidden();
 }

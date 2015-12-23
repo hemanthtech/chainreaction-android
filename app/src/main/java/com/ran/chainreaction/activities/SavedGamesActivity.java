@@ -22,86 +22,86 @@ import java.util.ArrayList;
 public class SavedGamesActivity extends ActionBarActivity implements SavedGamesSelectionInterface,
     SavedGamesDbFetchInterface {
 
-    private static final float ENABLE_ALPHA = 1.0f;
-    private static final float DISABLE_ALPHA = 0.25f;
-    Toolbar toolbar;
-    SoundSettingsView soundSettingsView;
-    TextView no_saved_Games;
-    ProgressBar savedGamesProgressBar;
-    RecyclerView savedGamesRecycler;
-    LinearLayoutManager layoutManager;
-    SavedGamesRecycleAdapter savedGamesRecycleAdapter;
-    SavedGamesDbPresenter savedGamesDbPresenter;
+  private static final float ENABLE_ALPHA = 1.0f;
+  private static final float DISABLE_ALPHA = 0.25f;
+  Toolbar toolbar;
+  SoundSettingsView soundSettingsView;
+  TextView no_saved_Games;
+  ProgressBar savedGamesProgressBar;
+  RecyclerView savedGamesRecycler;
+  LinearLayoutManager layoutManager;
+  SavedGamesRecycleAdapter savedGamesRecycleAdapter;
+  SavedGamesDbPresenter savedGamesDbPresenter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_games);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_saved_games);
 
-        initViews();
-        savedGamesDbPresenter = new SavedGamesDbPresenter(this, this);
+    initViews();
+    savedGamesDbPresenter = new SavedGamesDbPresenter(this, this);
+  }
+
+  /**
+   * Method to Initialize the Views
+   */
+  private void initViews() {
+
+    toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+    soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
+    savedGamesRecycler = (RecyclerView) findViewById(R.id.saved_games_recycler);
+    no_saved_Games = (TextView) findViewById(R.id.saved_games_noItems);
+    savedGamesProgressBar = (ProgressBar) findViewById(R.id.saved_games_progress);
+
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    soundSettingsView.onViewVisible();
+    savedGamesDbPresenter.start();
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    soundSettingsView.onViewHidden();
+    savedGamesDbPresenter.stop();
+  }
+
+  @Override
+  public void showAllSavedGames(ArrayList<SavedGamesEntity> savedGamesEntities) {
+    if (savedGamesEntities != null && savedGamesEntities.size() == 0) {
+      no_saved_Games.setVisibility(View.VISIBLE);
+    } else {
+      //RecyclerView Stuff..
+      layoutManager = new LinearLayoutManager(this);
+      layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+      savedGamesRecycleAdapter = new SavedGamesRecycleAdapter(this, this, savedGamesEntities);
+      savedGamesRecycler.setAdapter(savedGamesRecycleAdapter);
+      savedGamesRecycler.setLayoutManager(layoutManager);
+      savedGamesRecycler.setVisibility(View.VISIBLE);
     }
+  }
 
-    /**
-     * Method to Initialize the Views
-     */
-    private void initViews() {
-
-        toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
-        soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
-        savedGamesRecycler = (RecyclerView) findViewById(R.id.saved_games_recycler);
-        no_saved_Games = (TextView) findViewById(R.id.saved_games_noItems);
-        savedGamesProgressBar = (ProgressBar) findViewById(R.id.saved_games_progress);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  @Override
+  public void showProgressBar(boolean show) {
+    if (show) {
+      savedGamesProgressBar.setVisibility(View.VISIBLE);
+    } else {
+      savedGamesProgressBar.setVisibility(View.GONE);
     }
+  }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        soundSettingsView.onViewVisible();
-        savedGamesDbPresenter.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        soundSettingsView.onViewHidden();
-        savedGamesDbPresenter.stop();
-    }
-
-    @Override
-    public void showAllSavedGames(ArrayList<SavedGamesEntity> savedGamesEntities) {
-        if (savedGamesEntities != null && savedGamesEntities.size() == 0) {
-            no_saved_Games.setVisibility(View.VISIBLE);
-        } else {
-            //RecyclerView Stuff..
-            layoutManager = new LinearLayoutManager(this);
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            savedGamesRecycleAdapter = new SavedGamesRecycleAdapter(this, this, savedGamesEntities);
-            savedGamesRecycler.setAdapter(savedGamesRecycleAdapter);
-            savedGamesRecycler.setLayoutManager(layoutManager);
-            savedGamesRecycler.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            savedGamesProgressBar.setVisibility(View.VISIBLE);
-        } else {
-            savedGamesProgressBar.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * Call Back to Activity saying All Games are Deleted
-     */
-    @Override
-    public void onAllGamesDeleted() {
-        no_saved_Games.setVisibility(View.VISIBLE);
-        savedGamesRecycler.setVisibility(View.GONE);
-    }
+  /**
+   * Call Back to Activity saying All Games are Deleted
+   */
+  @Override
+  public void onAllGamesDeleted() {
+    no_saved_Games.setVisibility(View.VISIBLE);
+    savedGamesRecycler.setVisibility(View.GONE);
+  }
 
 }

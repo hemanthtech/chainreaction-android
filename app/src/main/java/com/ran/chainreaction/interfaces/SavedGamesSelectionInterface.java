@@ -7,9 +7,9 @@ package com.ran.chainreaction.interfaces;
  */
 public interface SavedGamesSelectionInterface {
 
-    /**
-     * Call Back to Activity saying All Games are Deleted
-     */
-    void onAllGamesDeleted();
+  /**
+   * Call Back to Activity saying All Games are Deleted
+   */
+  void onAllGamesDeleted();
 
 }

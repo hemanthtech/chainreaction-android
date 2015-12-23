@@ -10,12 +10,12 @@ import com.ran.chainreaction.services.AudioPlayBackService;
  */
 public class ChainReactionApplication extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
-        //Start the Audio Play BAck here ..
-        Intent audioPlayBackService = new Intent(this, AudioPlayBackService.class);
-        startService(audioPlayBackService);
-    }
+    //Start the Audio Play BAck here ..
+    Intent audioPlayBackService = new Intent(this, AudioPlayBackService.class);
+    startService(audioPlayBackService);
+  }
 }

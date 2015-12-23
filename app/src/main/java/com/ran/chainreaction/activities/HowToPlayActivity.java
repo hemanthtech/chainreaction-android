@@ -16,47 +16,47 @@ import com.ran.chainreaction.utils.ChainReactionNavigator;
  */
 public class HowToPlayActivity extends ActionBarActivity {
 
-    Toolbar toolbar;
-    SoundSettingsView soundSettingsView;
-    Button playButton;
-    private Context context;
+  Toolbar toolbar;
+  SoundSettingsView soundSettingsView;
+  Button playButton;
+  private Context context;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context = this;
-        setContentView(R.layout.activity_how_to_play);
-        initViews();
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    context = this;
+    setContentView(R.layout.activity_how_to_play);
+    initViews();
+  }
 
-    /**
-     * Method to Initialize the Views
-     */
-    private void initViews() {
+  /**
+   * Method to Initialize the Views
+   */
+  private void initViews() {
 
-        toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
-        soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
-        playButton = (Button) findViewById(R.id.how_to_Play_start);
+    toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+    soundSettingsView = (SoundSettingsView) findViewById(R.id.tool_bar_sound_settings);
+    playButton = (Button) findViewById(R.id.how_to_Play_start);
 
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChainReactionNavigator.openOfflineGameSettingsActivity(context);
-            }
-        });
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+    playButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ChainReactionNavigator.openOfflineGameSettingsActivity(context);
+      }
+    });
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        soundSettingsView.onViewVisible();
-    }
+  @Override
+  protected void onResume() {
+    super.onResume();
+    soundSettingsView.onViewVisible();
+  }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        soundSettingsView.onViewHidden();
-    }
+  @Override
+  protected void onPause() {
+    super.onPause();
+    soundSettingsView.onViewHidden();
+  }
 }

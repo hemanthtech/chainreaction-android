@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/alertDialog_view_background"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/alertDialog_view_background"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/alertDialogParent_title"
@@ -15,6 +15,6 @@
         android:layout_marginTop="@dimen/alert_dialog_padding_vetical"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@color/alertDialog_textview_color"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
 </LinearLayout>

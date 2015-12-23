@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith on 18/12/15.
- *
+ * <p/>
  * Interface between Presenter and View
  *
  * @see com.ran.chainreaction.activities.SavedGamesActivity
@@ -14,18 +14,18 @@ import java.util.ArrayList;
  */
 public interface SavedGamesDbFetchInterface {
 
-    /**
-     * Call Back to UI screen , giving the Saved Games Arraylist
-     *
-     * @param savedGamesEntities -- list of saved Games
-     */
-    void showAllSavedGames(ArrayList<SavedGamesEntity> savedGamesEntities);
+  /**
+   * Call Back to UI screen , giving the Saved Games Arraylist
+   *
+   * @param savedGamesEntities -- list of saved Games
+   */
+  void showAllSavedGames(ArrayList<SavedGamesEntity> savedGamesEntities);
 
-    /**
-     * Call back to show progress on UI
-     *
-     * @param show -- true/false
-     */
-    void showProgressBar(boolean show);
+  /**
+   * Call back to show progress on UI
+   *
+   * @param show -- true/false
+   */
+  void showProgressBar(boolean show);
 
 }
